@@ -17,6 +17,44 @@
   --rust: #9A4A2C;
   --line: #C9B98E;
   --shadow: rgba(42,35,25,0.18);
+  --grain-opacity: 0.4;
+  color-scheme: light;
+}
+
+/* nuit tombée sur l'atelier — mêmes teintes, inversées et assombries */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper: #211C15;
+    --paper-deep: #17130E;
+    --paper-light: #2B2418;
+    --moss-pale: #33402C;
+    --ink: #EDE3CF;
+    --ink-soft: #C3B79C;
+    --moss: #7FA067;
+    --moss-deep: #9BBF80;
+    --ochre: #E0A94F;
+    --rust: #E08355;
+    --line: #4A4130;
+    --shadow: rgba(0,0,0,0.45);
+    --grain-opacity: 0.22;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper: #211C15;
+  --paper-deep: #17130E;
+  --paper-light: #2B2418;
+  --moss-pale: #33402C;
+  --ink: #EDE3CF;
+  --ink-soft: #C3B79C;
+  --moss: #7FA067;
+  --moss-deep: #9BBF80;
+  --ochre: #E0A94F;
+  --rust: #E08355;
+  --line: #4A4130;
+  --shadow: rgba(0,0,0,0.45);
+  --grain-opacity: 0.22;
+  color-scheme: dark;
 }
 
 *{box-sizing:border-box;}
@@ -43,7 +81,7 @@ body::before{
   inset:0;
   z-index:999;
   pointer-events:none;
-  opacity:0.4;
+  opacity:var(--grain-opacity);
   mix-blend-mode:multiply;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
 }
@@ -164,6 +202,24 @@ p{margin:0;}
 .lang-flag.active{
   opacity:1; transform:rotate(-2deg) scale(1);
   box-shadow:3px 3px 0 var(--shadow);
+}
+
+/* ---------- theme toggle ---------- */
+.theme-toggle{
+  display:flex; align-items:center; justify-content:center;
+  width:34px; height:34px; padding:0; flex-shrink:0;
+  border:2px solid var(--ink); border-radius:50%;
+  background:var(--paper-light); cursor:pointer;
+  transition:transform .25s ease, box-shadow .2s ease;
+}
+.theme-toggle:hover{transform:rotate(-8deg); box-shadow:2px 2px 0 var(--shadow);}
+.theme-toggle svg{width:18px; height:18px; stroke:var(--ink);}
+.theme-toggle .icon-moon{display:none;}
+:root[data-theme="dark"] .theme-toggle .icon-sun{display:none;}
+:root[data-theme="dark"] .theme-toggle .icon-moon{display:block;}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .theme-toggle .icon-sun{display:none;}
+  :root:not([data-theme="light"]) .theme-toggle .icon-moon{display:block;}
 }
 
 /* ---------- page header (sous-pages) ---------- */
