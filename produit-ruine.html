@@ -3,162 +3,92 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ferme en Ruine — Atelier Bourgeon Alain</title>
-<meta name="description" content="Ferme en Ruine, miniature de bâtisse en pierre au toit percé, entourée d'une clôture en bois, façonnée à la main par l'Atelier Bourgeon Alain.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<title>Ferme en Ruine — L'Atelier Alain Bourgeon</title>
+<meta name="description" content="Ferme en ruine au toit percé, maquette faite main en mousse, plâtre et clôture bois. 15 €.">
+<link rel="stylesheet" href="wabi.css">
 </head>
 <body>
 
-<div class="page-loader">
-  <div class="loader-logo">
-    <span class="loader-halo"></span>
-    <span class="loader-atelier">Atelier</span>
-    <span class="loader-name">Alain Bourgeon</span>
-  </div>
-</div>
+<div class="cart-toast" id="cartToast"></div>
+
+<button type="button" class="back-to-top" id="backToTop" aria-label="Retour en haut de la page" data-fr="Retour en haut de la page" data-en="Back to top" data-i18n-attr="aria-label">
+  <svg viewBox="0 0 24 24" fill="none" stroke="#2A2319" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6M6 12l6-6 6 6"/></svg>
+</button>
+
+<a href="https://wa.me/33000000000" class="whatsapp-fab" aria-label="Discuter sur WhatsApp" data-fr="Discuter sur WhatsApp" data-en="Chat on WhatsApp" data-i18n-attr="aria-label">
+  <svg viewBox="0 0 32 32"><path d="M16.02 3C9.4 3 4 8.38 4 15c0 2.34.66 4.53 1.8 6.4L4 29l7.8-1.75A11.9 11.9 0 0 0 16.02 27C22.64 27 28 21.62 28 15S22.64 3 16.02 3zm0 21.6c-1.9 0-3.68-.53-5.2-1.45l-.37-.22-4.1.92.9-4-.24-.4A9.55 9.55 0 0 1 6.4 15c0-5.3 4.32-9.6 9.62-9.6 5.3 0 9.6 4.3 9.6 9.6s-4.3 9.6-9.6 9.6zm5.34-7.2c-.29-.15-1.73-.85-2-.95-.27-.1-.46-.15-.66.15-.2.29-.76.95-.93 1.15-.17.2-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.77-1.44-1.71-1.61-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.51-.07-.15-.66-1.6-.91-2.19-.24-.58-.48-.5-.66-.51h-.56c-.2 0-.51.07-.78.37s-1.03 1-1.03 2.44 1.06 2.83 1.2 3.02c.15.2 2.09 3.19 5.06 4.48.71.31 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.73-.71 1.98-1.39.24-.68.24-1.27.17-1.39-.07-.13-.26-.2-.55-.35z"/></svg>
+</a>
 
 <header class="site-header">
   <div class="header-inner">
-    <a href="index.html" class="logo">Bourgeon<span>Alain</span></a>
+    <a href="index.html" class="logo">
+      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 34 L6 18 L20 6 L34 19 L34 34 Z"/>
+        <path d="M15 34 L15 24 L25 24 L25 34"/>
+      </svg>
+      L'Atelier Alain Bourgeon
+    </a>
     <nav class="main-nav">
-      <a href="index.html">Accueil</a>
-      <a href="boutique.html" class="active">Boutique</a>
-      <a href="atelier.html">L'Atelier</a>
-      <a href="contact.html">Contact</a>
+      <a href="index.html" data-fr="Accueil" data-en="Home">Accueil</a>
+      <a href="boutique.html" class="active" data-fr="Boutique" data-en="Shop">Boutique</a>
+      <a href="atelier.html" data-fr="L'atelier" data-en="The workshop">L'atelier</a>
+      <a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a>
     </nav>
-    <div class="header-actions">
-      <a href="panier.html" class="cart-icon" aria-label="Panier">🛍<span class="cart-count">0</span></a>
-      <button class="nav-toggle" aria-label="Menu">☰</button>
+    <div class="lang-switch">
+      <button type="button" class="lang-flag active" data-lang="fr" aria-label="Passer en français" title="Français — drapeau breton">
+        <svg viewBox="0 0 30 22" preserveAspectRatio="none">
+          <defs><g id="erm"><path d="M0,-1.7 L-0.85,-0.65 M0,-1.7 L0.85,-0.65 M0,-1.7 L0,0.5" stroke="#000" stroke-width="0.42" fill="none" stroke-linecap="round"/><circle cx="0" cy="1.15" r="0.46" fill="#000"/></g></defs>
+          <rect width="30" height="22" fill="#000"/>
+          <g fill="#fff"><rect y="2.444" width="30" height="2.444"/><rect y="7.333" width="30" height="2.444"/><rect y="12.222" width="30" height="2.444"/><rect y="17.111" width="30" height="2.444"/></g>
+          <rect x="0" y="0" width="14" height="12" fill="#fff"/>
+          <use href="#erm" transform="translate(2,3)"/><use href="#erm" transform="translate(5.33,3)"/><use href="#erm" transform="translate(8.67,3)"/><use href="#erm" transform="translate(12,3)"/>
+          <use href="#erm" transform="translate(3.67,6.2)"/><use href="#erm" transform="translate(7,6.2)"/><use href="#erm" transform="translate(10.33,6.2)"/>
+          <use href="#erm" transform="translate(2,9.3)"/><use href="#erm" transform="translate(5.33,9.3)"/><use href="#erm" transform="translate(8.67,9.3)"/><use href="#erm" transform="translate(12,9.3)"/>
+        </svg>
+      </button>
+      <button type="button" class="lang-flag" data-lang="en" aria-label="Switch to English" title="English — Union Jack">
+        <svg viewBox="0 0 60 36" preserveAspectRatio="none">
+          <rect width="60" height="36" fill="#012169"/>
+          <line x1="0" y1="0" x2="60" y2="36" stroke="#fff" stroke-width="9"/><line x1="60" y1="0" x2="0" y2="36" stroke="#fff" stroke-width="9"/>
+          <line x1="0" y1="0" x2="60" y2="36" stroke="#C8102E" stroke-width="3.4"/><line x1="60" y1="0" x2="0" y2="36" stroke="#C8102E" stroke-width="3.4"/>
+          <rect x="24" y="0" width="12" height="36" fill="#fff"/><rect x="0" y="12" width="60" height="12" fill="#fff"/>
+          <rect x="26.6" y="0" width="6.8" height="36" fill="#C8102E"/><rect x="0" y="14.6" width="60" height="6.8" fill="#C8102E"/>
+        </svg>
+      </button>
     </div>
+    <a href="panier.html" class="cart-icon" aria-label="Panier">🛍<span class="cart-count">0</span></a>
+    <a href="contact.html" class="stamp-btn" data-fr="Nous écrire ✎" data-en="Get in touch ✎">Nous écrire ✎</a>
   </div>
 </header>
 
 <main>
-  <div class="container product-detail">
-
-    <div class="reveal-scale reveal">
-      <div class="product-gallery-main" style="background-image:url('IMG_20260829_114933-clean.png')"></div>
-      <div class="product-gallery-thumbs">
-        <img src="IMG_20260829_114933-clean.png" data-full="IMG_20260829_114933-clean.png" class="active" alt="Ferme en Ruine, vue de face">
-        <img src="IMG_20260829_114714-clean.png" data-full="IMG_20260829_114714-clean.png" alt="Ferme en Ruine, vue de trois quarts">
-        <img src="IMG_20260829_114848-clean.png" data-full="IMG_20260829_114848-clean.png" alt="Ferme en Ruine, vue arrière">
-      </div>
-    </div>
-
-    <div class="product-info-panel reveal">
-      <span class="eyebrow">Collection Maisons en pierre</span>
-      <h1 class="product-title">Ferme en Ruine</h1>
-      <div class="rating-line" style="margin-bottom: 0.6rem;"><span class="stars" style="--rating:4.9"></span><span class="rating-score">4.9/5</span><span class="rating-count">(12 avis)</span></div>
-      <p class="product-price-detail">15 € <span style="font-size:0.85rem; font-weight:400; color:var(--color-ink-soft);">/ pièce — 100% fait main</span></p>
-      <p class="product-desc">Une ferme en pierre à l'abandon, toit percé et pans de mur effondrés, envahie par une végétation d'automne. Entourée d'une clôture en bois faite main, cette pièce d'exception apporte une atmosphère narrative forte à toute collection ou diorama.</p>
-
-      <div class="option-row">
-        <label>Échelle</label>
-        <div class="option-values">
-          <span class="option-swatch active">1/72</span>
-        </div>
-      </div>
-
-      <div class="option-row">
-        <label>État</label>
-        <div class="option-values">
-          <a href="produit-chaumiere.html" class="option-swatch">Version intacte</a>
-          <span class="option-swatch active">En ruine</span>
-        </div>
-      </div>
-
-      <div class="qty-row">
-        <div class="qty-selector" data-unit-price="15">
-          <button class="qty-minus" aria-label="Diminuer">−</button>
-          <input type="text" value="1" readonly>
-          <button class="qty-plus" aria-label="Augmenter">+</button>
-        </div>
-        <span class="product-material">Total : <strong class="qty-total">15 €</strong></span>
-      </div>
-      <p class="product-material" style="margin-top:-0.5rem; margin-bottom: var(--space-md);">Pièce unique faite main — expédition sous 4 à 5 jours</p>
-
-      <div class="product-actions">
-        <button class="btn btn-primary magnetic add-to-cart-btn" data-id="ferme-ruine" data-name="Ferme en Ruine" data-price="15" data-image="IMG_20260829_114933-clean.png">Ajouter au panier</button>
-        <button class="btn btn-outline magnetic">♡ Favoris</button>
-      </div>
-
-      <div class="accordion">
-        <div class="accordion-item open">
-          <div class="accordion-header">Dimensions & matériaux <span class="accordion-icon">+</span></div>
-          <div class="accordion-content"><div>Dimensions : 14 × 10 × 9 cm (socle inclus). Structure en mousse/carton, enduit type plâtre, feuillage automnal, clôture en bois véritable, socle enherbé.</div></div>
-        </div>
-        <div class="accordion-item">
-          <div class="accordion-header">Fabrication <span class="accordion-icon">+</span></div>
-          <div class="accordion-content"><div>Les effets de ruine (toit percé, pierres effondrées) sont sculptés à la main pour un rendu réaliste, puis végétalisés brin par brin. Comptez environ 6 heures de travail par pièce.</div></div>
-        </div>
-        <div class="accordion-item">
-          <div class="accordion-header">Livraison & emballage <span class="accordion-icon">+</span></div>
-          <div class="accordion-content"><div>Emballage protecteur avec calage intérieur, notamment pour la clôture en bois. Expédition sous 4 à 5 jours ouvrés.</div></div>
-        </div>
-        <div class="accordion-item">
-          <div class="accordion-header">Entretien <span class="accordion-icon">+</span></div>
-          <div class="accordion-content"><div>Dépoussiérer à l'aide d'un pinceau doux. Éviter l'exposition directe et prolongée au soleil pour préserver les couleurs.</div></div>
-        </div>
-      </div>
-
-    </div>
+  <div class="page-header container">
+    <span class="breadcrumb" data-fr="Accueil / Boutique / Ferme en Ruine" data-en="Home / Shop / Ruined Farmhouse">Accueil / Boutique / Ferme en Ruine</span>
   </div>
 
-  <section class="section">
-    <div class="container">
-      <div class="reviews-section reveal">
-        <div class="section-header">
-          <div><span class="eyebrow">Avis clients</span><h2>Ce qu'en disent nos clients</h2></div>
-        </div>
-        <div class="reviews-summary">
-          <span class="score-big">4.9/5</span>
-          <div class="reviews-summary-text">
-            <span class="stars" style="--rating:4.9"></span>
-            <span class="rating-count">Basé sur 12 avis vérifiés</span>
-          </div>
-        </div>
-        <div class="review-card">
-          <div class="review-head"><span class="review-author">Élodie V.</span><span class="review-date">Août 2026</span></div>
-          <span class="stars" style="--rating:5"></span>
-          <p class="review-text">L'effet de ruine est saisissant de réalisme, on sent vraiment l'histoire de la ferme.</p>
-          <span class="review-badge">Achat vérifié</span>
-        </div>
-        <div class="review-card">
-          <div class="review-head"><span class="review-author">Antoine G.</span><span class="review-date">Juillet 2026</span></div>
-          <span class="stars" style="--rating:5"></span>
-          <p class="review-text">Une pièce pleine de caractère, la clôture en bois apporte un vrai plus à la scène.</p>
-          <span class="review-badge">Achat vérifié</span>
-        </div>
-        <div class="review-card">
-          <div class="review-head"><span class="review-author">Camille F.</span><span class="review-date">Juin 2026</span></div>
-          <span class="stars" style="--rating:5"></span>
-          <p class="review-text">Coup de cœur total, j'en commande une deuxième pour un ami passionné de maquettes.</p>
-          <span class="review-badge">Achat vérifié</span>
-        </div>
-      </div>
-    </div>
-  </section>
+  <section class="section" style="padding-top:1rem;">
+    <div class="container product-detail">
 
-  <section class="section section-alt">
-    <div class="container">
-      <div class="section-header reveal">
-        <div><span class="eyebrow">Vous aimerez aussi</span><h2>Autres pièces de la collection</h2></div>
+      <div class="reveal">
+        <div class="product-detail-frame">
+          <img src="IMG_20260829_114933-clean.png" alt="Ferme en ruine, toit percé">
+        </div>
       </div>
-      <div class="products-grid reveal-stagger reveal" style="grid-template-columns: repeat(3, 1fr); max-width: 900px; margin: 0 auto;">
-        <a href="produit-chaumiere.html" class="product-card">
-          <div class="product-image"><img src="IMG_20260819_134136-clean.png" alt="Chaumière de Pierre"></div>
-          <div class="product-info"><div><p class="product-name">Chaumière de Pierre</p><p class="product-material">Mousse, plâtre & feuillage</p><div class="rating-line"><span class="stars" style="--rating:4.9"></span><span class="rating-score">4.9/5</span><span class="rating-count">(24 avis)</span></div></div><span class="product-price">15 €</span></div>
-        </a>
-        <a href="produit-colombages.html" class="product-card">
-          <div class="product-image"><img src="IMG_20260710_070147-clean.png" alt="Maison à Colombages"></div>
-          <div class="product-info"><div><p class="product-name">Maison à Colombages</p><p class="product-material">Carton bois & balsa peint</p><div class="rating-line"><span class="stars" style="--rating:4.8"></span><span class="rating-score">4.8/5</span><span class="rating-count">(17 avis)</span></div></div><span class="product-price">15 €</span></div>
-        </a>
-        <a href="boutique.html" class="product-card">
-          <div class="product-image" style="display:flex; align-items:center; justify-content:center; background:var(--color-bg-alt);"><span style="text-align:center; padding:var(--space-sm); color:var(--color-ink-soft);">Voir toute<br>la boutique →</span></div>
-        </a>
+
+      <div class="reveal">
+        <span class="eyebrow-hand" data-fr="fait main — pièce unique" data-en="handmade — one of a kind">fait main — pièce unique</span>
+        <h1 style="font-size:clamp(2rem,4.5vw,2.8rem); margin-top:.3rem;" data-fr="Ferme en Ruine" data-en="Ruined Farmhouse">Ferme en Ruine</h1>
+        <div class="product-detail-price">15 €</div>
+        <p style="color:var(--ink-soft);" data-fr="Une ferme en pierre à l'abandon, toit percé et pans de mur envahis de lierre, entourée d'une clôture en bois et d'une pelouse miniature." data-en="An abandoned stone farmhouse, with a broken roof and ivy-covered walls, surrounded by a wooden fence and a miniature lawn.">Une ferme en pierre à l'abandon, toit percé et pans de mur envahis de lierre, entourée d'une clôture en bois et d'une pelouse miniature.</p>
+        <ul class="product-detail-list">
+          <li data-fr="Matériaux : mousse, plâtre & clôture bois" data-en="Materials: moss, plaster & wooden fence">Matériaux : mousse, plâtre & clôture bois</li>
+          <li data-fr="Fabrication artisanale, pièce par pièce" data-en="Handcrafted, piece by piece">Fabrication artisanale, pièce par pièce</li>
+          <li data-fr="Livrée dans un emballage protecteur sur-mesure" data-en="Shipped in custom protective packaging">Livrée dans un emballage protecteur sur-mesure</li>
+        </ul>
+        <button type="button" class="stamp-btn" id="addToCart" data-fr="Commander ✎" data-en="Order ✎">Commander ✎</button>
+        <p style="font-size:.8rem; color:var(--ink-soft); margin-top:1rem;" data-fr="Chaque pièce étant façonnée à la main, de légères variations sont possibles d'un exemplaire à l'autre." data-en="As every piece is handmade, slight variations between copies are possible.">Chaque pièce étant façonnée à la main, de légères variations sont possibles d'un exemplaire à l'autre.</p>
       </div>
+
     </div>
   </section>
 </main>
@@ -167,46 +97,81 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-col">
-        <h4>Atelier Bourgeon Alain</h4>
-        <p>Maquettes d'architecture façonnées à la main, pour les amateurs d'objets rares.</p>
+        <h4>L'Atelier Alain Bourgeon</h4>
+        <p data-fr="Maquettes d'architecture façonnées à la main, pour les amateurs d'objets rares." data-en="Architectural models handmade for lovers of rare objects.">Maquettes d'architecture façonnées à la main, pour les amateurs d'objets rares.</p>
       </div>
       <div class="footer-col">
-        <h4>Navigation</h4>
+        <h4 data-fr="Navigation" data-en="Navigation">Navigation</h4>
         <ul>
-          <li><a href="index.html">Accueil</a></li>
-          <li><a href="boutique.html">Boutique</a></li>
-          <li><a href="atelier.html">L'Atelier</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="index.html" data-fr="Accueil" data-en="Home">Accueil</a></li>
+          <li><a href="boutique.html" data-fr="Boutique" data-en="Shop">Boutique</a></li>
+          <li><a href="atelier.html" data-fr="L'Atelier" data-en="The Workshop">L'Atelier</a></li>
+          <li><a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Informations</h4>
+        <h4 data-fr="Informations" data-en="Information">Informations</h4>
         <ul>
-          <li><a href="livraison.html">Livraison & retours</a></li>
-          <li><a href="cgv.html">CGV</a></li>
-          <li><a href="mentions-legales.html">Mentions légales</a></li>
+          <li><a href="livraison.html" data-fr="Livraison & retours" data-en="Shipping & returns">Livraison & retours</a></li>
+          <li><a href="cgv.html" data-fr="CGV" data-en="Terms of sale">CGV</a></li>
+          <li><a href="mentions-legales.html" data-fr="Mentions légales" data-en="Legal notice">Mentions légales</a></li>
+          <li><button type="button" class="link-underline" id="openCookieModal" style="background:none;border:none;cursor:pointer;padding:0;font:inherit;" data-fr="Politique de cookies" data-en="Cookie policy">Politique de cookies</button></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Contact</h4>
+        <h4 data-fr="Contact" data-en="Contact">Contact</h4>
         <ul>
           <li><a href="mailto:contact@bourgeonalain.fr">contact@bourgeonalain.fr</a></li>
-          <li><a href="tel:+33000000000">+33 0 00 00 00 00</a></li>
-          <li>[Adresse de l'atelier]</li>
+          <li>6 rue Surcouf, 35640 Martigné-Ferchaud</li>
         </ul>
-        <iframe class="footer-map" src="https://www.google.com/maps?q=Martign%C3%A9-Ferchaud,35640&output=embed" loading="lazy" title="Localisation de l'Atelier Bourgeon Alain, Martigné-Ferchaud"></iframe>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Atelier Bourgeon Alain. Tous droits réservés.</span>
-      <div class="footer-social">
+      <span data-fr="© 2026 L'Atelier Alain Bourgeon — tous droits réservés" data-en="© 2026 L'Atelier Alain Bourgeon — all rights reserved">© 2026 L'Atelier Alain Bourgeon — tous droits réservés</span>
+      <div style="display:flex; gap:1.2rem; flex-wrap:wrap;">
         <a href="#" class="link-underline">Instagram</a>
         <a href="#" class="link-underline">Pinterest</a>
+        <a href="#" class="link-underline">TikTok</a>
+        <a href="https://wa.me/33000000000" class="link-underline">WhatsApp</a>
       </div>
     </div>
   </div>
 </footer>
 
-<script src="script.js"></script>
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-card">
+    <p data-fr="Ce site utilise des cookies pour faire fonctionner la boutique, mesurer l'audience et, si vous l'acceptez, personnaliser les contenus." data-en="This site uses cookies to run the shop, measure traffic and, if you agree, personalise content.">Ce site utilise des cookies pour faire fonctionner la boutique, mesurer l'audience et, si vous l'acceptez, personnaliser les contenus.</p>
+    <div class="cookie-actions">
+      <button type="button" class="stamp-btn" id="cookieAccept" data-fr="Accepter ✎" data-en="Accept ✎">Accepter ✎</button>
+      <button type="button" class="btn-decline" id="cookieDecline" data-fr="Refuser" data-en="Decline">Refuser</button>
+      <button type="button" class="btn-decline" id="cookieLearnMore" data-fr="En savoir plus" data-en="Learn more">En savoir plus</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="cookieModal">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="cookieModalTitle">
+    <div class="modal-head">
+      <h3 id="cookieModalTitle" data-fr="Politique de cookies" data-en="Cookie policy">Politique de cookies</h3>
+      <button type="button" class="modal-close" id="cookieModalClose" aria-label="Fermer" data-fr="Fermer" data-en="Close" data-i18n-attr="aria-label">×</button>
+    </div>
+    <p data-fr="L'Atelier Alain Bourgeon utilise des cookies et technologies similaires sur ce site." data-en="L'Atelier Alain Bourgeon uses cookies and similar technologies on this site.">L'Atelier Alain Bourgeon utilise des cookies et technologies similaires sur ce site.</p>
+    <div class="cookie-actions" style="margin-top:1.2rem;">
+      <button type="button" class="stamp-btn" id="cookieModalAccept" data-fr="Tout accepter ✎" data-en="Accept all ✎">Tout accepter ✎</button>
+      <button type="button" class="btn-decline" id="cookieModalDecline" data-fr="Tout refuser" data-en="Decline all">Tout refuser</button>
+    </div>
+  </div>
+</div>
+
+<script src="wabi.js"></script>
+<script>
+  document.getElementById('addToCart').addEventListener('click', function(){
+    atelierAddToCart(
+      {name:"Ferme en Ruine", price:15, image:"IMG_20260829_114933-clean.png", material:"Mousse, plâtre & clôture bois"},
+      "Ferme en Ruine ajoutée au panier ✓",
+      "Ruined Farmhouse added to cart ✓"
+    );
+  });
+</script>
 </body>
 </html>

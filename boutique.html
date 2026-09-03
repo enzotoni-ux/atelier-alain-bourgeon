@@ -3,115 +3,141 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Boutique — Atelier Bourgeon Alain</title>
-<meta name="description" content="Découvrez toutes nos maquettes d'architecture : monuments, résidences et projets urbains, fabriqués à la main.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<title>Boutique — L'Atelier Alain Bourgeon</title>
+<meta name="description" content="Toutes les maquettes de l'Atelier Alain Bourgeon : maisons en pierre, chaumières et maisons à colombages, sculptées et peintes à la main.">
+<link rel="stylesheet" href="wabi.css">
 </head>
 <body>
 
-<div class="page-loader">
-  <div class="loader-logo">
-    <span class="loader-halo"></span>
-    <span class="loader-atelier">Atelier</span>
-    <span class="loader-name">Alain Bourgeon</span>
-  </div>
-</div>
+<button type="button" class="back-to-top" id="backToTop" aria-label="Retour en haut de la page" data-fr="Retour en haut de la page" data-en="Back to top" data-i18n-attr="aria-label">
+  <svg viewBox="0 0 24 24" fill="none" stroke="#2A2319" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6M6 12l6-6 6 6"/></svg>
+</button>
+
+<a href="https://wa.me/33000000000" class="whatsapp-fab" aria-label="Discuter sur WhatsApp" data-fr="Discuter sur WhatsApp" data-en="Chat on WhatsApp" data-i18n-attr="aria-label">
+  <svg viewBox="0 0 32 32"><path d="M16.02 3C9.4 3 4 8.38 4 15c0 2.34.66 4.53 1.8 6.4L4 29l7.8-1.75A11.9 11.9 0 0 0 16.02 27C22.64 27 28 21.62 28 15S22.64 3 16.02 3zm0 21.6c-1.9 0-3.68-.53-5.2-1.45l-.37-.22-4.1.92.9-4-.24-.4A9.55 9.55 0 0 1 6.4 15c0-5.3 4.32-9.6 9.62-9.6 5.3 0 9.6 4.3 9.6 9.6s-4.3 9.6-9.6 9.6zm5.34-7.2c-.29-.15-1.73-.85-2-.95-.27-.1-.46-.15-.66.15-.2.29-.76.95-.93 1.15-.17.2-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.77-1.44-1.71-1.61-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.51-.07-.15-.66-1.6-.91-2.19-.24-.58-.48-.5-.66-.51h-.56c-.2 0-.51.07-.78.37s-1.03 1-1.03 2.44 1.06 2.83 1.2 3.02c.15.2 2.09 3.19 5.06 4.48.71.31 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.73-.71 1.98-1.39.24-.68.24-1.27.17-1.39-.07-.13-.26-.2-.55-.35z"/></svg>
+</a>
 
 <header class="site-header">
   <div class="header-inner">
-    <a href="index.html" class="logo">Bourgeon<span>Alain</span></a>
+    <a href="index.html" class="logo">
+      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 34 L6 18 L20 6 L34 19 L34 34 Z"/>
+        <path d="M15 34 L15 24 L25 24 L25 34"/>
+      </svg>
+      L'Atelier Alain Bourgeon
+    </a>
     <nav class="main-nav">
-      <a href="index.html">Accueil</a>
-      <a href="boutique.html" class="active">Boutique</a>
-      <a href="atelier.html">L'Atelier</a>
-      <a href="contact.html">Contact</a>
+      <a href="index.html" data-fr="Accueil" data-en="Home">Accueil</a>
+      <a href="boutique.html" class="active" data-fr="Boutique" data-en="Shop">Boutique</a>
+      <a href="atelier.html" data-fr="L'atelier" data-en="The workshop">L'atelier</a>
+      <a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a>
     </nav>
-    <div class="header-actions">
-      <a href="panier.html" class="cart-icon" aria-label="Panier">🛍<span class="cart-count">0</span></a>
-      <button class="nav-toggle" aria-label="Menu">☰</button>
+    <div class="lang-switch">
+      <button type="button" class="lang-flag active" data-lang="fr" aria-label="Passer en français" title="Français — drapeau breton">
+        <svg viewBox="0 0 30 22" preserveAspectRatio="none">
+          <defs><g id="erm"><path d="M0,-1.7 L-0.85,-0.65 M0,-1.7 L0.85,-0.65 M0,-1.7 L0,0.5" stroke="#000" stroke-width="0.42" fill="none" stroke-linecap="round"/><circle cx="0" cy="1.15" r="0.46" fill="#000"/></g></defs>
+          <rect width="30" height="22" fill="#000"/>
+          <g fill="#fff"><rect y="2.444" width="30" height="2.444"/><rect y="7.333" width="30" height="2.444"/><rect y="12.222" width="30" height="2.444"/><rect y="17.111" width="30" height="2.444"/></g>
+          <rect x="0" y="0" width="14" height="12" fill="#fff"/>
+          <use href="#erm" transform="translate(2,3)"/><use href="#erm" transform="translate(5.33,3)"/><use href="#erm" transform="translate(8.67,3)"/><use href="#erm" transform="translate(12,3)"/>
+          <use href="#erm" transform="translate(3.67,6.2)"/><use href="#erm" transform="translate(7,6.2)"/><use href="#erm" transform="translate(10.33,6.2)"/>
+          <use href="#erm" transform="translate(2,9.3)"/><use href="#erm" transform="translate(5.33,9.3)"/><use href="#erm" transform="translate(8.67,9.3)"/><use href="#erm" transform="translate(12,9.3)"/>
+        </svg>
+      </button>
+      <button type="button" class="lang-flag" data-lang="en" aria-label="Switch to English" title="English — Union Jack">
+        <svg viewBox="0 0 60 36" preserveAspectRatio="none">
+          <rect width="60" height="36" fill="#012169"/>
+          <line x1="0" y1="0" x2="60" y2="36" stroke="#fff" stroke-width="9"/><line x1="60" y1="0" x2="0" y2="36" stroke="#fff" stroke-width="9"/>
+          <line x1="0" y1="0" x2="60" y2="36" stroke="#C8102E" stroke-width="3.4"/><line x1="60" y1="0" x2="0" y2="36" stroke="#C8102E" stroke-width="3.4"/>
+          <rect x="24" y="0" width="12" height="36" fill="#fff"/><rect x="0" y="12" width="60" height="12" fill="#fff"/>
+          <rect x="26.6" y="0" width="6.8" height="36" fill="#C8102E"/><rect x="0" y="14.6" width="60" height="6.8" fill="#C8102E"/>
+        </svg>
+      </button>
     </div>
+    <a href="panier.html" class="cart-icon" aria-label="Panier">🛍<span class="cart-count">0</span></a>
+    <a href="contact.html" class="stamp-btn" data-fr="Nous écrire ✎" data-en="Get in touch ✎">Nous écrire ✎</a>
   </div>
 </header>
 
 <main>
 
-  <div class="page-header">
-    <div class="container">
-      <span class="breadcrumb">Accueil / Boutique</span>
-      <span class="eyebrow">Catalogue</span>
-      <h1>Toutes nos maquettes</h1>
-    </div>
+  <div class="page-header container">
+    <span class="breadcrumb" data-fr="Accueil / Boutique" data-en="Home / Shop">Accueil / Boutique</span>
+    <span class="eyebrow-hand" data-fr="catalogue" data-en="catalogue">catalogue</span>
+    <h1 data-fr="Toutes nos maquettes" data-en="All our models">Toutes nos maquettes</h1>
   </div>
 
-  <section class="section" style="padding-top: var(--space-lg);">
+  <section class="section" style="padding-top:1rem;">
     <div class="container">
 
       <div class="filters-bar reveal">
         <div class="filter-group">
-          <button class="filter-chip active" data-filter="all">Tout</button>
-          <button class="filter-chip" data-filter="monuments">Monuments</button>
-          <button class="filter-chip" data-filter="residentiel">Résidentiel</button>
-          <button class="filter-chip" data-filter="urbanisme">Urbanisme</button>
+          <button class="filter-chip active" data-filter="all" data-fr="Tout" data-en="All">Tout</button>
+          <button class="filter-chip" data-filter="pierre" data-fr="Pierre" data-en="Stone">Pierre</button>
+          <button class="filter-chip" data-filter="colombages" data-fr="Colombages" data-en="Timber-frame">Colombages</button>
         </div>
-        <select class="sort-select">
-          <option>Trier par : Nouveautés</option>
-          <option>Prix croissant</option>
-          <option>Prix décroissant</option>
-          <option>Popularité</option>
-        </select>
       </div>
 
       <div class="products-grid reveal-stagger reveal">
 
         <a href="produit-chaumiere.html" class="product-card" data-category="pierre">
           <div class="product-image">
-            <span class="product-badge">Fait main</span>
+            <span class="product-badge" data-fr="Fait main" data-en="Handmade">Fait main</span>
             <img src="IMG_20260819_134136-clean.png" alt="Chaumière de Pierre envahie de lierre">
           </div>
           <div class="product-info">
-            <div><p class="product-name">Chaumière de Pierre</p><p class="product-material">Mousse, plâtre & feuillage</p><div class="rating-line"><span class="stars" style="--rating:4.9"></span><span class="rating-score">4.9/5</span><span class="rating-count">(24 avis)</span></div></div>
+            <div>
+              <p class="product-name" data-fr="Chaumière de Pierre" data-en="Stone Cottage">Chaumière de Pierre</p>
+              <p class="product-material" data-fr="Mousse, plâtre & feuillage" data-en="Moss, plaster & foliage">Mousse, plâtre & feuillage</p>
+              <div class="rating-line"><span class="stars"></span><span>4.9/5</span></div>
+            </div>
             <span class="product-price">15 €</span>
           </div>
         </a>
 
         <a href="produit-colombages.html" class="product-card" data-category="colombages">
           <div class="product-image">
-            <span class="product-badge">Fait main</span>
+            <span class="product-badge" data-fr="Fait main" data-en="Handmade">Fait main</span>
             <img src="IMG_20260710_070147-clean.png" alt="Maison à colombages">
           </div>
           <div class="product-info">
-            <div><p class="product-name">Maison à Colombages</p><p class="product-material">Carton bois & balsa peint</p><div class="rating-line"><span class="stars" style="--rating:4.8"></span><span class="rating-score">4.8/5</span><span class="rating-count">(17 avis)</span></div></div>
+            <div>
+              <p class="product-name" data-fr="Maison à Colombages" data-en="Timber-Framed House">Maison à Colombages</p>
+              <p class="product-material" data-fr="Carton bois & balsa peint" data-en="Wood board & painted balsa">Carton bois & balsa peint</p>
+              <div class="rating-line"><span class="stars"></span><span>4.8/5</span></div>
+            </div>
             <span class="product-price">15 €</span>
           </div>
         </a>
 
         <a href="produit-ruine.html" class="product-card" data-category="pierre">
           <div class="product-image">
-            <span class="product-badge">Fait main</span>
+            <span class="product-badge" data-fr="Fait main" data-en="Handmade">Fait main</span>
             <img src="IMG_20260829_114933-clean.png" alt="Ferme en ruine, toit percé">
           </div>
           <div class="product-info">
-            <div><p class="product-name">Ferme en Ruine</p><p class="product-material">Mousse, plâtre & clôture bois</p><div class="rating-line"><span class="stars" style="--rating:4.9"></span><span class="rating-score">4.9/5</span><span class="rating-count">(12 avis)</span></div></div>
+            <div>
+              <p class="product-name" data-fr="Ferme en Ruine" data-en="Ruined Farmhouse">Ferme en Ruine</p>
+              <p class="product-material" data-fr="Mousse, plâtre & clôture bois" data-en="Moss, plaster & wooden fence">Mousse, plâtre & clôture bois</p>
+              <div class="rating-line"><span class="stars"></span><span>4.9/5</span></div>
+            </div>
             <span class="product-price">15 €</span>
           </div>
         </a>
 
       </div>
 
-      <p class="reveal" style="margin-top: var(--space-lg); color: var(--color-ink-soft); font-size: 0.9rem;">D'autres pièces arrivent bientôt dans la boutique. [À personnaliser au fil de vos créations]</p>
+      <p class="reveal hand" style="margin-top:2.5rem; color:var(--rust); font-size:1.15rem;" data-fr="D'autres pièces arrivent bientôt dans la boutique." data-en="More pieces are coming soon to the shop.">D'autres pièces arrivent bientôt dans la boutique.</p>
 
     </div>
   </section>
 
-  <!-- ===== SUR-MESURE ===== -->
-  <section class="section section-alt">
+  <section class="section section-deep">
     <div class="container quote-block reveal">
-      <span class="eyebrow">Un projet précis en tête ?</span>
-      <h2 style="margin-bottom: var(--space-md);">Nous réalisons aussi des maquettes sur-mesure</h2>
-      <p class="lead" style="margin: 0 auto var(--space-md);">Décrivez-nous votre bâtiment ou votre projet architectural : notre atelier étudie sa faisabilité et vous propose un devis personnalisé.</p>
-      <a href="contact.html" class="btn btn-primary magnetic">Demander un devis</a>
+      <span class="eyebrow-hand" data-fr="un projet précis en tête ?" data-en="a specific project in mind?">un projet précis en tête ?</span>
+      <h2 style="margin:.6rem 0 1rem;" data-fr="Nous réalisons aussi des maquettes sur-mesure" data-en="We also make custom models">Nous réalisons aussi des maquettes sur-mesure</h2>
+      <p style="color:var(--ink-soft); max-width:56ch; margin:0 auto 1.4rem;" data-fr="Décrivez-nous votre bâtiment ou votre projet architectural : notre atelier étudie sa faisabilité et vous propose un devis personnalisé." data-en="Tell us about your building or architectural project: our workshop studies its feasibility and offers you a personalised quote.">Décrivez-nous votre bâtiment ou votre projet architectural : notre atelier étudie sa faisabilité et vous propose un devis personnalisé.</p>
+      <a href="contact.html" class="stamp-btn" data-fr="Demander un devis ✎" data-en="Request a quote ✎">Demander un devis ✎</a>
     </div>
   </section>
 
@@ -121,46 +147,76 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-col">
-        <h4>Atelier Bourgeon Alain</h4>
-        <p>Maquettes d'architecture façonnées à la main, pour les amateurs d'objets rares.</p>
+        <h4>L'Atelier Alain Bourgeon</h4>
+        <p data-fr="Maquettes d'architecture façonnées à la main, pour les amateurs d'objets rares." data-en="Architectural models handmade for lovers of rare objects.">Maquettes d'architecture façonnées à la main, pour les amateurs d'objets rares.</p>
       </div>
       <div class="footer-col">
-        <h4>Navigation</h4>
+        <h4 data-fr="Navigation" data-en="Navigation">Navigation</h4>
         <ul>
-          <li><a href="index.html">Accueil</a></li>
-          <li><a href="boutique.html">Boutique</a></li>
-          <li><a href="atelier.html">L'Atelier</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="index.html" data-fr="Accueil" data-en="Home">Accueil</a></li>
+          <li><a href="boutique.html" data-fr="Boutique" data-en="Shop">Boutique</a></li>
+          <li><a href="atelier.html" data-fr="L'Atelier" data-en="The Workshop">L'Atelier</a></li>
+          <li><a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Informations</h4>
+        <h4 data-fr="Informations" data-en="Information">Informations</h4>
         <ul>
-          <li><a href="livraison.html">Livraison & retours</a></li>
-          <li><a href="cgv.html">CGV</a></li>
-          <li><a href="mentions-legales.html">Mentions légales</a></li>
+          <li><a href="livraison.html" data-fr="Livraison & retours" data-en="Shipping & returns">Livraison & retours</a></li>
+          <li><a href="cgv.html" data-fr="CGV" data-en="Terms of sale">CGV</a></li>
+          <li><a href="mentions-legales.html" data-fr="Mentions légales" data-en="Legal notice">Mentions légales</a></li>
+          <li><button type="button" class="link-underline" id="openCookieModal" style="background:none;border:none;cursor:pointer;padding:0;font:inherit;" data-fr="Politique de cookies" data-en="Cookie policy">Politique de cookies</button></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Contact</h4>
+        <h4 data-fr="Contact" data-en="Contact">Contact</h4>
         <ul>
           <li><a href="mailto:contact@bourgeonalain.fr">contact@bourgeonalain.fr</a></li>
-          <li><a href="tel:+33000000000">+33 0 00 00 00 00</a></li>
-          <li>[Adresse de l'atelier]</li>
+          <li>6 rue Surcouf, 35640 Martigné-Ferchaud</li>
         </ul>
-        <iframe class="footer-map" src="https://www.google.com/maps?q=Martign%C3%A9-Ferchaud,35640&output=embed" loading="lazy" title="Localisation de l'Atelier Bourgeon Alain, Martigné-Ferchaud"></iframe>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Atelier Bourgeon Alain. Tous droits réservés.</span>
-      <div class="footer-social">
+      <span data-fr="© 2026 L'Atelier Alain Bourgeon — tous droits réservés" data-en="© 2026 L'Atelier Alain Bourgeon — all rights reserved">© 2026 L'Atelier Alain Bourgeon — tous droits réservés</span>
+      <div style="display:flex; gap:1.2rem; flex-wrap:wrap;">
         <a href="#" class="link-underline">Instagram</a>
         <a href="#" class="link-underline">Pinterest</a>
+        <a href="#" class="link-underline">TikTok</a>
+        <a href="https://wa.me/33000000000" class="link-underline">WhatsApp</a>
       </div>
     </div>
   </div>
 </footer>
 
-<script src="script.js"></script>
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-card">
+    <p data-fr="Ce site utilise des cookies pour faire fonctionner la boutique, mesurer l'audience et, si vous l'acceptez, personnaliser les contenus. Vous pouvez changer d'avis à tout moment depuis la politique de cookies." data-en="This site uses cookies to run the shop, measure traffic and, if you agree, personalise content. You can change your mind at any time from the cookie policy.">Ce site utilise des cookies pour faire fonctionner la boutique, mesurer l'audience et, si vous l'acceptez, personnaliser les contenus. Vous pouvez changer d'avis à tout moment depuis la politique de cookies.</p>
+    <div class="cookie-actions">
+      <button type="button" class="stamp-btn" id="cookieAccept" data-fr="Accepter ✎" data-en="Accept ✎">Accepter ✎</button>
+      <button type="button" class="btn-decline" id="cookieDecline" data-fr="Refuser" data-en="Decline">Refuser</button>
+      <button type="button" class="btn-decline" id="cookieLearnMore" data-fr="En savoir plus" data-en="Learn more">En savoir plus</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="cookieModal">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="cookieModalTitle">
+    <div class="modal-head">
+      <h3 id="cookieModalTitle" data-fr="Politique de cookies" data-en="Cookie policy">Politique de cookies</h3>
+      <button type="button" class="modal-close" id="cookieModalClose" aria-label="Fermer" data-fr="Fermer" data-en="Close" data-i18n-attr="aria-label">×</button>
+    </div>
+    <p data-fr="L'Atelier Alain Bourgeon utilise des cookies et technologies similaires sur ce site. Voici à quoi ils servent et comment les gérer." data-en="L'Atelier Alain Bourgeon uses cookies and similar technologies on this site. Here's what they're for and how to manage them.">L'Atelier Alain Bourgeon utilise des cookies et technologies similaires sur ce site. Voici à quoi ils servent et comment les gérer.</p>
+    <h4 data-fr="Cookies essentiels" data-en="Essential cookies">Cookies essentiels</h4>
+    <p data-fr="Nécessaires au fonctionnement du site (panier, connexion, préférence de langue et choix de cookies). Toujours actifs, ils ne peuvent pas être désactivés." data-en="Required for the site to work (cart, sign-in, language preference and cookie choice). Always active and cannot be turned off.">Nécessaires au fonctionnement du site (panier, connexion, préférence de langue et choix de cookies). Toujours actifs, ils ne peuvent pas être désactivés.</p>
+    <h4 data-fr="Cookies de mesure d'audience" data-en="Analytics cookies">Cookies de mesure d'audience</h4>
+    <p data-fr="Nous aident à comprendre comment le site est utilisé pour l'améliorer. Activés uniquement avec votre accord." data-en="Help us understand how the site is used so we can improve it. Only enabled with your consent.">Nous aident à comprendre comment le site est utilisé pour l'améliorer. Activés uniquement avec votre accord.</p>
+    <div class="cookie-actions" style="margin-top:1.2rem;">
+      <button type="button" class="stamp-btn" id="cookieModalAccept" data-fr="Tout accepter ✎" data-en="Accept all ✎">Tout accepter ✎</button>
+      <button type="button" class="btn-decline" id="cookieModalDecline" data-fr="Tout refuser" data-en="Decline all">Tout refuser</button>
+    </div>
+  </div>
+</div>
+
+<script src="wabi.js"></script>
 </body>
 </html>

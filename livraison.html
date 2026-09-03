@@ -3,75 +3,94 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Livraison & Retours — Atelier Bourgeon Alain</title>
-<meta name="description" content="Informations de livraison, d'emballage et de retours pour les miniatures de l'Atelier Bourgeon Alain.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<title>Livraison & retours — L'Atelier Alain Bourgeon</title>
+<meta name="description" content="Délais, zones, tarifs de livraison et droit de rétractation pour les maquettes de l'Atelier Alain Bourgeon.">
+<link rel="stylesheet" href="wabi.css">
 </head>
 <body>
 
-<div class="page-loader">
-  <div class="loader-logo">
-    <span class="loader-halo"></span>
-    <span class="loader-atelier">Atelier</span>
-    <span class="loader-name">Alain Bourgeon</span>
-  </div>
-</div>
+<button type="button" class="back-to-top" id="backToTop" aria-label="Retour en haut de la page" data-fr="Retour en haut de la page" data-en="Back to top" data-i18n-attr="aria-label">
+  <svg viewBox="0 0 24 24" fill="none" stroke="#2A2319" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6M6 12l6-6 6 6"/></svg>
+</button>
 
 <header class="site-header">
   <div class="header-inner">
-    <a href="index.html" class="logo">Bourgeon<span>Alain</span></a>
+    <a href="index.html" class="logo">
+      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 34 L6 18 L20 6 L34 19 L34 34 Z"/>
+        <path d="M15 34 L15 24 L25 24 L25 34"/>
+      </svg>
+      L'Atelier Alain Bourgeon
+    </a>
     <nav class="main-nav">
-      <a href="index.html">Accueil</a>
-      <a href="boutique.html">Boutique</a>
-      <a href="atelier.html">L'Atelier</a>
-      <a href="contact.html">Contact</a>
+      <a href="index.html" data-fr="Accueil" data-en="Home">Accueil</a>
+      <a href="boutique.html" data-fr="Boutique" data-en="Shop">Boutique</a>
+      <a href="atelier.html" data-fr="L'atelier" data-en="The workshop">L'atelier</a>
+      <a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a>
     </nav>
-    <div class="header-actions">
-      <a href="panier.html" class="cart-icon" aria-label="Panier">🛍<span class="cart-count">0</span></a>
-      <button class="nav-toggle" aria-label="Menu">☰</button>
+    <div class="lang-switch">
+      <button type="button" class="lang-flag active" data-lang="fr" aria-label="Passer en français" title="Français — drapeau breton">
+        <svg viewBox="0 0 30 22" preserveAspectRatio="none">
+          <defs><g id="erm"><path d="M0,-1.7 L-0.85,-0.65 M0,-1.7 L0.85,-0.65 M0,-1.7 L0,0.5" stroke="#000" stroke-width="0.42" fill="none" stroke-linecap="round"/><circle cx="0" cy="1.15" r="0.46" fill="#000"/></g></defs>
+          <rect width="30" height="22" fill="#000"/>
+          <g fill="#fff"><rect y="2.444" width="30" height="2.444"/><rect y="7.333" width="30" height="2.444"/><rect y="12.222" width="30" height="2.444"/><rect y="17.111" width="30" height="2.444"/></g>
+          <rect x="0" y="0" width="14" height="12" fill="#fff"/>
+          <use href="#erm" transform="translate(2,3)"/><use href="#erm" transform="translate(5.33,3)"/><use href="#erm" transform="translate(8.67,3)"/><use href="#erm" transform="translate(12,3)"/>
+          <use href="#erm" transform="translate(3.67,6.2)"/><use href="#erm" transform="translate(7,6.2)"/><use href="#erm" transform="translate(10.33,6.2)"/>
+          <use href="#erm" transform="translate(2,9.3)"/><use href="#erm" transform="translate(5.33,9.3)"/><use href="#erm" transform="translate(8.67,9.3)"/><use href="#erm" transform="translate(12,9.3)"/>
+        </svg>
+      </button>
+      <button type="button" class="lang-flag" data-lang="en" aria-label="Switch to English" title="English — Union Jack">
+        <svg viewBox="0 0 60 36" preserveAspectRatio="none">
+          <rect width="60" height="36" fill="#012169"/>
+          <line x1="0" y1="0" x2="60" y2="36" stroke="#fff" stroke-width="9"/><line x1="60" y1="0" x2="0" y2="36" stroke="#fff" stroke-width="9"/>
+          <line x1="0" y1="0" x2="60" y2="36" stroke="#C8102E" stroke-width="3.4"/><line x1="60" y1="0" x2="0" y2="36" stroke="#C8102E" stroke-width="3.4"/>
+          <rect x="24" y="0" width="12" height="36" fill="#fff"/><rect x="0" y="12" width="60" height="12" fill="#fff"/>
+          <rect x="26.6" y="0" width="6.8" height="36" fill="#C8102E"/><rect x="0" y="14.6" width="60" height="6.8" fill="#C8102E"/>
+        </svg>
+      </button>
     </div>
+    <a href="panier.html" class="cart-icon" aria-label="Panier">🛍<span class="cart-count">0</span></a>
+    <a href="contact.html" class="stamp-btn" data-fr="Nous écrire ✎" data-en="Get in touch ✎">Nous écrire ✎</a>
   </div>
 </header>
 
 <main>
-  <div class="page-header">
-    <div class="container">
-      <span class="breadcrumb">Accueil / Livraison & retours</span>
-      <span class="eyebrow">Après votre commande</span>
-      <h1>Livraison & retours</h1>
-    </div>
+  <div class="page-header container">
+    <span class="breadcrumb" data-fr="Accueil / Livraison & retours" data-en="Home / Shipping & returns">Accueil / Livraison & retours</span>
+    <span class="eyebrow-hand" data-fr="informations pratiques" data-en="practical information">informations pratiques</span>
+    <h1 data-fr="Livraison & retours" data-en="Shipping & returns">Livraison & retours</h1>
   </div>
 
-  <section class="section">
-    <div class="container" style="max-width: 780px;">
+  <section class="section" style="padding-top:1rem;">
+    <div class="container legal-content reveal">
 
-      <div class="reveal" style="margin-bottom: var(--space-lg);">
-        <h3 style="margin-bottom: var(--space-sm);">Délais d'expédition</h3>
-        <p style="color: var(--color-ink-soft);">Chaque miniature étant façonnée et peinte à la main, comptez <strong>4 à 5 jours ouvrés</strong> entre la validation de votre commande et son expédition. Vous recevez une confirmation par email dès l'envoi.</p>
-      </div>
+      <h2 data-fr="Emballage" data-en="Packaging">Emballage</h2>
+      <p data-fr="Chaque maquette est fragile : elle est calée à la main dans une boîte sur-mesure, avec mousse de protection et éléments amovibles fixés séparément lorsque nécessaire." data-en="Every model is fragile: it is hand-packed in a custom box, with protective foam and any removable parts secured separately when needed.">Chaque maquette est fragile : elle est calée à la main dans une boîte sur-mesure, avec mousse de protection et éléments amovibles fixés séparément lorsque nécessaire.</p>
 
-      <div class="reveal" style="margin-bottom: var(--space-lg);">
-        <h3 style="margin-bottom: var(--space-sm);">Emballage</h3>
-        <p style="color: var(--color-ink-soft);">Chaque pièce est protégée par un emballage avec calage intérieur sur-mesure, pensé pour la fragilité des éléments (toitures, végétation, clôtures) et le transport.</p>
-      </div>
+      <h2 data-fr="Délais & zones" data-en="Timing & areas">Délais & zones</h2>
+      <ul>
+        <li data-fr="France métropolitaine : expédition sous 5 à 10 jours ouvrés (pièces réalisées à la main, à la commande)." data-en="Mainland France: shipped within 5 to 10 business days (each piece is handmade to order).">France métropolitaine : expédition sous 5 à 10 jours ouvrés (pièces réalisées à la main, à la commande).</li>
+        <li data-fr="Union européenne : 8 à 15 jours ouvrés." data-en="European Union: 8 to 15 business days.">Union européenne : 8 à 15 jours ouvrés.</li>
+        <li data-fr="Pièces sur-mesure : délai communiqué individuellement selon la complexité du projet." data-en="Custom pieces: timing given individually depending on the project's complexity.">Pièces sur-mesure : délai communiqué individuellement selon la complexité du projet.</li>
+      </ul>
 
-      <div class="reveal" style="margin-bottom: var(--space-lg);">
-        <h3 style="margin-bottom: var(--space-sm);">Zones de livraison</h3>
-        <p style="color: var(--color-ink-soft);">[À personnaliser] Livraison en France métropolitaine. Livraison internationale possible sur demande — contactez-nous pour un devis d'expédition adapté.</p>
-      </div>
+      <table>
+        <thead><tr><th data-fr="Destination" data-en="Destination">Destination</th><th data-fr="Tarif" data-en="Price">Tarif</th></tr></thead>
+        <tbody>
+          <tr><td data-fr="France métropolitaine" data-en="Mainland France">France métropolitaine</td><td data-fr="offerte dès 60 € d'achat, sinon 6,90 €" data-en="free from €60, otherwise €6.90">offerte dès 60 € d'achat, sinon 6,90 €</td></tr>
+          <tr><td data-fr="Union européenne" data-en="European Union">Union européenne</td><td>12,90 €</td></tr>
+          <tr><td data-fr="Reste du monde" data-en="Rest of the world">Reste du monde</td><td data-fr="sur devis" data-en="quote on request">sur devis</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:.8rem;" data-fr="Tarifs indicatifs, à ajuster selon vos coûts réels." data-en="Indicative rates — adjust to your actual costs.">Tarifs indicatifs, à ajuster selon vos coûts réels.</p>
 
-      <div class="reveal" style="margin-bottom: var(--space-lg);">
-        <h3 style="margin-bottom: var(--space-sm);">Retours</h3>
-        <p style="color: var(--color-ink-soft);">Vous disposez de 14 jours après réception pour nous retourner un article qui ne vous conviendrait pas (hors pièces sur-mesure). Écrivez-nous à <a href="mailto:contact@bourgeonalain.fr" class="link-underline">contact@bourgeonalain.fr</a> pour organiser le retour.</p>
-      </div>
+      <h2 data-fr="Droit de rétractation" data-en="Right of withdrawal">Droit de rétractation</h2>
+      <p data-fr="Conformément aux articles L221-18 et suivants du Code de la consommation, vous disposez de 14 jours à compter de la réception de votre commande pour changer d'avis, sans avoir à justifier de motif. La pièce doit être retournée non utilisée, dans son emballage d'origine." data-en="Under French consumer law (art. L221-18 et seq.), you have 14 days from receipt of your order to change your mind, with no need to give a reason. The piece must be returned unused, in its original packaging.">Conformément aux articles L221-18 et suivants du Code de la consommation, vous disposez de 14 jours à compter de la réception de votre commande pour changer d'avis, sans avoir à justifier de motif. La pièce doit être retournée non utilisée, dans son emballage d'origine.</p>
+      <p data-fr="Exception : les pièces sur-mesure, réalisées selon vos spécifications, ne peuvent pas être reprises (article L221-28 du Code de la consommation)." data-en="Exception: custom pieces made to your specifications cannot be returned (article L221-28 of the French Consumer Code).">Exception : les pièces sur-mesure, réalisées selon vos spécifications, ne peuvent pas être reprises (article L221-28 du Code de la consommation).</p>
 
-      <div class="reveal">
-        <h3 style="margin-bottom: var(--space-sm);">Pièce endommagée à la livraison ?</h3>
-        <p style="color: var(--color-ink-soft);">Contactez-nous sous 48h avec des photos de la pièce et de l'emballage. Nous étudierons un remplacement ou un remboursement dans les meilleurs délais.</p>
-      </div>
-
+      <h2 data-fr="Comment retourner une pièce" data-en="How to return a piece">Comment retourner une pièce</h2>
+      <p data-fr="Écrivez à contact@bourgeonalain.fr en indiquant votre numéro de commande. Les frais de retour sont à votre charge, sauf en cas de pièce défectueuse ou d'erreur de notre part. Le remboursement est effectué sous 14 jours après réception de la pièce retournée." data-en="Write to contact@bourgeonalain.fr with your order number. Return shipping is at your expense, unless the piece is faulty or we made a mistake. Refunds are made within 14 days of receiving the returned piece.">Écrivez à contact@bourgeonalain.fr en indiquant votre numéro de commande. Les frais de retour sont à votre charge, sauf en cas de pièce défectueuse ou d'erreur de notre part. Le remboursement est effectué sous 14 jours après réception de la pièce retournée.</p>
     </div>
   </section>
 </main>
@@ -80,46 +99,72 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-col">
-        <h4>Atelier Bourgeon Alain</h4>
-        <p>Maquettes d'architecture façonnées à la main, pour les amateurs d'objets rares.</p>
+        <h4>L'Atelier Alain Bourgeon</h4>
+        <p data-fr="Maquettes d'architecture façonnées à la main, pour les amateurs d'objets rares." data-en="Architectural models handmade for lovers of rare objects.">Maquettes d'architecture façonnées à la main, pour les amateurs d'objets rares.</p>
       </div>
       <div class="footer-col">
-        <h4>Navigation</h4>
+        <h4 data-fr="Navigation" data-en="Navigation">Navigation</h4>
         <ul>
-          <li><a href="index.html">Accueil</a></li>
-          <li><a href="boutique.html">Boutique</a></li>
-          <li><a href="atelier.html">L'Atelier</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="index.html" data-fr="Accueil" data-en="Home">Accueil</a></li>
+          <li><a href="boutique.html" data-fr="Boutique" data-en="Shop">Boutique</a></li>
+          <li><a href="atelier.html" data-fr="L'Atelier" data-en="The Workshop">L'Atelier</a></li>
+          <li><a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Informations</h4>
+        <h4 data-fr="Informations" data-en="Information">Informations</h4>
         <ul>
-          <li><a href="livraison.html">Livraison & retours</a></li>
-          <li><a href="cgv.html">CGV</a></li>
-          <li><a href="mentions-legales.html">Mentions légales</a></li>
+          <li><a href="livraison.html" class="link-underline" data-fr="Livraison & retours" data-en="Shipping & returns">Livraison & retours</a></li>
+          <li><a href="cgv.html" data-fr="CGV" data-en="Terms of sale">CGV</a></li>
+          <li><a href="mentions-legales.html" data-fr="Mentions légales" data-en="Legal notice">Mentions légales</a></li>
+          <li><button type="button" class="link-underline" id="openCookieModal" style="background:none;border:none;cursor:pointer;padding:0;font:inherit;" data-fr="Politique de cookies" data-en="Cookie policy">Politique de cookies</button></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Contact</h4>
+        <h4 data-fr="Contact" data-en="Contact">Contact</h4>
         <ul>
           <li><a href="mailto:contact@bourgeonalain.fr">contact@bourgeonalain.fr</a></li>
-          <li><a href="tel:+33000000000">+33 0 00 00 00 00</a></li>
-          <li>[Adresse de l'atelier]</li>
+          <li>6 rue Surcouf, 35640 Martigné-Ferchaud</li>
         </ul>
-        <iframe class="footer-map" src="https://www.google.com/maps?q=Martign%C3%A9-Ferchaud,35640&output=embed" loading="lazy" title="Localisation de l'Atelier Bourgeon Alain, Martigné-Ferchaud"></iframe>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Atelier Bourgeon Alain. Tous droits réservés.</span>
-      <div class="footer-social">
+      <span data-fr="© 2026 L'Atelier Alain Bourgeon — tous droits réservés" data-en="© 2026 L'Atelier Alain Bourgeon — all rights reserved">© 2026 L'Atelier Alain Bourgeon — tous droits réservés</span>
+      <div style="display:flex; gap:1.2rem; flex-wrap:wrap;">
         <a href="#" class="link-underline">Instagram</a>
         <a href="#" class="link-underline">Pinterest</a>
+        <a href="#" class="link-underline">TikTok</a>
+        <a href="https://wa.me/33000000000" class="link-underline">WhatsApp</a>
       </div>
     </div>
   </div>
 </footer>
 
-<script src="script.js"></script>
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-card">
+    <p data-fr="Ce site utilise des cookies pour faire fonctionner la boutique, mesurer l'audience et, si vous l'acceptez, personnaliser les contenus." data-en="This site uses cookies to run the shop, measure traffic and, if you agree, personalise content.">Ce site utilise des cookies pour faire fonctionner la boutique, mesurer l'audience et, si vous l'acceptez, personnaliser les contenus.</p>
+    <div class="cookie-actions">
+      <button type="button" class="stamp-btn" id="cookieAccept" data-fr="Accepter ✎" data-en="Accept ✎">Accepter ✎</button>
+      <button type="button" class="btn-decline" id="cookieDecline" data-fr="Refuser" data-en="Decline">Refuser</button>
+      <button type="button" class="btn-decline" id="cookieLearnMore" data-fr="En savoir plus" data-en="Learn more">En savoir plus</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="cookieModal">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="cookieModalTitle">
+    <div class="modal-head">
+      <h3 id="cookieModalTitle" data-fr="Politique de cookies" data-en="Cookie policy">Politique de cookies</h3>
+      <button type="button" class="modal-close" id="cookieModalClose" aria-label="Fermer" data-fr="Fermer" data-en="Close" data-i18n-attr="aria-label">×</button>
+    </div>
+    <p data-fr="L'Atelier Alain Bourgeon utilise des cookies et technologies similaires sur ce site." data-en="L'Atelier Alain Bourgeon uses cookies and similar technologies on this site.">L'Atelier Alain Bourgeon utilise des cookies et technologies similaires sur ce site.</p>
+    <div class="cookie-actions" style="margin-top:1.2rem;">
+      <button type="button" class="stamp-btn" id="cookieModalAccept" data-fr="Tout accepter ✎" data-en="Accept all ✎">Tout accepter ✎</button>
+      <button type="button" class="btn-decline" id="cookieModalDecline" data-fr="Tout refuser" data-en="Decline all">Tout refuser</button>
+    </div>
+  </div>
+</div>
+
+<script src="wabi.js"></script>
 </body>
 </html>
