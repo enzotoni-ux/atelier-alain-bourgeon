@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /_archive-style-architecte/
+
+Sitemap: https://enzotoni-ux.github.io/atelier-alain-bourgeon/sitemap.xml
