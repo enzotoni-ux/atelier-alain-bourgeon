@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'Atelier Alain Bourgeon</title>
+<meta name="description" content="Atelier Alain Bourgeon cree et vend des miniatures de batiments historiques faites main : maisons en pierre, chaumieres et maisons a colombages, pour collectionneurs et amateurs de dioramas.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Caveat:wght@500;600;700&family=Archivo:wght@400;500;600;700&display=swap');
+
+  :root{
+    --paper: #E7DCC2;
+    --paper-deep: #DBCBA4;
+    --paper-light: #F6EFDC;
+    --moss-pale: #DCE3CE;
+    --ink: #2A2319;
+    --ink-soft: #5B5140;
+    --moss: #536B48;
+    --moss-deep: #38492F;
+    --ochre: #B27F2E;
+    --rust: #9A4A2C;
+    --line: #C9B98E;
+    --shadow: rgba(42,35,25,0.18);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Archivo',-apple-system,sans-serif;
+    font-size:16px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    position:relative;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;}
+  ul{list-style:none;margin:0;padding:0;}
+
+  /* ---------- grain overlay ---------- */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:999;
+    pointer-events:none;
+    opacity:0.4;
+    mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  }
+
+  h1,h2,h3{
+    font-family:'Instrument Serif', Georgia, serif;
+    font-weight:400;
+    line-height:1.05;
+    letter-spacing:0.001em;
+    margin:0;
+    text-wrap:balance;
+  }
+  h1{font-size:clamp(2.6rem, 6.4vw, 5rem); font-style:italic;}
+  h2{font-size:clamp(1.9rem, 4vw, 3rem); font-style:italic;}
+  h3{font-size:1.4rem;}
+
+  p{margin:0;}
+
+  .hand{font-family:'Caveat', cursive; font-weight:600;}
+
+  .container{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 clamp(1.25rem, 4vw, 2.5rem);
+  }
+
+  .section{padding: clamp(3.5rem,7vw,6.5rem) 0; position:relative;}
+  .section-deep{background:var(--paper-deep);}
+
+  /* ---------- confetti shapes ---------- */
+  .confetti{position:absolute; pointer-events:none; z-index:1;}
+  .confetti.sq{width:22px; height:22px;}
+  .confetti.diamond{transform:rotate(45deg);}
+  .c-ink{background:var(--ink);}
+  .c-moss{background:var(--moss-deep);}
+  .c-ochre{background:var(--ochre);}
+  .c-outline{background:transparent; border:2px solid var(--ink); width:26px; height:26px;}
+
+  .squiggle{position:absolute; pointer-events:none; z-index:1;}
+
+  /* ---------- torn edge divider ---------- */
+  .torn{
+    position:relative;
+    height:34px;
+    background:var(--paper-deep);
+    clip-path: polygon(
+      0% 100%, 0% 30%, 3% 55%, 7% 15%, 12% 60%, 17% 20%, 22% 50%, 27% 10%,
+      32% 45%, 37% 5%, 42% 55%, 47% 25%, 52% 60%, 57% 15%, 62% 50%, 67% 10%,
+      72% 45%, 77% 20%, 82% 55%, 87% 10%, 92% 50%, 97% 20%, 100% 40%, 100% 100%
+    );
+  }
+  .torn-flip{transform:scaleY(-1);background:var(--paper);}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0; transform:translateY(18px) rotate(var(--r,0deg)); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.visible{opacity:1; transform:translateY(0) rotate(var(--r,0deg));}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+
+  /* ---------- header ---------- */
+  .site-header{
+    position:sticky; top:0; z-index:60;
+    background:var(--paper);
+    border-bottom:2px solid var(--ink);
+    box-shadow:0 2px 0 var(--paper-deep);
+  }
+  .header-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1rem clamp(1.25rem,4vw,2.5rem);
+    max-width:1180px; margin:0 auto;
+  }
+  .logo{
+    font-family:'Caveat',cursive; font-weight:700; font-size:1.75rem;
+    display:flex; align-items:center; gap:.5rem; text-decoration:none;
+  }
+  .logo svg{width:28px;height:28px;flex-shrink:0;}
+  .main-nav{display:flex; gap:2rem;}
+  .main-nav a{text-decoration:none; font-size:0.95rem; font-weight:600; position:relative; padding-bottom:2px;}
+  .main-nav a.active{color:var(--moss-deep);}
+  .main-nav a svg{position:absolute; left:-4%; right:-4%; bottom:-6px; width:108%; height:8px; overflow:visible;}
+  .stamp-btn{
+    display:inline-flex; align-items:center; gap:.4rem;
+    font-family:'Caveat',cursive; font-weight:700; font-size:1.1rem;
+    padding:.5rem 1.1rem; border:2px solid var(--ink); border-radius:3px;
+    background:var(--paper-light); box-shadow:3px 3px 0 var(--ink);
+    text-decoration:none; transform:rotate(-1.2deg);
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .stamp-btn:hover{transform:rotate(0deg) translate(-2px,-2px); box-shadow:5px 5px 0 var(--ink);}
+
+  /* ---------- language switch ---------- */
+  .lang-switch{display:flex; align-items:center; gap:.5rem;}
+  .lang-flag{
+    display:block; width:30px; height:22px; padding:0;
+    border:2px solid var(--ink); border-radius:2px;
+    background:var(--paper-light); cursor:pointer;
+    overflow:hidden; line-height:0;
+    opacity:.55; transform:rotate(0deg) scale(.94);
+    transition:opacity .2s ease, transform .2s ease, box-shadow .2s ease;
+  }
+  .lang-flag svg{display:block; width:100%; height:100%;}
+  .lang-flag:hover{opacity:.85;}
+  .lang-flag.active{
+    opacity:1; transform:rotate(-2deg) scale(1);
+    box-shadow:3px 3px 0 var(--shadow);
+  }
+
+  /* ---------- hero ---------- */
+  .hero{padding: clamp(2.5rem,6vw,4rem) 0 clamp(3rem,6vw,5rem); overflow:visible;}
+  .hero-grid{
+    display:grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem,5vw,3rem); align-items:center;
+  }
+  .eyebrow-hand{
+    font-family:'Caveat',cursive; font-size:1.55rem; color:var(--rust);
+    display:inline-block; transform:rotate(-2deg); margin-bottom:.6rem;
+  }
+  .hero-lead{margin-top:1.3rem; max-width:46ch; font-size:1.08rem; color:var(--ink-soft);}
+  .hero-actions{display:flex; gap:1rem; margin-top:2.1rem; flex-wrap:wrap;}
+  .btn-ghost{
+    font-family:'Archivo',sans-serif; font-weight:600; font-size:.92rem;
+    padding:.85rem 1.4rem; text-decoration:none; color:var(--ink);
+    border-bottom:2px dashed var(--ink-soft);
+  }
+
+  .hero-photo{position:relative; display:flex; justify-content:center; align-items:center; min-height:380px;}
+  .photo-stage{
+    position:relative; width:min(420px, 90%);
+  }
+  .dashed-ring{
+    position:absolute; inset:-6% -10% -14% -10%;
+    border:2px dashed var(--moss-deep);
+    border-radius:48% 52% 45% 55% / 55% 48% 52% 45%;
+    opacity:.65;
+  }
+  .photo-cutout{
+    position:relative; width:100%;
+    filter:drop-shadow(10px 16px 14px rgba(42,35,25,.35));
+  }
+  .badge-stamp{
+    position:absolute; top:6%; left:-8%;
+    width:104px; height:104px;
+    background:var(--paper-light);
+    border:2px solid var(--ink); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    transform:rotate(-9deg);
+    box-shadow:3px 3px 0 var(--shadow);
+  }
+  .badge-stamp span{font-family:'Caveat',cursive; font-weight:700; font-size:1.05rem; line-height:1.15; color:var(--rust);}
+
+  /* ---------- marquee ---------- */
+  .marquee{
+    overflow:hidden; background:var(--ink); color:var(--paper-light);
+    padding:.75rem 0; border-top:2px solid var(--ink); border-bottom:2px solid var(--ink);
+  }
+  .marquee-track{
+    display:flex; gap:2.5rem; white-space:nowrap; width:max-content;
+    animation:scrollLeft 26s linear infinite;
+    font-family:'Caveat',cursive; font-size:1.4rem;
+  }
+  @media (prefers-reduced-motion:reduce){.marquee-track{animation:none;}}
+  .marquee-track span::after{content:"✦"; margin-left:2.5rem; color:var(--ochre);}
+  @keyframes scrollLeft{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  .section-header{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    gap:1.5rem; flex-wrap:wrap; margin-bottom:2.5rem; position:relative; z-index:2;
+  }
+  .section-header .eyebrow-hand{margin-bottom:.3rem;}
+  .link-underline{
+    font-weight:600; font-size:.92rem; text-decoration:none; color:var(--moss-deep);
+    border-bottom:1px solid var(--moss-deep); padding-bottom:2px;
+  }
+
+  /* ---------- collection cards ---------- */
+  .collections{display:grid; grid-template-columns:repeat(3,1fr); gap:2.2rem; position:relative; z-index:2;}
+  .coll-card{
+    --r:-2deg;
+    text-decoration:none; color:var(--ink); display:block; position:relative;
+  }
+  .coll-card:nth-child(2){--r:1.5deg;}
+  .coll-card:nth-child(3){--r:-1deg;}
+  .coll-frame{
+    background:var(--paper-light);
+    aspect-ratio:4/3.4;
+    border:1px solid var(--ink);
+    box-shadow:5px 6px 0 var(--shadow);
+    display:flex; align-items:flex-end; justify-content:center;
+    overflow:hidden; position:relative;
+  }
+  .coll-frame img{width:78%; object-fit:contain; filter:drop-shadow(4px 8px 8px rgba(42,35,25,.3));}
+  .coll-caption{margin-top:.9rem; text-align:center;}
+  .coll-caption h3{font-size:1.3rem;}
+  .coll-caption span{display:block; margin-top:.2rem; font-family:'Caveat',cursive; color:var(--rust); font-size:1.05rem;}
+
+  /* ---------- method ---------- */
+  .method-wrap{display:grid; grid-template-columns:0.95fr 1.05fr; gap:clamp(2rem,5vw,3.5rem); align-items:center; position:relative; z-index:2;}
+  .sketch-module{position:relative;}
+  .sketch-module canvas{
+    width:100%; height:auto; display:block;
+    -webkit-mask-image: radial-gradient(ellipse 66% 60% at 50% 48%, #000 50%, transparent 90%);
+    mask-image: radial-gradient(ellipse 66% 60% at 50% 48%, #000 50%, transparent 90%);
+  }
+  .sketch-caption{
+    display:block; text-align:center; margin-top:-.6rem;
+    font-size:1.1rem; color:var(--rust); transform:rotate(-1deg);
+  }
+  .method{display:flex; flex-direction:column; gap:2rem; position:relative; z-index:2;}
+  .method-step{position:relative; padding-left:3.6rem;}
+  .method-num{
+    position:absolute; left:0; top:-.3rem; width:2.6rem; height:2.6rem;
+    border:2px solid var(--moss-deep); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Caveat',cursive; font-weight:700; font-size:1.4rem;
+    color:var(--moss-deep); transform:rotate(-4deg);
+  }
+  .method-step h3{margin-bottom:.4rem;}
+  .method-step p{color:var(--ink-soft); font-size:.98rem;}
+
+  /* ---------- quote ---------- */
+  .quote-block{max-width:760px; margin:0 auto; text-align:center; position:relative; padding:2rem 1rem;}
+  .quote-block p{
+    font-family:'Instrument Serif',serif; font-style:italic;
+    font-size:clamp(1.5rem,3vw,2.1rem); line-height:1.3;
+  }
+  .quote-block span{
+    display:inline-block; margin-top:1.4rem; font-family:'Caveat',cursive;
+    font-size:1.3rem; color:var(--rust); transform:rotate(-2deg);
+  }
+  .quote-mark{font-family:'Instrument Serif',serif; font-size:5rem; color:var(--line); line-height:0; display:block; margin-bottom:.5rem;}
+
+  /* ---------- sticky notes ---------- */
+  .notes{display:grid; grid-template-columns:repeat(4,1fr); gap:1.6rem; position:relative; z-index:2;}
+  .note{background:var(--paper-light); border:1px solid var(--ink); padding:1.6rem 1.2rem; text-align:center; box-shadow:4px 5px 0 var(--shadow);}
+  .note:nth-child(1){transform:rotate(-1.5deg);}
+  .note:nth-child(2){transform:rotate(1deg);}
+  .note:nth-child(3){transform:rotate(-.8deg);}
+  .note:nth-child(4){transform:rotate(1.6deg);}
+  .note-value{font-family:'Instrument Serif',serif; font-style:italic; font-size:2.6rem; color:var(--moss-deep);}
+  .note p{margin-top:.3rem; font-size:.85rem; color:var(--ink-soft); font-weight:600;}
+
+  /* ---------- newsletter ---------- */
+  .newsletter{background:var(--ink); color:var(--paper-light); padding:clamp(3rem,6vw,4.5rem) 0;}
+  .newsletter-inner{display:flex; justify-content:space-between; align-items:center; gap:2rem; flex-wrap:wrap;}
+  .newsletter h2{color:var(--paper-light); font-style:italic;}
+  .newsletter p{color:#C9BFA6; margin-top:.5rem;}
+  .newsletter-form{display:flex; gap:.8rem; flex-wrap:wrap;}
+  .newsletter-form input{
+    font-family:'Archivo',sans-serif; font-size:.95rem; padding:.85rem 1.1rem;
+    border:2px solid var(--paper-light); background:transparent; color:var(--paper-light); min-width:240px;
+  }
+  .newsletter-form input::placeholder{color:#C9BFA6;}
+  .newsletter-form button{
+    font-family:'Caveat',cursive; font-weight:700; font-size:1.15rem;
+    padding:.7rem 1.5rem; border:2px solid var(--ochre); background:var(--ochre); color:var(--ink);
+    cursor:pointer; box-shadow:3px 3px 0 var(--paper-light);
+  }
+
+  /* ---------- footer ---------- */
+  .site-footer{background:var(--paper-deep); padding:3.5rem 0 2rem;}
+  .footer-grid{display:grid; grid-template-columns:1.3fr 1fr 1fr 1fr; gap:2.5rem;}
+  .footer-col h4{font-family:'Caveat',cursive; font-size:1.3rem; margin-bottom:.8rem; color:var(--moss-deep);}
+  .footer-col p, .footer-col li{font-size:.92rem; color:var(--ink-soft);}
+  .footer-col li{margin-bottom:.4rem;}
+  .footer-col a{text-decoration:none;}
+  .footer-col a:hover{color:var(--rust);}
+
+  .visit-counter{
+    display:inline-flex; align-items:center; gap:.5rem;
+    padding:.4rem .8rem;
+    background:var(--paper-light);
+    border:1px dashed var(--ink-soft);
+    transform:rotate(-1.2deg);
+    font-size:.8rem;
+  }
+  .visit-counter .hand{font-size:1.05rem; color:var(--ink-soft);}
+  .visit-counter strong{
+    font-family:'Instrument Serif',serif; font-style:italic;
+    font-size:1.15rem; color:var(--moss-deep);
+    font-variant-numeric:tabular-nums;
+  }
+
+  /* ---------- cookie banner ---------- */
+  .cookie-banner{
+    position:fixed; left:0; right:0; bottom:0; z-index:90;
+    display:flex; justify-content:center;
+    padding:0 clamp(1rem,4vw,2rem) clamp(1rem,3vw,1.6rem);
+    transform:translateY(120%);
+    transition:transform .5s cubic-bezier(.2,.8,.2,1);
+  }
+  .cookie-banner.is-visible{transform:translateY(0);}
+  .cookie-card{
+    width:min(640px,100%);
+    background:var(--paper-light);
+    border:2px solid var(--ink);
+    box-shadow:6px 6px 0 var(--shadow);
+    padding:1.3rem 1.5rem;
+    display:flex; flex-direction:column; gap:1rem;
+    transform:rotate(-.6deg);
+  }
+  .cookie-card p{font-size:.92rem; color:var(--ink-soft); line-height:1.55;}
+  .cookie-card p a{color:var(--moss-deep); border-bottom:1px solid var(--moss-deep); text-decoration:none;}
+  .cookie-actions{display:flex; gap:.8rem; flex-wrap:wrap; align-items:center;}
+  .btn-decline{
+    font-family:'Archivo',sans-serif; font-weight:600; font-size:.85rem;
+    background:none; border:none; padding:.4rem 0;
+    color:var(--ink-soft); text-decoration:underline; cursor:pointer;
+  }
+
+  /* ---------- modal ---------- */
+  .modal-overlay{
+    position:fixed; inset:0; z-index:120;
+    background:rgba(42,35,25,.55);
+    display:flex; align-items:center; justify-content:center;
+    padding:clamp(1rem,4vw,2rem);
+    opacity:0; pointer-events:none;
+    transition:opacity .25s ease;
+  }
+  .modal-overlay.is-open{opacity:1; pointer-events:auto;}
+  .modal-card{
+    width:min(620px,100%); max-height:82vh; overflow-y:auto;
+    background:var(--paper); border:2px solid var(--ink);
+    box-shadow:8px 8px 0 var(--shadow);
+    padding:clamp(1.6rem,4vw,2.2rem);
+    transform:rotate(-.4deg) translateY(8px);
+    transition:transform .25s ease;
+  }
+  .modal-overlay.is-open .modal-card{transform:rotate(-.4deg) translateY(0);}
+  .modal-head{display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; margin-bottom:1rem; border-bottom:1px solid var(--line); padding-bottom:.8rem;}
+  .modal-close{
+    font-family:'Caveat',cursive; font-weight:700; font-size:1.3rem;
+    background:none; border:2px solid var(--ink); border-radius:50%;
+    width:34px; height:34px; line-height:1; cursor:pointer; flex-shrink:0;
+    color:var(--ink); transition:transform .2s ease;
+  }
+  .modal-close:hover{transform:rotate(90deg);}
+  .modal-card h4{
+    font-family:'Instrument Serif',serif; font-style:italic; font-size:1.15rem;
+    margin:1.1rem 0 .4rem; color:var(--moss-deep);
+  }
+  .modal-card p, .modal-card li{font-size:.92rem; color:var(--ink-soft); line-height:1.6;}
+  .modal-card ul{padding-left:1.2rem; list-style:disc;}
+  .modal-card table{width:100%; border-collapse:collapse; margin-top:.6rem; font-size:.85rem;}
+  .modal-card th, .modal-card td{text-align:left; padding:.45rem .5rem; border-bottom:1px solid var(--line); color:var(--ink-soft);}
+  .modal-card th{color:var(--ink); font-weight:600;}
+
+  .back-to-top{
+    position:fixed; left:clamp(1rem,3vw,2rem); bottom:clamp(1rem,3vw,2rem); z-index:70;
+    width:54px; height:54px; border-radius:50%;
+    background:var(--ochre); border:2px solid var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; padding:0;
+    transform:rotate(3deg) translateY(14px) scale(.85);
+    opacity:0; pointer-events:none;
+    transition:transform .35s ease, opacity .35s ease, box-shadow .3s ease;
+    box-shadow:3px 3px 0 var(--shadow), 0 0 0 rgba(178,127,46,0);
+  }
+  .back-to-top.is-visible{
+    opacity:1; pointer-events:auto;
+    transform:rotate(3deg) translateY(0) scale(1);
+    animation: haloPulse 2.6s ease-in-out infinite;
+  }
+  .back-to-top:hover{transform:rotate(0deg) translateY(0) scale(1.06);}
+  .back-to-top svg{width:24px; height:24px;}
+  @keyframes haloPulse{
+    0%, 100% { box-shadow:3px 3px 0 var(--shadow), 0 0 12px 2px rgba(178,127,46,.45), 0 0 26px 8px rgba(178,127,46,.2); }
+    50% { box-shadow:3px 3px 0 var(--shadow), 0 0 20px 6px rgba(178,127,46,.65), 0 0 42px 16px rgba(178,127,46,.32); }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .back-to-top.is-visible{animation:none; box-shadow:3px 3px 0 var(--shadow), 0 0 16px 4px rgba(178,127,46,.5);}
+  }
+
+  .whatsapp-fab{
+    position:fixed; right:clamp(1rem,3vw,2rem); bottom:clamp(1rem,3vw,2rem); z-index:70;
+    width:56px; height:56px; border-radius:50%;
+    background:var(--moss-deep); border:2px solid var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:3px 3px 0 var(--shadow);
+    transform:rotate(-4deg);
+    transition:transform .2s ease;
+  }
+  .whatsapp-fab:hover{transform:rotate(0deg) scale(1.06);}
+  .whatsapp-fab svg{width:28px; height:28px; fill:var(--paper-light);}
+
+  .footer-bottom{
+    margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem;
+    font-size:.85rem; color:var(--ink-soft);
+  }
+
+  @media (max-width:860px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-photo{order:-1;}
+    .main-nav{display:none;}
+    .collections{grid-template-columns:1fr;}
+    .method-wrap{grid-template-columns:1fr;}
+    .notes{grid-template-columns:repeat(2,1fr);}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+  }
+</style>
+</head>
+<body>
+
+
+<button type="button" class="back-to-top" id="backToTop" aria-label="Retour en haut de la page" data-fr="Retour en haut de la page" data-en="Back to top" data-i18n-attr="aria-label">
+  <svg viewBox="0 0 24 24" fill="none" stroke="#2A2319" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6M6 12l6-6 6 6"/></svg>
+</button>
+
+<a href="https://wa.me/33000000000" class="whatsapp-fab" aria-label="Discuter sur WhatsApp" data-fr="Discuter sur WhatsApp" data-en="Chat on WhatsApp" data-i18n-attr="aria-label">
+  <svg viewBox="0 0 32 32"><path d="M16.02 3C9.4 3 4 8.38 4 15c0 2.34.66 4.53 1.8 6.4L4 29l7.8-1.75A11.9 11.9 0 0 0 16.02 27C22.64 27 28 21.62 28 15S22.64 3 16.02 3zm0 21.6c-1.9 0-3.68-.53-5.2-1.45l-.37-.22-4.1.92.9-4-.24-.4A9.55 9.55 0 0 1 6.4 15c0-5.3 4.32-9.6 9.62-9.6 5.3 0 9.6 4.3 9.6 9.6s-4.3 9.6-9.6 9.6zm5.34-7.2c-.29-.15-1.73-.85-2-.95-.27-.1-.46-.15-.66.15-.2.29-.76.95-.93 1.15-.17.2-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.77-1.44-1.71-1.61-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.51-.07-.15-.66-1.6-.91-2.19-.24-.58-.48-.5-.66-.51h-.56c-.2 0-.51.07-.78.37s-1.03 1-1.03 2.44 1.06 2.83 1.2 3.02c.15.2 2.09 3.19 5.06 4.48.71.31 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.73-.71 1.98-1.39.24-.68.24-1.27.17-1.39-.07-.13-.26-.2-.55-.35z"/></svg>
+</a>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 34 L6 18 L20 6 L34 19 L34 34 Z"/>
+        <path d="M15 34 L15 24 L25 24 L25 34"/>
+      </svg>
+      L'Atelier Alain Bourgeon
+    </a>
+    <nav class="main-nav">
+      <a href="#" class="active"><span data-fr="Accueil" data-en="Home">Accueil</span>
+        <svg viewBox="0 0 100 8" preserveAspectRatio="none"><path d="M2 5 Q 25 2 50 5 T 98 4" stroke="#38492F" stroke-width="2" fill="none"/></svg>
+      </a>
+      <a href="#collections" data-fr="Boutique" data-en="Shop">Boutique</a>
+      <a href="#methode" data-fr="L'atelier" data-en="The workshop">L'atelier</a>
+      <a href="#contact" data-fr="Contact" data-en="Contact">Contact</a>
+    </nav>
+    <div class="lang-switch">
+      <button type="button" class="lang-flag active" data-lang="fr" aria-label="Passer en français" title="Français — drapeau breton">
+        <svg viewBox="0 0 30 22" preserveAspectRatio="none">
+          <defs>
+            <g id="erm">
+              <path d="M0,-1.7 L-0.85,-0.65 M0,-1.7 L0.85,-0.65 M0,-1.7 L0,0.5" stroke="#000" stroke-width="0.42" fill="none" stroke-linecap="round"/>
+              <circle cx="0" cy="1.15" r="0.46" fill="#000"/>
+            </g>
+          </defs>
+          <!-- 9 stripes, black leading/trailing (5 black, 4 white) -->
+          <rect width="30" height="22" fill="#000"/>
+          <g fill="#fff">
+            <rect y="2.444" width="30" height="2.444"/>
+            <rect y="7.333" width="30" height="2.444"/>
+            <rect y="12.222" width="30" height="2.444"/>
+            <rect y="17.111" width="30" height="2.444"/>
+          </g>
+          <!-- canton -->
+          <rect x="0" y="0" width="14" height="12" fill="#fff"/>
+          <!-- 11 ermine spots, 4-3-4 -->
+          <use href="#erm" transform="translate(2,3)"/>
+          <use href="#erm" transform="translate(5.33,3)"/>
+          <use href="#erm" transform="translate(8.67,3)"/>
+          <use href="#erm" transform="translate(12,3)"/>
+          <use href="#erm" transform="translate(3.67,6.2)"/>
+          <use href="#erm" transform="translate(7,6.2)"/>
+          <use href="#erm" transform="translate(10.33,6.2)"/>
+          <use href="#erm" transform="translate(2,9.3)"/>
+          <use href="#erm" transform="translate(5.33,9.3)"/>
+          <use href="#erm" transform="translate(8.67,9.3)"/>
+          <use href="#erm" transform="translate(12,9.3)"/>
+        </svg>
+      </button>
+      <button type="button" class="lang-flag" data-lang="en" aria-label="Switch to English" title="English — Union Jack">
+        <svg viewBox="0 0 60 36" preserveAspectRatio="none">
+          <rect width="60" height="36" fill="#012169"/>
+          <line x1="0" y1="0" x2="60" y2="36" stroke="#fff" stroke-width="9"/>
+          <line x1="60" y1="0" x2="0" y2="36" stroke="#fff" stroke-width="9"/>
+          <line x1="0" y1="0" x2="60" y2="36" stroke="#C8102E" stroke-width="3.4"/>
+          <line x1="60" y1="0" x2="0" y2="36" stroke="#C8102E" stroke-width="3.4"/>
+          <rect x="24" y="0" width="12" height="36" fill="#fff"/>
+          <rect x="0" y="12" width="60" height="12" fill="#fff"/>
+          <rect x="26.6" y="0" width="6.8" height="36" fill="#C8102E"/>
+          <rect x="0" y="14.6" width="60" height="6.8" fill="#C8102E"/>
+        </svg>
+      </button>
+    </div>
+    <a href="#contact" class="stamp-btn" data-fr="Nous écrire ✎" data-en="Get in touch ✎">Nous écrire ✎</a>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero container">
+    <div class="confetti sq diamond c-ink" style="top:6%; left:2%;"></div>
+    <div class="confetti sq c-ochre" style="top:70%; left:6%; transform:rotate(18deg);"></div>
+    <div class="confetti c-outline diamond" style="top:12%; right:4%;"></div>
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow-hand" data-fr="— façonné à la main, à Martigné-Ferchaud" data-en="— handmade, in Martigné-Ferchaud">— façonné à la main, à Martigné-Ferchaud</span>
+        <h1 data-fr="Des villages entiers tiennent dans une main." data-en="Whole villages held in the palm of a hand.">Des villages entiers tiennent dans une main.</h1>
+        <p class="hero-lead" data-fr="Chaque maquette de l'Atelier Alain Bourgeon — maison en pierre, chaumière ou bâtisse à colombages — naît de l'observation d'un vrai bâtiment, avant d'être sculptée, peinte et végétalisée à la main, pièce par pièce." data-en="Every model from L'Atelier Alain Bourgeon — stone house, thatched cottage or timber-framed building — begins with the study of a real building, before being sculpted, painted and planted by hand, piece by piece.">Chaque maquette de l'Atelier Alain Bourgeon — maison en pierre, chaumière ou bâtisse à colombages — naît de l'observation d'un vrai bâtiment, avant d'être sculptée, peinte et végétalisée à la main, pièce par pièce.</p>
+        <div class="hero-actions">
+          <a href="#collections" class="stamp-btn" data-fr="Voir les pièces" data-en="See the pieces">Voir les pièces</a>
+          <a href="#methode" class="btn-ghost" data-fr="Comment on travaille →" data-en="How we work →">Comment on travaille →</a>
+        </div>
+      </div>
+      <div class="hero-photo reveal" style="--r:0deg;">
+        <div class="photo-stage">
+          <div class="dashed-ring"></div>
+          <div class="badge-stamp"><span data-fr="fait&nbsp;main<br>pièce&nbsp;unique" data-en="hand&#8209;made<br>one&nbsp;of&nbsp;a&nbsp;kind" data-i18n-attr="innerHTML">fait&nbsp;main<br>pièce&nbsp;unique</span></div>
+          <img class="photo-cutout" src="IMG_20260819_134136-clean.png" alt="Chaumière de pierre envahie de lierre, sculptée à la main">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee">
+    <div class="marquee-track">
+      <span data-fr="Fabrication artisanale" data-en="Handcrafted">Fabrication artisanale</span>
+      <span data-fr="Édition limitée" data-en="Limited edition">Édition limitée</span>
+      <span data-fr="Livraison soignée" data-en="Careful shipping">Livraison soignée</span>
+      <span data-fr="Sur-mesure possible" data-en="Custom orders">Sur-mesure possible</span>
+      <span data-fr="Fabrication artisanale" data-en="Handcrafted">Fabrication artisanale</span>
+      <span data-fr="Édition limitée" data-en="Limited edition">Édition limitée</span>
+      <span data-fr="Livraison soignée" data-en="Careful shipping">Livraison soignée</span>
+      <span data-fr="Sur-mesure possible" data-en="Custom orders">Sur-mesure possible</span>
+    </div>
+  </div>
+
+  <section class="section" id="collections">
+    <div class="confetti sq c-moss" style="top:2%; right:8%; transform:rotate(30deg);"></div>
+    <div class="container">
+      <div class="section-header reveal">
+        <div>
+          <span class="eyebrow-hand" data-fr="nos univers" data-en="our worlds">nos univers</span>
+          <h2 data-fr="Collections signature" data-en="Signature collections">Collections signature</h2>
+        </div>
+        <a href="#" class="link-underline" data-fr="Voir toute la boutique →" data-en="View the full shop →">Voir toute la boutique →</a>
+      </div>
+      <div class="collections">
+
+        <a href="#" class="coll-card reveal" style="--r:-2deg;">
+          <div class="coll-frame"><img src="IMG_20260819_133946-clean.png" alt="Maison en pierre envahie de mousse"></div>
+          <div class="coll-caption"><h3 data-fr="Maisons en pierre" data-en="Stone houses">Maisons en pierre</h3><span data-fr="mousse & plâtre patiné" data-en="moss & aged plaster">mousse & plâtre patiné</span></div>
+        </a>
+
+        <a href="#" class="coll-card reveal" style="--r:1.5deg;">
+          <div class="coll-frame"><img src="IMG_20260710_070147-clean.png" alt="Maison à colombages peinte à la main"></div>
+          <div class="coll-caption"><h3 data-fr="Maisons à colombages" data-en="Timber-framed houses">Maisons à colombages</h3><span data-fr="bois & balsa peint" data-en="wood & painted balsa">bois & balsa peint</span></div>
+        </a>
+
+        <a href="#contact" class="coll-card reveal" style="--r:-1deg;">
+          <div class="coll-frame"><img src="IMG_20260829_114714-clean.png" alt="Ferme en ruine, pièce sur-mesure"></div>
+          <div class="coll-caption"><h3 data-fr="Sur-mesure" data-en="Custom piece">Sur-mesure</h3><span data-fr="votre bâtiment, à l'échelle" data-en="your building, to scale">votre bâtiment, à l'échelle</span></div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="torn"></div>
+
+  <section class="section section-deep" id="methode">
+    <div class="container">
+      <div class="section-header reveal">
+        <div>
+          <span class="eyebrow-hand" data-fr="méthode" data-en="method">méthode</span>
+          <h2 data-fr="La conception, en quelques mots" data-en="The making, in a few words">La conception, en quelques mots</h2>
+        </div>
+        <p style="max-width:420px; color:var(--ink-soft); font-size:.95rem;" data-fr="Chaque maquette naît d'une observation minutieuse du bâtiment réel, avant d'être recréée à la main, matière par matière." data-en="Every model starts with a close study of the real building, before being recreated by hand, material by material.">Chaque maquette naît d'une observation minutieuse du bâtiment réel, avant d'être recréée à la main, matière par matière.</p>
+      </div>
+      <div class="method-wrap">
+        <div class="sketch-module reveal" style="--r:-1deg;">
+          <canvas id="sketchCanvas" width="1400" height="1120" role="img" aria-label="Croquis au crayon à papier de la chaumière de pierre"></canvas>
+          <span class="sketch-caption hand" data-fr="étude au crayon — chaumière de pierre" data-en="pencil study — stone cottage">étude au crayon — chaumière de pierre</span>
+        </div>
+        <div class="method">
+          <div class="method-step reveal">
+            <div class="method-num">1</div>
+            <h3 data-fr="Étude" data-en="Study">Étude</h3>
+            <p data-fr="Observation des proportions et de l'architecture d'origine, croquis à l'appui." data-en="Observing the proportions and architecture of the original, sketchbook in hand.">Observation des proportions et de l'architecture d'origine, croquis à l'appui.</p>
+          </div>
+          <div class="method-step reveal">
+            <div class="method-num">2</div>
+            <h3 data-fr="Sculpture" data-en="Sculpting">Sculpture</h3>
+            <p data-fr="Modelage de chaque volume, pierre par pierre ou poutre par poutre." data-en="Shaping every volume, stone by stone or beam by beam.">Modelage de chaque volume, pierre par pierre ou poutre par poutre.</p>
+          </div>
+          <div class="method-step reveal">
+            <div class="method-num">3</div>
+            <h3 data-fr="Patine" data-en="Weathering">Patine</h3>
+            <p data-fr="Vieillissement et finitions à la main pour un rendu réaliste et vivant." data-en="Hand-finished ageing for a lifelike, lived-in result.">Vieillissement et finitions à la main pour un rendu réaliste et vivant.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="torn torn-flip"></div>
+
+  <section class="section">
+    <div class="container quote-block reveal">
+      <span class="quote-mark">"</span>
+      <p data-fr="Nous ne construisons pas des objets. Nous condensons, à l'échelle d'une main, l'intention d'un architecte." data-en="We don't build objects. We condense an architect's intent down to the scale of a hand.">Nous ne construisons pas des objets. Nous condensons, à l'échelle d'une main, l'intention d'un architecte.</p>
+      <span data-fr="— Alain Bourgeon, fondateur" data-en="— Alain Bourgeon, founder">— Alain Bourgeon, fondateur</span>
+    </div>
+  </section>
+
+  <section class="section section-deep">
+    <div class="container">
+      <div class="notes reveal">
+        <div class="note"><div class="note-value">180</div><p data-fr="maquettes livrées" data-en="models delivered">maquettes livrées</p></div>
+        <div class="note"><div class="note-value">12</div><p data-fr="années d'atelier" data-en="years of craft">années d'atelier</p></div>
+        <div class="note"><div class="note-value">98%</div><p data-fr="clients ravis" data-en="happy clients">clients ravis</p></div>
+        <div class="note"><div class="note-value">4.9/5</div><p data-fr="note moyenne (53 avis)" data-en="average rating (53 reviews)">note moyenne (53 avis)</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="newsletter" id="contact">
+    <div class="container newsletter-inner reveal">
+      <div>
+        <h2 data-fr="Restez proche de l'atelier" data-en="Stay close to the workshop">Restez proche de l'atelier</h2>
+        <p data-fr="Nouvelles pièces, coulisses de fabrication, éditions limitées." data-en="New pieces, behind-the-scenes and limited editions.">Nouvelles pièces, coulisses de fabrication, éditions limitées.</p>
+      </div>
+      <form class="newsletter-form" onsubmit="return false;">
+        <input type="email" placeholder="Votre adresse email" required data-fr="Votre adresse email" data-en="Your email address" data-i18n-attr="placeholder">
+        <button type="submit" data-fr="S'inscrire ✎" data-en="Subscribe ✎">S'inscrire ✎</button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>L'Atelier Alain Bourgeon</h4>
+        <p data-fr="Maquettes d'architecture façonnées à la main, pour les amateurs d'objets rares." data-en="Architectural models handmade for lovers of rare objects.">Maquettes d'architecture façonnées à la main, pour les amateurs d'objets rares.</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-fr="Navigation" data-en="Navigation">Navigation</h4>
+        <ul>
+          <li><a href="#" data-fr="Accueil" data-en="Home">Accueil</a></li>
+          <li><a href="#collections" data-fr="Boutique" data-en="Shop">Boutique</a></li>
+          <li><a href="#methode" data-fr="L'Atelier" data-en="The Workshop">L'Atelier</a></li>
+          <li><a href="#contact" data-fr="Contact" data-en="Contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-fr="Informations" data-en="Information">Informations</h4>
+        <ul>
+          <li><button type="button" class="link-underline" id="openShippingModal" style="background:none;border:none;cursor:pointer;padding:0;font:inherit;" data-fr="Livraison & retours" data-en="Shipping & returns">Livraison & retours</button></li>
+          <li><button type="button" class="link-underline" id="openCgvModal" style="background:none;border:none;cursor:pointer;padding:0;font:inherit;" data-fr="CGV" data-en="Terms of sale">CGV</button></li>
+          <li><button type="button" class="link-underline" id="openLegalModal" style="background:none;border:none;cursor:pointer;padding:0;font:inherit;" data-fr="Mentions légales" data-en="Legal notice">Mentions légales</button></li>
+          <li><button type="button" class="link-underline" id="openCookieModal" style="background:none;border:none;cursor:pointer;padding:0;font:inherit;" data-fr="Politique de cookies" data-en="Cookie policy">Politique de cookies</button></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-fr="Contact" data-en="Contact">Contact</h4>
+        <ul>
+          <li><a href="mailto:contact@bourgeonalain.fr">contact@bourgeonalain.fr</a></li>
+          <li>6 rue Surcouf, 35640 Martigné-Ferchaud</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span data-fr="© 2026 L'Atelier Alain Bourgeon — tous droits réservés" data-en="© 2026 L'Atelier Alain Bourgeon — all rights reserved">© 2026 L'Atelier Alain Bourgeon — tous droits réservés</span>
+      <div class="visit-counter">
+        <span class="hand" data-fr="vous êtes le visiteur n°" data-en="you are visitor no.">vous êtes le visiteur n°</span>
+        <strong id="visitCount">···</strong>
+      </div>
+      <div style="display:flex; gap:1.2rem; flex-wrap:wrap;">
+        <a href="#" class="link-underline">Instagram</a>
+        <a href="#" class="link-underline">Pinterest</a>
+        <a href="#" class="link-underline">TikTok</a>
+        <a href="https://wa.me/33000000000" class="link-underline">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-card">
+    <p data-fr="Ce site utilise des cookies pour faire fonctionner la boutique, mesurer l'audience et, si vous l'acceptez, personnaliser les contenus. Vous pouvez changer d'avis à tout moment depuis la politique de cookies." data-en="This site uses cookies to run the shop, measure traffic and, if you agree, personalise content. You can change your mind at any time from the cookie policy.">Ce site utilise des cookies pour faire fonctionner la boutique, mesurer l'audience et, si vous l'acceptez, personnaliser les contenus. Vous pouvez changer d'avis à tout moment depuis la politique de cookies.</p>
+    <div class="cookie-actions">
+      <button type="button" class="stamp-btn" id="cookieAccept" data-fr="Accepter ✎" data-en="Accept ✎">Accepter ✎</button>
+      <button type="button" class="btn-decline" id="cookieDecline" data-fr="Refuser" data-en="Decline">Refuser</button>
+      <button type="button" class="btn-decline" id="cookieLearnMore" data-fr="En savoir plus" data-en="Learn more">En savoir plus</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="shippingModal">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="shippingModalTitle">
+    <div class="modal-head">
+      <h3 id="shippingModalTitle" data-fr="Livraison & retours" data-en="Shipping & returns">Livraison & retours</h3>
+      <button type="button" class="modal-close" id="shippingModalClose" aria-label="Fermer" data-fr="Fermer" data-en="Close" data-i18n-attr="aria-label">×</button>
+    </div>
+
+    <h4 data-fr="Emballage" data-en="Packaging">Emballage</h4>
+    <p data-fr="Chaque maquette est fragile : elle est calée à la main dans une boîte sur-mesure, avec mousse de protection et éléments amovibles fixés séparément lorsque nécessaire." data-en="Every model is fragile: it is hand-packed in a custom box, with protective foam and any removable parts secured separately when needed.">Chaque maquette est fragile : elle est calée à la main dans une boîte sur-mesure, avec mousse de protection et éléments amovibles fixés séparément lorsque nécessaire.</p>
+
+    <h4 data-fr="Délais & zones" data-en="Timing & areas">Délais & zones</h4>
+    <ul>
+      <li data-fr="France métropolitaine : expédition sous 5 à 10 jours ouvrés (pièces réalisées à la main, à la commande)." data-en="Mainland France: shipped within 5 to 10 business days (each piece is handmade to order).">France métropolitaine : expédition sous 5 à 10 jours ouvrés (pièces réalisées à la main, à la commande).</li>
+      <li data-fr="Union européenne : 8 à 15 jours ouvrés." data-en="European Union: 8 to 15 business days.">Union européenne : 8 à 15 jours ouvrés.</li>
+      <li data-fr="Pièces sur-mesure : délai communiqué individuellement selon la complexité du projet." data-en="Custom pieces: timing given individually depending on the project's complexity.">Pièces sur-mesure : délai communiqué individuellement selon la complexité du projet.</li>
+    </ul>
+
+    <table>
+      <thead><tr><th data-fr="Destination" data-en="Destination">Destination</th><th data-fr="Tarif" data-en="Price">Tarif</th></tr></thead>
+      <tbody>
+        <tr><td data-fr="France métropolitaine" data-en="Mainland France">France métropolitaine</td><td data-fr="offerte dès 60 € d'achat, sinon 6,90 €" data-en="free from €60, otherwise €6.90">offerte dès 60 € d'achat, sinon 6,90 €</td></tr>
+        <tr><td data-fr="Union européenne" data-en="European Union">Union européenne</td><td>12,90 €</td></tr>
+        <tr><td data-fr="Reste du monde" data-en="Rest of the world">Reste du monde</td><td data-fr="sur devis" data-en="quote on request">sur devis</td></tr>
+      </tbody>
+    </table>
+
+    <h4 data-fr="Droit de rétractation" data-en="Right of withdrawal">Droit de rétractation</h4>
+    <p data-fr="Conformément aux articles L221-18 et suivants du Code de la consommation, vous disposez de 14 jours à compter de la réception de votre commande pour changer d'avis, sans avoir à justifier de motif. La pièce doit être retournée non utilisée, dans son emballage d'origine." data-en="Under French consumer law (art. L221-18 et seq.), you have 14 days from receipt of your order to change your mind, with no need to give a reason. The piece must be returned unused, in its original packaging.">Conformément aux articles L221-18 et suivants du Code de la consommation, vous disposez de 14 jours à compter de la réception de votre commande pour changer d'avis, sans avoir à justifier de motif. La pièce doit être retournée non utilisée, dans son emballage d'origine.</p>
+    <p data-fr="Exception : les pièces sur-mesure, réalisées selon vos spécifications, ne peuvent pas être reprises (article L221-28 du Code de la consommation)." data-en="Exception: custom pieces made to your specifications cannot be returned (article L221-28 of the French Consumer Code).">Exception : les pièces sur-mesure, réalisées selon vos spécifications, ne peuvent pas être reprises (article L221-28 du Code de la consommation).</p>
+
+    <h4 data-fr="Comment retourner une pièce" data-en="How to return a piece">Comment retourner une pièce</h4>
+    <p data-fr="Écrivez à contact@bourgeonalain.fr en indiquant votre numéro de commande. Les frais de retour sont à votre charge, sauf en cas de pièce défectueuse ou d'erreur de notre part. Le remboursement est effectué sous 14 jours après réception de la pièce retournée." data-en="Write to contact@bourgeonalain.fr with your order number. Return shipping is at your expense, unless the piece is faulty or we made a mistake. Refunds are made within 14 days of receiving the returned piece.">Écrivez à contact@bourgeonalain.fr en indiquant votre numéro de commande. Les frais de retour sont à votre charge, sauf en cas de pièce défectueuse ou d'erreur de notre part. Le remboursement est effectué sous 14 jours après réception de la pièce retournée.</p>
+  </div>
+</div>
+
+<div class="modal-overlay" id="cgvModal">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="cgvModalTitle">
+    <div class="modal-head">
+      <h3 id="cgvModalTitle" data-fr="Conditions générales de vente" data-en="Terms of sale">Conditions générales de vente</h3>
+      <button type="button" class="modal-close" id="cgvModalClose" aria-label="Fermer" data-fr="Fermer" data-en="Close" data-i18n-attr="aria-label">×</button>
+    </div>
+
+    <h4 data-fr="Article 1 — Objet" data-en="Article 1 — Purpose">Article 1 — Objet</h4>
+    <p data-fr="Les présentes conditions régissent les ventes de maquettes et miniatures d'architecture réalisées à la main par Alain Bourgeon, entrepreneur individuel (SIREN 814 893 319), entre l'Atelier Alain Bourgeon et tout client passant commande sur ce site." data-en="These terms govern the sale of handmade architectural models and miniatures by Alain Bourgeon, sole trader (SIREN 814 893 319), between L'Atelier Alain Bourgeon and any customer ordering through this site.">Les présentes conditions régissent les ventes de maquettes et miniatures d'architecture réalisées à la main par Alain Bourgeon, entrepreneur individuel (SIREN 814 893 319), entre l'Atelier Alain Bourgeon et tout client passant commande sur ce site.</p>
+
+    <h4 data-fr="Article 2 — Produits" data-en="Article 2 — Products">Article 2 — Produits</h4>
+    <p data-fr="Chaque pièce est façonnée à la main ; de légères variations d'une pièce à l'autre (teinte, végétalisation, patine) sont normales et font partie du caractère artisanal du produit. Les photos sont non contractuelles." data-en="Every piece is handcrafted; slight variations from one piece to another (tone, planting, weathering) are normal and part of the handmade character of the product. Photos are not contractually binding.">Chaque pièce est façonnée à la main ; de légères variations d'une pièce à l'autre (teinte, végétalisation, patine) sont normales et font partie du caractère artisanal du produit. Les photos sont non contractuelles.</p>
+
+    <h4 data-fr="Article 3 — Prix" data-en="Article 3 — Prices">Article 3 — Prix</h4>
+    <p data-fr="Les prix sont indiqués en euros. TVA non applicable, article 293 B du Code général des impôts. Les frais de livraison sont précisés avant validation de la commande." data-en="Prices are shown in euros. VAT not applicable, article 293 B of the French General Tax Code. Shipping costs are shown before the order is confirmed.">Les prix sont indiqués en euros. TVA non applicable, article 293 B du Code général des impôts. Les frais de livraison sont précisés avant validation de la commande.</p>
+
+    <h4 data-fr="Article 4 — Commande & paiement" data-en="Article 4 — Order & payment">Article 4 — Commande & paiement</h4>
+    <p data-fr="La commande est validée après confirmation du paiement intégral. Le paiement s'effectue par carte bancaire via un prestataire sécurisé. Pour les pièces sur-mesure, un acompte peut être demandé avant le début de la réalisation." data-en="The order is confirmed once payment is received in full. Payment is made by card through a secure payment provider. For custom pieces, a deposit may be requested before work begins.">La commande est validée après confirmation du paiement intégral. Le paiement s'effectue par carte bancaire via un prestataire sécurisé. Pour les pièces sur-mesure, un acompte peut être demandé avant le début de la réalisation.</p>
+
+    <h4 data-fr="Article 5 — Livraison" data-en="Article 5 — Delivery">Article 5 — Livraison</h4>
+    <p data-fr="Voir la page « Livraison & retours » pour les délais, zones et tarifs. Les risques de perte ou d'avarie sont transférés au client à la réception du colis." data-en="See the “Shipping & returns” page for timing, areas and rates. Risk of loss or damage transfers to the customer upon receipt of the parcel.">Voir la page « Livraison & retours » pour les délais, zones et tarifs. Les risques de perte ou d'avarie sont transférés au client à la réception du colis.</p>
+
+    <h4 data-fr="Article 6 — Rétractation & retours" data-en="Article 6 — Withdrawal & returns">Article 6 — Rétractation & retours</h4>
+    <p data-fr="Voir la page « Livraison & retours ». Les pièces sur-mesure sont exclues du droit de rétractation (article L221-28 du Code de la consommation)." data-en="See the “Shipping & returns” page. Custom pieces are excluded from the right of withdrawal (article L221-28 of the French Consumer Code).">Voir la page « Livraison & retours ». Les pièces sur-mesure sont exclues du droit de rétractation (article L221-28 du Code de la consommation).</p>
+
+    <h4 data-fr="Article 7 — Garanties" data-en="Article 7 — Warranties">Article 7 — Garanties</h4>
+    <p data-fr="Toute pièce livrée endommagée doit être signalée sous 48h à contact@bourgeonalain.fr, photos à l'appui. Les produits bénéficient par ailleurs des garanties légales de conformité et des vices cachés." data-en="Any piece arriving damaged must be reported within 48 hours to contact@bourgeonalain.fr, with photos. Products also benefit from the statutory warranties of conformity and against hidden defects.">Toute pièce livrée endommagée doit être signalée sous 48h à contact@bourgeonalain.fr, photos à l'appui. Les produits bénéficient par ailleurs des garanties légales de conformité et des vices cachés.</p>
+
+    <h4 data-fr="Article 8 — Droit applicable" data-en="Article 8 — Governing law">Article 8 — Droit applicable</h4>
+    <p data-fr="Les présentes CGV sont soumises au droit français. En cas de litige, une solution amiable sera recherchée avant tout recours judiciaire ; le client consommateur peut recourir gratuitement à un médiateur de la consommation." data-en="These terms are governed by French law. In the event of a dispute, an amicable solution will be sought before any legal action; consumers may use a consumer mediation service free of charge.">Les présentes CGV sont soumises au droit français. En cas de litige, une solution amiable sera recherchée avant tout recours judiciaire ; le client consommateur peut recourir gratuitement à un médiateur de la consommation.</p>
+
+    <p style="margin-top:1rem; font-size:.8rem; color:var(--ink-soft);" data-fr="Alain Bourgeon, entrepreneur individuel — SIREN 814 893 319 — 6 rue Surcouf, 35640 Martigné-Ferchaud." data-en="Alain Bourgeon, sole trader — SIREN 814 893 319 — 6 rue Surcouf, 35640 Martigné-Ferchaud, France.">Alain Bourgeon, entrepreneur individuel — SIREN 814 893 319 — 6 rue Surcouf, 35640 Martigné-Ferchaud.</p>
+  </div>
+</div>
+
+<div class="modal-overlay" id="legalModal">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="legalModalTitle">
+    <div class="modal-head">
+      <h3 id="legalModalTitle" data-fr="Mentions légales" data-en="Legal notice">Mentions légales</h3>
+      <button type="button" class="modal-close" id="legalModalClose" aria-label="Fermer" data-fr="Fermer" data-en="Close" data-i18n-attr="aria-label">×</button>
+    </div>
+
+    <h4 data-fr="Éditeur du site" data-en="Site publisher">Éditeur du site</h4>
+    <table>
+      <tbody>
+        <tr><th data-fr="Exploitant" data-en="Operator">Exploitant</th><td>Alain Bourgeon</td></tr>
+        <tr><th data-fr="Statut" data-en="Status">Statut</th><td data-fr="Entrepreneur individuel" data-en="Sole trader (entrepreneur individuel)">Entrepreneur individuel</td></tr>
+        <tr><th data-fr="Activité" data-en="Business activity">Activité</th><td data-fr="Vente à domicile de maquettes et miniatures d'architecture faites main" data-en="Door-to-door sale of handmade architectural models and miniatures">Vente à domicile de maquettes et miniatures d'architecture faites main</td></tr>
+        <tr><th data-fr="Numéro SIREN" data-en="SIREN number">Numéro SIREN</th><td>814 893 319</td></tr>
+        <tr><th data-fr="Immatriculée depuis le" data-en="Registered since">Immatriculée depuis le</th><td data-fr="20 novembre 2015" data-en="20 November 2015">20 novembre 2015</td></tr>
+        <tr><th data-fr="Adresse" data-en="Address">Adresse</th><td>6 rue Surcouf, 35640 Martigné-Ferchaud, France</td></tr>
+        <tr><th data-fr="E-mail" data-en="Email">E-mail</th><td><a href="mailto:contact@bourgeonalain.fr" style="color:var(--moss-deep);">contact@bourgeonalain.fr</a></td></tr>
+      </tbody>
+    </table>
+
+    <h4 data-fr="Hébergement" data-en="Hosting">Hébergement</h4>
+    <p data-fr="[Nom, adresse et contact de l'hébergeur du site à compléter]." data-en="[Host's name, address and contact details to be added].">[Nom, adresse et contact de l'hébergeur du site à compléter].</p>
+
+    <h4 data-fr="Propriété intellectuelle" data-en="Intellectual property">Propriété intellectuelle</h4>
+    <p data-fr="L'ensemble des textes, photographies et créations présentés sur ce site sont la propriété de l'Atelier Alain Bourgeon et ne peuvent être reproduits sans autorisation écrite préalable." data-en="All text, photographs and works shown on this site are the property of L'Atelier Alain Bourgeon and may not be reproduced without prior written permission.">L'ensemble des textes, photographies et créations présentés sur ce site sont la propriété de l'Atelier Alain Bourgeon et ne peuvent être reproduits sans autorisation écrite préalable.</p>
+
+    <p style="margin-top:1rem; font-size:.8rem; color:var(--ink-soft);" data-fr="Informations issues du répertoire SIRENE (source Pappers) — SIREN 814 893 319." data-en="Information sourced from the SIRENE register (via Pappers) — SIREN 814 893 319.">Informations issues du répertoire SIRENE (source Pappers) — SIREN 814 893 319.</p>
+  </div>
+</div>
+
+<div class="modal-overlay" id="cookieModal">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="cookieModalTitle">
+    <div class="modal-head">
+      <h3 id="cookieModalTitle" data-fr="Politique de cookies" data-en="Cookie policy">Politique de cookies</h3>
+      <button type="button" class="modal-close" id="cookieModalClose" aria-label="Fermer" data-fr="Fermer" data-en="Close" data-i18n-attr="aria-label">×</button>
+    </div>
+    <p data-fr="L'Atelier Alain Bourgeon utilise des cookies et technologies similaires sur ce site. Voici à quoi ils servent et comment les gérer." data-en="L'Atelier Alain Bourgeon uses cookies and similar technologies on this site. Here's what they're for and how to manage them.">L'Atelier Alain Bourgeon utilise des cookies et technologies similaires sur ce site. Voici à quoi ils servent et comment les gérer.</p>
+
+    <h4 data-fr="Cookies essentiels" data-en="Essential cookies">Cookies essentiels</h4>
+    <p data-fr="Nécessaires au fonctionnement du site (panier, connexion, préférence de langue et choix de cookies). Toujours actifs, ils ne peuvent pas être désactivés." data-en="Required for the site to work (cart, sign-in, language preference and cookie choice). Always active and cannot be turned off.">Nécessaires au fonctionnement du site (panier, connexion, préférence de langue et choix de cookies). Toujours actifs, ils ne peuvent pas être désactivés.</p>
+
+    <h4 data-fr="Cookies de mesure d'audience" data-en="Analytics cookies">Cookies de mesure d'audience</h4>
+    <p data-fr="Nous aident à comprendre comment le site est utilisé (pages vues, provenance des visites) pour l'améliorer. Activés uniquement avec votre accord." data-en="Help us understand how the site is used (page views, traffic sources) so we can improve it. Only enabled with your consent.">Nous aident à comprendre comment le site est utilisé (pages vues, provenance des visites) pour l'améliorer. Activés uniquement avec votre accord.</p>
+
+    <h4 data-fr="Cookies tiers" data-en="Third-party cookies">Cookies tiers</h4>
+    <p data-fr="Déposés par des services externes (carte du footer, réseaux sociaux) lorsque vous interagissez avec leurs contenus." data-en="Set by external services (footer map, social networks) when you interact with their content.">Déposés par des services externes (carte du footer, réseaux sociaux) lorsque vous interagissez avec leurs contenus.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th data-fr="Cookie" data-en="Cookie">Cookie</th>
+          <th data-fr="Finalité" data-en="Purpose">Finalité</th>
+          <th data-fr="Durée" data-en="Duration">Durée</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>atelier-cookie-consent</td><td data-fr="Mémorise votre choix de cookies" data-en="Remembers your cookie choice">Mémorise votre choix de cookies</td><td data-fr="6 mois" data-en="6 months">6 mois</td></tr>
+        <tr><td>atelier-lang</td><td data-fr="Mémorise la langue choisie" data-en="Remembers your chosen language">Mémorise la langue choisie</td><td data-fr="6 mois" data-en="6 months">6 mois</td></tr>
+        <tr><td data-fr="mesure d'audience" data-en="analytics">mesure d'audience</td><td data-fr="Statistiques de visite anonymisées" data-en="Anonymised visit statistics">Statistiques de visite anonymisées</td><td data-fr="13 mois" data-en="13 months">13 mois</td></tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:1rem;" data-fr="Vous pouvez modifier votre choix à tout moment en revenant sur cette page, ou en réglant votre navigateur pour bloquer les cookies. Pour toute question : contact@bourgeonalain.fr." data-en="You can change your choice at any time by returning to this page, or by adjusting your browser settings to block cookies. For any question: contact@bourgeonalain.fr.">Vous pouvez modifier votre choix à tout moment en revenant sur cette page, ou en réglant votre navigateur pour bloquer les cookies. Pour toute question : contact@bourgeonalain.fr.</p>
+
+    <div class="cookie-actions" style="margin-top:1.2rem;">
+      <button type="button" class="stamp-btn" id="cookieModalAccept" data-fr="Tout accepter ✎" data-en="Accept all ✎">Tout accepter ✎</button>
+      <button type="button" class="btn-decline" id="cookieModalDecline" data-fr="Tout refuser" data-en="Decline all">Tout refuser</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var canvas = document.getElementById('sketchCanvas');
+  if(!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W = canvas.width, H = canvas.height;
+
+  function mulberry32(a){
+    return function(){
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  var rand = mulberry32(20260710);
+  function rr(min, max){ return min + rand() * (max - min); }
+
+  // canvas stays transparent — no paper fill — so the mask-image fade in CSS
+  // lets the drawing dissolve straight into the section's own paper background
+
+  function sketchLine(x1,y1,x2,y2,opts){
+    opts = opts || {};
+    var passes = opts.passes || 2;
+    var jitter = opts.jitter || 1.6;
+    var width = opts.width || 1.4;
+    var alpha = opts.alpha || 0.55;
+    var segs = opts.segs || Math.max(6, Math.floor(Math.hypot(x2-x1,y2-y1)/14));
+    var dx = x2-x1, dy = y2-y1;
+    var nx = -dy/Math.hypot(dx,dy), ny = dx/Math.hypot(dx,dy);
+
+    for(var p=0;p<passes;p++){
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(30,28,24,'+alpha+')';
+      ctx.lineWidth = width * rr(0.8,1.2);
+      ctx.lineCap = 'round';
+      var bow = rr(-jitter,jitter);
+      for(var i=0;i<=segs;i++){
+        var t = i/segs;
+        var wob = Math.sin(t*Math.PI)*bow + rr(-jitter,jitter)*0.5;
+        var px = x1 + dx*t + nx*wob;
+        var py = y1 + dy*t + ny*wob;
+        if(i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+      }
+      ctx.stroke();
+    }
+  }
+
+  function sketchPolyline(pts,opts){
+    for(var i=0;i<pts.length-1;i++){
+      sketchLine(pts[i][0],pts[i][1],pts[i+1][0],pts[i+1][1],opts);
+    }
+  }
+  function sketchPolygon(pts,opts){
+    sketchPolyline(pts.concat([pts[0]]),opts);
+  }
+
+  function hatch(pts, opts){
+    opts = opts || {};
+    var spacing = opts.spacing || 9;
+    var angle = (opts.angle || 45) * Math.PI/180;
+    var alpha = opts.alpha || 0.28;
+    var width = opts.width || 1;
+    var jitter = opts.jitter || 1.2;
+
+    var xs = pts.map(function(p){return p[0];});
+    var ys = pts.map(function(p){return p[1];});
+    var minX=Math.min.apply(null,xs), maxX=Math.max.apply(null,xs);
+    var minY=Math.min.apply(null,ys), maxY=Math.max.apply(null,ys);
+
+    ctx.save();
+    ctx.beginPath();
+    pts.forEach(function(p,i){ i===0?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1]); });
+    ctx.closePath();
+    ctx.clip();
+
+    var diag = Math.hypot(maxX-minX, maxY-minY) + spacing*2;
+    var cx = (minX+maxX)/2, cy=(minY+maxY)/2;
+    var dirx = Math.cos(angle), diry = Math.sin(angle);
+    var perpx = -diry, perpy = dirx;
+
+    for(var d=-diag/2; d<diag/2; d+=spacing){
+      var ox = cx + perpx*d, oy = cy + perpy*d;
+      var x1 = ox - dirx*diag/2, y1 = oy - diry*diag/2;
+      var x2 = ox + dirx*diag/2, y2 = oy + diry*diag/2;
+      sketchLine(x1,y1,x2,y2,{passes:1, jitter:jitter, width:width, alpha:alpha*rr(0.7,1.15), segs:14});
+    }
+    ctx.restore();
+  }
+
+  function scribbleBlob(cx,cy,r,density,alpha){
+    for(var i=0;i<density;i++){
+      var a0 = rr(0,Math.PI*2);
+      var rad = r*rr(0.35,1);
+      var x = cx + Math.cos(a0)*rad*rr(0.6,1);
+      var y = cy + Math.sin(a0)*rad*rr(0.5,0.9);
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(30,28,24,'+(alpha*rr(0.6,1))+')';
+      ctx.lineWidth = rr(1,1.8);
+      var loops = rr(1,2);
+      var steps=10;
+      var rr2 = rr(6,16);
+      ctx.moveTo(x,y);
+      for(var s=1;s<=steps;s++){
+        var t = s/steps*Math.PI*2*loops;
+        ctx.lineTo(x + Math.cos(t)*rr2*(s/steps), y - s*1.4 + Math.sin(t)*rr2*0.6*(s/steps));
+      }
+      ctx.stroke();
+    }
+  }
+
+  var groundY = 900;
+  var wallL = 430, wallR = 980, wallTop = 470, wallBot = groundY;
+  var eaveL = 380, eaveR = 1030, eaveY = 470;
+  var ridgeX = 705, ridgeY = 190;
+  var chimX1 = 520, chimX2 = 600, chimTop = 120, chimBase = 300;
+
+  ctx.save();
+  sketchLine(120, groundY, 1300, groundY, {passes:1, jitter:2, width:1, alpha:0.18, segs:20});
+  sketchLine(ridgeX, 60, ridgeX, groundY, {passes:1, jitter:1, width:0.8, alpha:0.14, segs:20});
+  sketchLine(wallL, 60, wallL, groundY, {passes:1, jitter:1, width:0.8, alpha:0.1, segs:20});
+  sketchLine(wallR, 60, wallR, groundY, {passes:1, jitter:1, width:0.8, alpha:0.1, segs:20});
+  ctx.restore();
+
+  var roofPolyL = [[eaveL,eaveY],[ridgeX,ridgeY],[705,wallTop-2],[wallL-4,wallTop+6]];
+  var roofPolyR = [[ridgeX,ridgeY],[eaveR,eaveY],[wallR+4,wallTop+6],[705,wallTop-2]];
+
+  hatch(roofPolyL, {angle:24, spacing:7, alpha:0.30, width:1.1, jitter:1.4});
+  hatch(roofPolyL, {angle:70, spacing:16, alpha:0.14, width:0.9, jitter:1.2});
+  hatch(roofPolyR, {angle:-24, spacing:7, alpha:0.34, width:1.1, jitter:1.4});
+  hatch(roofPolyR, {angle:-70, spacing:16, alpha:0.16, width:0.9, jitter:1.2});
+
+  for(var i=1;i<12;i++){
+    var t = i/12;
+    var yA = eaveY + (ridgeY-eaveY)*t;
+    var xL = eaveL + (ridgeX-eaveL)*t;
+    var xR2 = eaveR + (ridgeX-eaveR)*t;
+    sketchLine(xL, yA, ridgeX, yA - (yA-ridgeY)*0.02, {passes:1, jitter:2.4, width:1.1, alpha:0.42, segs:22});
+    sketchLine(ridgeX, yA - (yA-ridgeY)*0.02, xR2, yA, {passes:1, jitter:2.4, width:1.1, alpha:0.42, segs:22});
+  }
+
+  sketchPolygon(roofPolyL, {passes:2, jitter:2, width:2.2, alpha:0.75});
+  sketchPolygon(roofPolyR, {passes:2, jitter:2, width:2.2, alpha:0.75});
+  sketchLine(eaveL-14, eaveY+4, ridgeX, ridgeY-4, {passes:2, jitter:1.6, width:2.6, alpha:0.85});
+  sketchLine(ridgeX, ridgeY-4, eaveR+14, eaveY+4, {passes:2, jitter:1.6, width:2.6, alpha:0.85});
+
+  var chim = [[chimX1,chimBase],[chimX1,chimTop],[chimX2,chimTop],[chimX2,chimBase]];
+  hatch(chim, {angle:35, spacing:6, alpha:0.3, width:1});
+  sketchPolyline([[chimX1,chimBase],[chimX1,chimTop],[chimX2-6,chimTop-6],[chimX2+6,chimTop-2],[chimX2,chimBase]], {passes:2, jitter:1.6, width:2, alpha:0.8});
+  sketchLine(chimX1-4, chimTop+18, chimX2+4, chimTop+16, {passes:1, jitter:1.5, width:1.4, alpha:0.55});
+
+  var wallPts = [[wallL,wallTop],[wallR,wallTop],[wallR,wallBot],[wallL,wallBot]];
+  hatch(wallPts, {angle:60, spacing:8, alpha:0.16, width:1});
+
+  var rows = 9;
+  for(var row=0; row<rows; row++){
+    var y0 = wallTop + (wallBot-wallTop)*row/rows;
+    var y1r = wallTop + (wallBot-wallTop)*(row+1)/rows;
+    var x = wallL + rr(-4,4);
+    var offset = (row % 2 === 0) ? 0 : 26;
+    x += offset;
+    while(x < wallR-6){
+      var bw = rr(30,58);
+      var bx2 = Math.min(x+bw, wallR);
+      sketchPolygon([[x+2,y0+2],[bx2-2,y0+rr(-2,2)],[bx2-2,y1r-2],[x+2,y1r+rr(-2,2)]], {passes:1, jitter:1.6, width:1.2, alpha:0.55, segs:6});
+      x = bx2 + rr(2,5);
+    }
+  }
+
+  var doorX1=630, doorX2=760, doorTop=650, doorBot=wallBot;
+  sketchPolyline([[doorX1,doorBot],[doorX1,doorTop+20],[(doorX1+doorX2)/2,doorTop],[doorX2,doorTop+20],[doorX2,doorBot]], {passes:2, jitter:1.4, width:2, alpha:0.8});
+  hatch([[doorX1,doorTop+20],[doorX2,doorTop+20],[doorX2,doorBot],[doorX1,doorBot]], {angle:80, spacing:7, alpha:0.32});
+  sketchLine(doorX1+8, doorBot-40, doorX2-8, doorTop+40, {passes:1, jitter:2, width:1.2, alpha:0.3, segs:12});
+
+  function window_(x1,y1,x2,y2){
+    sketchPolygon([[x1,y1],[x2,y1],[x2,y2],[x1,y2]], {passes:2, jitter:1.3, width:1.8, alpha:0.7});
+    sketchLine((x1+x2)/2, y1, (x1+x2)/2, y2, {passes:1, jitter:1, width:1.2, alpha:0.55, segs:8});
+    sketchLine(x1, (y1+y2)/2, x2, (y1+y2)/2, {passes:1, jitter:1, width:1.2, alpha:0.55, segs:8});
+    hatch([[x1,y1],[x2,y1],[x2,y2],[x1,y2]], {angle:45, spacing:6, alpha:0.22});
+  }
+  window_(478, 560, 580, 690);
+  window_(820, 560, 922, 690);
+
+  var ivyPts = [[880,900],[900,800],[860,700],[905,610],[870,520]];
+  sketchPolyline(ivyPts, {passes:1, jitter:5, width:1.6, alpha:0.5, segs:26});
+  [ [900,860,26], [860,760,22], [905,660,24], [865,560,20], [930,720,18], [800,880,16] ].forEach(function(b){
+    scribbleBlob(b[0],b[1],b[2],10,0.4);
+  });
+  scribbleBlob(660, 890, 30, 14, 0.42);
+  scribbleBlob(700, 895, 22, 10, 0.35);
+
+  sketchLine(wallL-40, groundY+6, wallR+120, groundY+6, {passes:2, jitter:2.5, width:2, alpha:0.5, segs:30});
+  hatch([[wallR-40,groundY+6],[wallR+140,groundY+10],[wallR+140,groundY+42],[wallR-40,groundY+42]], {angle:100, spacing:6, alpha:0.24});
+  for(var g=0; g<70; g++){
+    var gx = rr(160,1260);
+    var gy = groundY + rr(10,46);
+    sketchLine(gx,gy,gx+rr(-6,6),gy-rr(10,20),{passes:1,jitter:1,width:1,alpha:0.22,segs:4});
+  }
+
+  hatch([[705,wallTop],[wallR,wallTop],[wallR,wallBot],[705,wallBot]], {angle:60, spacing:5, alpha:0.14, width:1});
+})();
+</script>
+
+<script>
+  (async function(){
+    var countEl = document.getElementById('visitCount');
+    if(!countEl || !window.claude || !window.claude.use) return;
+    try{
+      var db = await window.claude.use('db');
+      if(!db){ countEl.textContent = '—'; return; }
+      var ref = db.doc('stats/visits');
+      var snap = await ref.get();
+      if(snap.exists){
+        await ref.update({count: (snap.data().count || 0) + 1});
+      } else {
+        await ref.set({count: 1});
+      }
+      ref.onSnapshot(function(s){
+        if(s.exists){
+          countEl.textContent = (s.data().count || 0).toLocaleString('fr-FR');
+        }
+      }, function(){ countEl.textContent = '—'; });
+    }catch(e){
+      countEl.textContent = '—';
+    }
+  })();
+
+  (function(){
+    var flags = document.querySelectorAll('.lang-flag');
+    var nodes = document.querySelectorAll('[data-fr]');
+
+    function applyLang(lang){
+      nodes.forEach(function(el){
+        var val = lang === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-fr');
+        if(val == null) return;
+        var attr = el.getAttribute('data-i18n-attr');
+        if(attr === 'innerHTML'){ el.innerHTML = val; }
+        else if(attr){ el.setAttribute(attr, val); }
+        else { el.textContent = val; }
+      });
+      document.documentElement.lang = lang;
+      flags.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === lang); });
+      try{ localStorage.setItem('atelier-lang', lang); }catch(e){}
+    }
+
+    var saved = 'fr';
+    try{ saved = localStorage.getItem('atelier-lang') || 'fr'; }catch(e){}
+    applyLang(saved);
+
+    flags.forEach(function(b){
+      b.addEventListener('click', function(){ applyLang(b.dataset.lang); });
+    });
+  })();
+
+  (function(){
+    var banner = document.getElementById('cookieBanner');
+    var modal = document.getElementById('cookieModal');
+    if(!banner || !modal) return;
+
+    function getConsent(){ try{ return localStorage.getItem('atelier-cookie-consent'); }catch(e){ return null; } }
+    function setConsent(v){ try{ localStorage.setItem('atelier-cookie-consent', v); }catch(e){} }
+
+    function openModal(){ modal.classList.add('is-open'); }
+    function closeModal(){ modal.classList.remove('is-open'); }
+    function hideBanner(){ banner.classList.remove('is-visible'); }
+
+    if(!getConsent()){
+      window.setTimeout(function(){ banner.classList.add('is-visible'); }, 600);
+    }
+
+    var accept = document.getElementById('cookieAccept');
+    var decline = document.getElementById('cookieDecline');
+    var learnMore = document.getElementById('cookieLearnMore');
+    var openLink = document.getElementById('openCookieModal');
+    var modalClose = document.getElementById('cookieModalClose');
+    var modalAccept = document.getElementById('cookieModalAccept');
+    var modalDecline = document.getElementById('cookieModalDecline');
+
+    if(accept) accept.addEventListener('click', function(){ setConsent('accepted'); hideBanner(); });
+    if(decline) decline.addEventListener('click', function(){ setConsent('declined'); hideBanner(); });
+    if(learnMore) learnMore.addEventListener('click', openModal);
+    if(openLink) openLink.addEventListener('click', openModal);
+    if(modalClose) modalClose.addEventListener('click', closeModal);
+    if(modalAccept) modalAccept.addEventListener('click', function(){ setConsent('accepted'); closeModal(); hideBanner(); });
+    if(modalDecline) modalDecline.addEventListener('click', function(){ setConsent('declined'); closeModal(); hideBanner(); });
+    modal.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+  })();
+
+  function wireSimpleModal(modalId, openBtnId, closeBtnId){
+    var modalEl = document.getElementById(modalId);
+    var openBtn = document.getElementById(openBtnId);
+    var closeBtn = document.getElementById(closeBtnId);
+    if(!modalEl || !openBtn) return;
+    var open = function(){ modalEl.classList.add('is-open'); };
+    var close = function(){ modalEl.classList.remove('is-open'); };
+    openBtn.addEventListener('click', open);
+    if(closeBtn) closeBtn.addEventListener('click', close);
+    modalEl.addEventListener('click', function(e){ if(e.target === modalEl) close(); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+  }
+  wireSimpleModal('legalModal', 'openLegalModal', 'legalModalClose');
+  wireSimpleModal('shippingModal', 'openShippingModal', 'shippingModalClose');
+  wireSimpleModal('cgvModal', 'openCgvModal', 'cgvModalClose');
+
+  var backToTop = document.getElementById('backToTop');
+  if(backToTop){
+    var toggleBackToTop = function(){
+      if(window.scrollY > window.innerHeight * 0.6){ backToTop.classList.add('is-visible'); }
+      else{ backToTop.classList.remove('is-visible'); }
+    };
+    window.addEventListener('scroll', toggleBackToTop, {passive:true});
+    toggleBackToTop();
+    backToTop.addEventListener('click', function(){
+      window.scrollTo({top:0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+    });
+  }
+
+  var els = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, {threshold:0.15});
+    els.forEach(function(el){ io.observe(el); });
+  } else {
+    els.forEach(function(el){ el.classList.add('visible'); });
+  }
+</script>
+
+</body>
+</html>

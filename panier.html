@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panier — Atelier Bourgeon Alain</title>
+<meta name="description" content="Votre panier sur l'Atelier Bourgeon Alain.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="page-loader">
+  <div class="loader-logo">
+    <span class="loader-halo"></span>
+    <span class="loader-atelier">Atelier</span>
+    <span class="loader-name">Alain Bourgeon</span>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">Bourgeon<span>Alain</span></a>
+    <nav class="main-nav">
+      <a href="index.html">Accueil</a>
+      <a href="boutique.html">Boutique</a>
+      <a href="atelier.html">L'Atelier</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <a href="panier.html" class="cart-icon active" aria-label="Panier">🛍<span class="cart-count">0</span></a>
+      <button class="nav-toggle" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="page-header">
+    <div class="container">
+      <span class="breadcrumb">Accueil / Panier</span>
+      <span class="eyebrow">Votre sélection</span>
+      <h1>Votre panier</h1>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container" style="max-width: 900px;">
+
+      <div class="cart-empty">
+        <p style="margin-bottom: var(--space-md);">Votre panier est vide pour le moment.</p>
+        <a href="boutique.html" class="btn btn-primary magnetic">Découvrir la boutique</a>
+      </div>
+
+      <div class="cart-items"></div>
+
+      <div class="cart-summary" style="display:none; flex-direction: column; align-items: stretch;">
+        <div class="cart-total-row">
+          <span>Total</span>
+          <span class="cart-total-value">0 €</span>
+        </div>
+        <p class="product-material" style="margin-bottom: var(--space-md);">Frais de livraison calculés à l'étape suivante. Expédition sous 4 à 5 jours ouvrés.</p>
+        <div style="display:flex; gap: var(--space-sm); flex-wrap: wrap;">
+          <a href="boutique.html" class="btn btn-outline magnetic">Continuer mes achats</a>
+          <button class="btn btn-primary magnetic" id="checkout-btn" style="flex:1; justify-content:center;">Passer la commande</button>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--color-ink-soft); margin-top: var(--space-sm); text-align: center;">[Site de démonstration — le paiement en ligne n'est pas encore activé. À connecter à Stripe / PayPal avant mise en production.]</p>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Atelier Bourgeon Alain</h4>
+        <p>Maquettes d'architecture façonnées à la main, pour les amateurs d'objets rares.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="boutique.html">Boutique</a></li>
+          <li><a href="atelier.html">L'Atelier</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Informations</h4>
+        <ul>
+          <li><a href="livraison.html">Livraison & retours</a></li>
+          <li><a href="cgv.html">CGV</a></li>
+          <li><a href="mentions-legales.html">Mentions légales</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:contact@bourgeonalain.fr">contact@bourgeonalain.fr</a></li>
+          <li><a href="tel:+33000000000">+33 0 00 00 00 00</a></li>
+          <li>[Adresse de l'atelier]</li>
+        </ul>
+        <iframe class="footer-map" src="https://www.google.com/maps?q=Martign%C3%A9-Ferchaud,35640&output=embed" loading="lazy" title="Localisation de l'Atelier Bourgeon Alain, Martigné-Ferchaud"></iframe>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Atelier Bourgeon Alain. Tous droits réservés.</span>
+      <div class="footer-social">
+        <a href="#" class="link-underline">Instagram</a>
+        <a href="#" class="link-underline">Pinterest</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  document.getElementById('checkout-btn')?.addEventListener('click', () => {
+    alert("Ceci est une démonstration : le paiement en ligne n'est pas encore activé sur ce site.");
+  });
+</script>
+</body>
+</html>

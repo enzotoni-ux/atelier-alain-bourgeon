@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boutique — Atelier Bourgeon Alain</title>
+<meta name="description" content="Découvrez toutes nos maquettes d'architecture : monuments, résidences et projets urbains, fabriqués à la main.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="page-loader">
+  <div class="loader-logo">
+    <span class="loader-halo"></span>
+    <span class="loader-atelier">Atelier</span>
+    <span class="loader-name">Alain Bourgeon</span>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">Bourgeon<span>Alain</span></a>
+    <nav class="main-nav">
+      <a href="index.html">Accueil</a>
+      <a href="boutique.html" class="active">Boutique</a>
+      <a href="atelier.html">L'Atelier</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <a href="panier.html" class="cart-icon" aria-label="Panier">🛍<span class="cart-count">0</span></a>
+      <button class="nav-toggle" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <div class="page-header">
+    <div class="container">
+      <span class="breadcrumb">Accueil / Boutique</span>
+      <span class="eyebrow">Catalogue</span>
+      <h1>Toutes nos maquettes</h1>
+    </div>
+  </div>
+
+  <section class="section" style="padding-top: var(--space-lg);">
+    <div class="container">
+
+      <div class="filters-bar reveal">
+        <div class="filter-group">
+          <button class="filter-chip active" data-filter="all">Tout</button>
+          <button class="filter-chip" data-filter="monuments">Monuments</button>
+          <button class="filter-chip" data-filter="residentiel">Résidentiel</button>
+          <button class="filter-chip" data-filter="urbanisme">Urbanisme</button>
+        </div>
+        <select class="sort-select">
+          <option>Trier par : Nouveautés</option>
+          <option>Prix croissant</option>
+          <option>Prix décroissant</option>
+          <option>Popularité</option>
+        </select>
+      </div>
+
+      <div class="products-grid reveal-stagger reveal">
+
+        <a href="produit-chaumiere.html" class="product-card" data-category="pierre">
+          <div class="product-image">
+            <span class="product-badge">Fait main</span>
+            <img src="IMG_20260819_134136-clean.png" alt="Chaumière de Pierre envahie de lierre">
+          </div>
+          <div class="product-info">
+            <div><p class="product-name">Chaumière de Pierre</p><p class="product-material">Mousse, plâtre & feuillage</p><div class="rating-line"><span class="stars" style="--rating:4.9"></span><span class="rating-score">4.9/5</span><span class="rating-count">(24 avis)</span></div></div>
+            <span class="product-price">15 €</span>
+          </div>
+        </a>
+
+        <a href="produit-colombages.html" class="product-card" data-category="colombages">
+          <div class="product-image">
+            <span class="product-badge">Fait main</span>
+            <img src="IMG_20260710_070147-clean.png" alt="Maison à colombages">
+          </div>
+          <div class="product-info">
+            <div><p class="product-name">Maison à Colombages</p><p class="product-material">Carton bois & balsa peint</p><div class="rating-line"><span class="stars" style="--rating:4.8"></span><span class="rating-score">4.8/5</span><span class="rating-count">(17 avis)</span></div></div>
+            <span class="product-price">15 €</span>
+          </div>
+        </a>
+
+        <a href="produit-ruine.html" class="product-card" data-category="pierre">
+          <div class="product-image">
+            <span class="product-badge">Fait main</span>
+            <img src="IMG_20260829_114933-clean.png" alt="Ferme en ruine, toit percé">
+          </div>
+          <div class="product-info">
+            <div><p class="product-name">Ferme en Ruine</p><p class="product-material">Mousse, plâtre & clôture bois</p><div class="rating-line"><span class="stars" style="--rating:4.9"></span><span class="rating-score">4.9/5</span><span class="rating-count">(12 avis)</span></div></div>
+            <span class="product-price">15 €</span>
+          </div>
+        </a>
+
+      </div>
+
+      <p class="reveal" style="margin-top: var(--space-lg); color: var(--color-ink-soft); font-size: 0.9rem;">D'autres pièces arrivent bientôt dans la boutique. [À personnaliser au fil de vos créations]</p>
+
+    </div>
+  </section>
+
+  <!-- ===== SUR-MESURE ===== -->
+  <section class="section section-alt">
+    <div class="container quote-block reveal">
+      <span class="eyebrow">Un projet précis en tête ?</span>
+      <h2 style="margin-bottom: var(--space-md);">Nous réalisons aussi des maquettes sur-mesure</h2>
+      <p class="lead" style="margin: 0 auto var(--space-md);">Décrivez-nous votre bâtiment ou votre projet architectural : notre atelier étudie sa faisabilité et vous propose un devis personnalisé.</p>
+      <a href="contact.html" class="btn btn-primary magnetic">Demander un devis</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Atelier Bourgeon Alain</h4>
+        <p>Maquettes d'architecture façonnées à la main, pour les amateurs d'objets rares.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="boutique.html">Boutique</a></li>
+          <li><a href="atelier.html">L'Atelier</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Informations</h4>
+        <ul>
+          <li><a href="livraison.html">Livraison & retours</a></li>
+          <li><a href="cgv.html">CGV</a></li>
+          <li><a href="mentions-legales.html">Mentions légales</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:contact@bourgeonalain.fr">contact@bourgeonalain.fr</a></li>
+          <li><a href="tel:+33000000000">+33 0 00 00 00 00</a></li>
+          <li>[Adresse de l'atelier]</li>
+        </ul>
+        <iframe class="footer-map" src="https://www.google.com/maps?q=Martign%C3%A9-Ferchaud,35640&output=embed" loading="lazy" title="Localisation de l'Atelier Bourgeon Alain, Martigné-Ferchaud"></iframe>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Atelier Bourgeon Alain. Tous droits réservés.</span>
+      <div class="footer-social">
+        <a href="#" class="link-underline">Instagram</a>
+        <a href="#" class="link-underline">Pinterest</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
