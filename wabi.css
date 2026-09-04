@@ -249,7 +249,7 @@ p{margin:0;}
 }
 
 .hero-photo{position:relative; display:flex; justify-content:center; align-items:center; min-height:380px;}
-.photo-stage{position:relative; width:min(420px, 90%);}
+.photo-stage{position:relative; width:min(420px, 90%); aspect-ratio:1/1;}
 .dashed-ring{
   position:absolute; inset:-6% -10% -14% -10%;
   border:2px dashed var(--moss-deep);
@@ -258,7 +258,7 @@ p{margin:0;}
 }
 .photo-cutout{position:relative; width:100%; filter:drop-shadow(10px 16px 14px rgba(42,35,25,.35));}
 .photo-frame{
-  position:relative; z-index:1; width:100%; aspect-ratio:1/1;
+  position:absolute; inset:-6% -10% -14% -10%; z-index:1;
   overflow:hidden;
   border:2px solid var(--ink);
   border-radius:48% 52% 45% 55% / 55% 48% 52% 45%;
