@@ -475,6 +475,20 @@ p{margin:0;}
 .scale-note p{font-size:.85rem; color:var(--ink-soft); line-height:1.4;}
 .scale-note strong{font-family:'Caveat',cursive; font-weight:700; font-size:1.15rem; color:var(--rust); display:block;}
 
+.gift-option{
+  display:flex; align-items:flex-start; gap:.65rem;
+  margin:1.3rem 0 .3rem; padding:.7rem .9rem;
+  background:var(--paper-light); border:1px dashed var(--line);
+  font-size:.88rem; color:var(--ink-soft); cursor:pointer;
+}
+.gift-option input{margin-top:.2rem; width:16px; height:16px; accent-color:var(--moss-deep); flex-shrink:0; cursor:pointer;}
+.gift-option strong{color:var(--ink); font-weight:600;}
+
+.cross-sell{
+  display:grid; grid-template-columns:repeat(2,1fr); gap:2rem;
+  max-width:640px; margin:0 auto; position:relative; z-index:2;
+}
+
 /* ---------- contact ---------- */
 .contact-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:clamp(2rem,5vw,3.5rem); position:relative; z-index:2;}
 .contact-info-item{margin-bottom:1.6rem;}
@@ -680,4 +694,5 @@ p{margin:0;}
 }
 @media (max-width:560px){
   .products-grid{grid-template-columns:1fr;}
+  .cross-sell{grid-template-columns:1fr;}
 }

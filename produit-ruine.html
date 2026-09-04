@@ -106,10 +106,46 @@
           <li data-fr="Fabrication artisanale, pièce par pièce" data-en="Handcrafted, piece by piece">Fabrication artisanale, pièce par pièce</li>
           <li data-fr="Livrée dans un emballage protecteur sur-mesure" data-en="Shipped in custom protective packaging">Livrée dans un emballage protecteur sur-mesure</li>
         </ul>
+        <label class="gift-option">
+          <input type="checkbox" id="giftWrap">
+          <span><strong data-fr="Emballage cadeau" data-en="Gift wrapping">Emballage cadeau</strong> — <span data-fr="papier kraft, ficelle et carte manuscrite (+2 €)" data-en="kraft paper, string and a handwritten card (+€2)">papier kraft, ficelle et carte manuscrite (+2 €)</span></span>
+        </label>
         <button type="button" class="stamp-btn" id="addToCart" data-fr="Commander ✎" data-en="Order ✎">Commander ✎</button>
+        <ul class="reassurance-strip">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+            <span data-fr="Paiement sécurisé" data-en="Secure payment">Paiement sécurisé</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 3v5h5"/></svg>
+            <span data-fr="Satisfait ou remboursé sous 14 jours" data-en="Money-back guarantee within 14 days">Satisfait ou remboursé sous 14 jours</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="13" height="9"/><path d="M15 10h4l3 3v3h-7z"/><circle cx="6.5" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>
+            <span data-fr="Expédié sous 5 à 10 jours ouvrés" data-en="Shipped within 5 to 10 business days">Expédié sous 5 à 10 jours ouvrés</span>
+          </li>
+        </ul>
         <p style="font-size:.8rem; color:var(--ink-soft); margin-top:1rem;" data-fr="Chaque pièce étant façonnée à la main, de légères variations sont possibles d'un exemplaire à l'autre." data-en="As every piece is handmade, slight variations between copies are possible.">Chaque pièce étant façonnée à la main, de légères variations sont possibles d'un exemplaire à l'autre.</p>
       </div>
 
+    </div>
+  </section>
+
+  <section class="section section-deep">
+    <div class="container">
+      <div class="section-header reveal" style="justify-content:center; text-align:center;">
+        <div><span class="eyebrow-hand" data-fr="vous aimerez aussi" data-en="you may also like">vous aimerez aussi</span><h2 data-fr="Complétez la collection" data-en="Complete the collection">Complétez la collection</h2></div>
+      </div>
+      <div class="cross-sell reveal-stagger reveal">
+        <a href="produit-chaumiere.html" class="coll-card" style="--r:1deg;">
+          <div class="coll-frame"><img src="IMG_20260819_134136-clean.webp" alt="Chaumière de Pierre"></div>
+          <div class="coll-caption"><h3 data-fr="Chaumière de Pierre" data-en="Stone Cottage">Chaumière de Pierre</h3><span>15 €</span></div>
+        </a>
+        <a href="produit-colombages.html" class="coll-card" style="--r:-1deg;">
+          <div class="coll-frame"><img src="IMG_20260710_070147-clean.webp" alt="Maison à colombages"></div>
+          <div class="coll-caption"><h3 data-fr="Maison à Colombages" data-en="Timber-Framed House">Maison à Colombages</h3><span>15 €</span></div>
+        </a>
+      </div>
     </div>
   </section>
 </main>
@@ -187,11 +223,15 @@
 <script src="wabi.js"></script>
 <script>
   document.getElementById('addToCart').addEventListener('click', function(){
+    var gift = document.getElementById('giftWrap').checked;
     atelierAddToCart(
       {name:"Ferme en Ruine", price:15, image:"IMG_20260829_114933-clean.webp", material:"Mousse, plâtre & clôture bois"},
-      "Ferme en Ruine ajoutée au panier ✓",
-      "Ruined Farmhouse added to cart ✓"
+      gift ? "Ferme en Ruine + emballage cadeau ajoutés au panier ✓" : "Ferme en Ruine ajoutée au panier ✓",
+      gift ? "Ruined Farmhouse + gift wrap added to cart ✓" : "Ruined Farmhouse added to cart ✓"
     );
+    if(gift){
+      atelierAddToCart({name:"Emballage cadeau — Ferme en Ruine", price:2, image:"IMG_20260829_114933-clean.webp", material:"Papier kraft, ficelle & carte manuscrite"});
+    }
   });
 </script>
 </body>

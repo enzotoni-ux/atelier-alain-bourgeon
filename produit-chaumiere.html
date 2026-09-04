@@ -106,6 +106,10 @@
           <li data-fr="Fabrication artisanale, pièce par pièce" data-en="Handcrafted, piece by piece">Fabrication artisanale, pièce par pièce</li>
           <li data-fr="Livrée dans un emballage protecteur sur-mesure" data-en="Shipped in custom protective packaging">Livrée dans un emballage protecteur sur-mesure</li>
         </ul>
+        <label class="gift-option">
+          <input type="checkbox" id="giftWrap">
+          <span><strong data-fr="Emballage cadeau" data-en="Gift wrapping">Emballage cadeau</strong> — <span data-fr="papier kraft, ficelle et carte manuscrite (+2 €)" data-en="kraft paper, string and a handwritten card (+€2)">papier kraft, ficelle et carte manuscrite (+2 €)</span></span>
+        </label>
         <button type="button" class="stamp-btn" id="addToCart" data-fr="Commander ✎" data-en="Order ✎">Commander ✎</button>
         <ul class="reassurance-strip">
           <li>
@@ -124,6 +128,24 @@
         <p style="font-size:.8rem; color:var(--ink-soft); margin-top:1rem;" data-fr="Chaque pièce étant façonnée à la main, de légères variations sont possibles d'un exemplaire à l'autre." data-en="As every piece is handmade, slight variations between copies are possible.">Chaque pièce étant façonnée à la main, de légères variations sont possibles d'un exemplaire à l'autre.</p>
       </div>
 
+    </div>
+  </section>
+
+  <section class="section section-deep">
+    <div class="container">
+      <div class="section-header reveal" style="justify-content:center; text-align:center;">
+        <div><span class="eyebrow-hand" data-fr="vous aimerez aussi" data-en="you may also like">vous aimerez aussi</span><h2 data-fr="Complétez la collection" data-en="Complete the collection">Complétez la collection</h2></div>
+      </div>
+      <div class="cross-sell reveal-stagger reveal">
+        <a href="produit-colombages.html" class="coll-card" style="--r:1deg;">
+          <div class="coll-frame"><img src="IMG_20260710_070147-clean.webp" alt="Maison à colombages"></div>
+          <div class="coll-caption"><h3 data-fr="Maison à Colombages" data-en="Timber-Framed House">Maison à Colombages</h3><span>15 €</span></div>
+        </a>
+        <a href="produit-ruine.html" class="coll-card" style="--r:-1deg;">
+          <div class="coll-frame"><img src="IMG_20260829_114933-clean.webp" alt="Ferme en ruine"></div>
+          <div class="coll-caption"><h3 data-fr="Ferme en Ruine" data-en="Ruined Farmhouse">Ferme en Ruine</h3><span>15 €</span></div>
+        </a>
+      </div>
     </div>
   </section>
 </main>
@@ -201,11 +223,15 @@
 <script src="wabi.js"></script>
 <script>
   document.getElementById('addToCart').addEventListener('click', function(){
+    var gift = document.getElementById('giftWrap').checked;
     atelierAddToCart(
       {name:"Chaumière de Pierre", price:15, image:"IMG_20260819_134136-clean.webp", material:"Mousse, plâtre & feuillage"},
-      "Chaumière de Pierre ajoutée au panier ✓",
-      "Stone Cottage added to cart ✓"
+      gift ? "Chaumière de Pierre + emballage cadeau ajoutés au panier ✓" : "Chaumière de Pierre ajoutée au panier ✓",
+      gift ? "Stone Cottage + gift wrap added to cart ✓" : "Stone Cottage added to cart ✓"
     );
+    if(gift){
+      atelierAddToCart({name:"Emballage cadeau — Chaumière de Pierre", price:2, image:"IMG_20260819_134136-clean.webp", material:"Papier kraft, ficelle & carte manuscrite"});
+    }
   });
 </script>
 </body>
