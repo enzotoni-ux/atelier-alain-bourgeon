@@ -1,4 +1,22 @@
 (function(){
+  var params;
+  try{ params = new URLSearchParams(window.location.search); }catch(e){ params = null; }
+  if(params && (params.get('sent') === '1' || params.get('subscribed') === '1')){
+    var isSub = params.get('subscribed') === '1';
+    var toast = document.createElement('div');
+    toast.className = 'cart-toast';
+    toast.textContent = isSub ? 'Inscription enregistrée, merci ✓' : 'Message envoyé, merci ✓';
+    document.body.appendChild(toast);
+    window.requestAnimationFrame(function(){ toast.classList.add('is-visible'); });
+    window.setTimeout(function(){ toast.classList.remove('is-visible'); }, 3500);
+    params.delete('sent'); params.delete('subscribed');
+    var qs = params.toString();
+    var newUrl = window.location.pathname + (qs ? '?' + qs : '') + window.location.hash;
+    window.history.replaceState({}, '', newUrl);
+  }
+})();
+
+(function(){
   var toggle = document.getElementById('themeToggle');
   var stored = null;
   try{ stored = localStorage.getItem('atelier-theme'); }catch(e){}

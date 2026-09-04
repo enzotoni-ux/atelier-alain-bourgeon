@@ -140,8 +140,11 @@
         <h2 data-fr="Ne manquez aucun article" data-en="Don't miss a post">Ne manquez aucun article</h2>
         <p data-fr="Nouvelles pièces, coulisses de fabrication, éditions limitées." data-en="New pieces, behind-the-scenes and limited editions.">Nouvelles pièces, coulisses de fabrication, éditions limitées.</p>
       </div>
-      <form class="newsletter-form" onsubmit="return false;">
-        <input type="email" placeholder="Votre adresse email" required data-fr="Votre adresse email" data-en="Your email address" data-i18n-attr="placeholder">
+      <form class="newsletter-form" action="https://formsubmit.co/contact@bourgeonalain.fr" method="POST">
+        <input type="hidden" name="_subject" value="Nouvelle inscription newsletter — site Atelier Alain Bourgeon">
+        <input type="hidden" name="_next" value="https://enzotoni-ux.github.io/atelier-alain-bourgeon/blog.html?subscribed=1">
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+        <input type="email" name="email" placeholder="Votre adresse email" required data-fr="Votre adresse email" data-en="Your email address" data-i18n-attr="placeholder">
         <button type="submit" data-fr="S'inscrire ✎" data-en="Subscribe ✎">S'inscrire ✎</button>
       </form>
     </div>

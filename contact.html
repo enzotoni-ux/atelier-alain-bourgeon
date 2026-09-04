@@ -106,7 +106,11 @@
         </div>
       </div>
 
-      <form class="reveal" onsubmit="return false;">
+      <form class="reveal" action="https://formsubmit.co/contact@bourgeonalain.fr" method="POST">
+        <input type="hidden" name="_subject" value="Nouveau message — site Atelier Alain Bourgeon">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_next" value="https://enzotoni-ux.github.io/atelier-alain-bourgeon/contact.html?sent=1">
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
         <div class="form-row">
           <div class="form-group">
             <label for="prenom" data-fr="Prénom" data-en="First name">Prénom</label>
@@ -135,7 +139,6 @@
           <textarea id="message" name="message" required placeholder="Décrivez votre demande, votre projet ou joignez des références..." data-fr="Décrivez votre demande, votre projet ou joignez des références..." data-en="Describe your request, your project, or mention any references..." data-i18n-attr="placeholder"></textarea>
         </div>
         <button type="submit" class="stamp-btn" data-fr="Envoyer le message ✎" data-en="Send message ✎">Envoyer le message ✎</button>
-        <p style="font-size:.8rem; color:var(--ink-soft); margin-top:.8rem;" data-fr="[Formulaire de démonstration — à connecter à un service d'envoi d'e-mails avant mise en production.]" data-en="[Demo form — connect it to an email-sending service before going live.]">[Formulaire de démonstration — à connecter à un service d'envoi d'e-mails avant mise en production.]</p>
       </form>
 
     </div>
