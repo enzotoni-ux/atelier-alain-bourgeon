@@ -1,0 +1,12 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Bourgeon;Alain;;;
+FN:Alain Bourgeon
+ORG:L'Atelier Alain Bourgeon
+TITLE:Artisan maquettiste
+TEL;TYPE=WORK,VOICE:+33000000000
+EMAIL;TYPE=WORK:contact@bourgeonalain.fr
+ADR;TYPE=WORK:;;6 rue Surcouf;Martigné-Ferchaud;;35640;France
+URL:https://enzotoni-ux.github.io/atelier-alain-bourgeon/
+NOTE:Maquettes d'architecture faites main
+END:VCARD

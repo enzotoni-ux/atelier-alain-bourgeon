@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<script>try{var t=localStorage.getItem("atelier-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QR code de contact — L'Atelier Alain Bourgeon</title>
+<meta name="description" content="QR code imprimable vers la carte de contact de l'Atelier Alain Bourgeon.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="wabi.css">
+<style>
+  body{display:flex; align-items:center; justify-content:center; min-height:100vh;}
+  .qr-wrap{text-align:center; padding:2rem 1.5rem; max-width:420px;}
+  .qr-frame{
+    background:var(--paper-light); border:2px solid var(--ink);
+    box-shadow:7px 7px 0 var(--shadow); padding:2rem; margin-bottom:1.5rem;
+    transform:rotate(-.5deg);
+  }
+  .qr-frame img{width:100%; max-width:320px; margin:0 auto; display:block;}
+  .qr-caption{font-family:'Caveat',cursive; font-size:1.3rem; color:var(--rust); transform:rotate(-1deg); display:block; margin-bottom:.6rem;}
+  .qr-wrap h1{font-size:1.3rem; margin-bottom:.3rem;}
+  .qr-wrap p{font-size:.85rem; color:var(--ink-soft);}
+  .print-btn{margin-top:1.5rem;}
+  @media print{
+    .print-btn, .theme-toggle, .back-to-top{display:none !important;}
+    body{background:#fff;}
+    .qr-frame{box-shadow:none; border:1px solid #000;}
+  }
+</style>
+</head>
+<body>
+
+<div class="qr-wrap">
+  <div class="qr-frame">
+    <img src="qr-atelier.png" alt="QR code vers la carte de contact de l'Atelier Alain Bourgeon">
+  </div>
+  <span class="qr-caption">scannez pour enregistrer nos coordonnées</span>
+  <h1>L'Atelier Alain Bourgeon</h1>
+  <p>Téléphone, email, réseaux et localisation en un scan.</p>
+  <button class="stamp-btn print-btn" onclick="window.print()">Imprimer ✎</button>
+</div>
+
+</body>
+</html>

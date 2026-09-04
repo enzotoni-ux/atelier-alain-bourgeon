@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<script>try{var t=localStorage.getItem("atelier-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carte de contact — L'Atelier Alain Bourgeon</title>
+<meta name="description" content="Coordonnées de l'Atelier Alain Bourgeon : téléphone, email, réseaux et localisation à Martigné-Ferchaud.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="L'Atelier Alain Bourgeon">
+<meta property="og:title" content="Carte de contact — L'Atelier Alain Bourgeon">
+<meta property="og:description" content="Coordonnées de l'Atelier Alain Bourgeon : téléphone, email, réseaux et localisation à Martigné-Ferchaud.">
+<meta property="og:url" content="https://enzotoni-ux.github.io/atelier-alain-bourgeon/carte.html">
+<meta property="og:image" content="https://enzotoni-ux.github.io/atelier-alain-bourgeon/IMG_20260819_134136-clean.webp">
+<meta property="og:locale" content="fr_FR">
+<link rel="canonical" href="https://enzotoni-ux.github.io/atelier-alain-bourgeon/carte.html">
+<link rel="stylesheet" href="wabi.css">
+<style>
+  body{display:flex; align-items:flex-start; justify-content:center; min-height:100vh;}
+  .card-wrap{width:100%; max-width:420px; margin:clamp(1.5rem,6vw,3rem) auto; padding:0 1.25rem;}
+  .card-sheet{
+    background:var(--paper-light); border:2px solid var(--ink);
+    box-shadow:7px 7px 0 var(--shadow); padding:2rem 1.6rem 1.8rem;
+    text-align:center; transform:rotate(-.6deg);
+  }
+  .card-logo{
+    width:56px; height:56px; margin:0 auto .8rem;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .card-logo svg{width:100%; height:100%; stroke:var(--ink);}
+  .card-sheet h1{font-size:1.6rem; margin-bottom:.2rem;}
+  .card-tagline{font-family:'Caveat',cursive; color:var(--rust); font-size:1.15rem; display:block; margin-bottom:1.6rem; transform:rotate(-1deg);}
+  .card-actions{display:flex; flex-direction:column; gap:.8rem; margin-bottom:1.6rem;}
+  .card-btn{
+    display:flex; align-items:center; gap:.8rem;
+    padding:.85rem 1.1rem; border:2px solid var(--ink); background:var(--paper);
+    text-decoration:none; color:var(--ink); font-size:.95rem; font-weight:600;
+    box-shadow:3px 3px 0 var(--shadow); transition:transform .15s ease;
+  }
+  .card-btn:hover{transform:translate(-2px,-2px); box-shadow:5px 5px 0 var(--shadow);}
+  .card-btn svg{width:20px; height:20px; stroke:var(--moss-deep); flex-shrink:0;}
+  .card-btn.primary{background:var(--ochre); border-color:var(--ink);}
+  .card-social{display:flex; justify-content:center; gap:.9rem; margin-bottom:1.6rem;}
+  .card-social a{
+    width:40px; height:40px; border:2px solid var(--ink); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; text-decoration:none; color:var(--ink);
+    font-size:1rem; background:var(--paper); transition:transform .15s ease;
+  }
+  .card-social a:hover{transform:rotate(-6deg);}
+  .card-map{
+    border:2px solid var(--ink); box-shadow:4px 4px 0 var(--shadow);
+    overflow:hidden; margin-bottom:1rem;
+  }
+  .card-map iframe{width:100%; height:160px; display:block; filter:grayscale(.25) sepia(.12);}
+  .card-address{font-size:.85rem; color:var(--ink-soft);}
+  .card-footer-link{display:block; margin-top:1.6rem; font-size:.85rem;}
+</style>
+</head>
+<body>
+
+<div class="card-wrap">
+  <div class="card-sheet reveal visible">
+    <div class="card-logo">
+      <svg viewBox="0 0 40 40" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 34 L6 18 L20 6 L34 19 L34 34 Z"/>
+        <path d="M15 34 L15 24 L25 24 L25 34"/>
+      </svg>
+    </div>
+    <h1>L'Atelier Alain Bourgeon</h1>
+    <span class="card-tagline">maquettes d'architecture faites main</span>
+
+    <div class="card-actions">
+      <a class="card-btn primary" href="tel:+33000000000">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92z"/></svg>
+        +33 0 00 00 00 00
+      </a>
+      <a class="card-btn" href="mailto:contact@bourgeonalain.fr">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+        contact@bourgeonalain.fr
+      </a>
+      <a class="card-btn" href="contact.vcf" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+        Enregistrer le contact
+      </a>
+    </div>
+
+    <div class="card-social">
+      <a href="https://wa.me/33000000000" aria-label="WhatsApp">✆</a>
+      <a href="#" aria-label="Instagram">◎</a>
+      <a href="#" aria-label="Pinterest">◈</a>
+      <a href="#" aria-label="TikTok">♪</a>
+    </div>
+
+    <div class="card-map">
+      <iframe src="https://www.google.com/maps?q=6+rue+Surcouf,+35640+Martign%C3%A9-Ferchaud&output=embed" loading="lazy" title="Localisation de l'Atelier Alain Bourgeon"></iframe>
+    </div>
+    <p class="card-address">6 rue Surcouf, 35640 Martigné-Ferchaud, France</p>
+
+    <a class="card-footer-link link-underline" href="index.html">Voir le site complet →</a>
+  </div>
+</div>
+
+</body>
+</html>
