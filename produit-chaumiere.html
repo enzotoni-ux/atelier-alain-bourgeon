@@ -11,12 +11,12 @@
 <meta property="og:title" content="Chaumière de Pierre — L'Atelier Alain Bourgeon">
 <meta property="og:description" content="Chaumière de Pierre envahie de lierre, maquette faite main en mousse et plâtre patiné. 15 €.">
 <meta property="og:url" content="https://enzotoni-ux.github.io/atelier-alain-bourgeon/produit-chaumiere.html">
-<meta property="og:image" content="https://enzotoni-ux.github.io/atelier-alain-bourgeon/IMG_20260819_134136-clean.webp">
+<meta property="og:image" content="https://enzotoni-ux.github.io/atelier-alain-bourgeon/IMG_chaumiere_pro_face.webp">
 <meta property="og:locale" content="fr_FR">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Chaumière de Pierre — L'Atelier Alain Bourgeon">
 <meta name="twitter:description" content="Chaumière de Pierre envahie de lierre, maquette faite main en mousse et plâtre patiné. 15 €.">
-<meta name="twitter:image" content="https://enzotoni-ux.github.io/atelier-alain-bourgeon/IMG_20260819_134136-clean.webp">
+<meta name="twitter:image" content="https://enzotoni-ux.github.io/atelier-alain-bourgeon/IMG_chaumiere_pro_face.webp">
 <link rel="canonical" href="https://enzotoni-ux.github.io/atelier-alain-bourgeon/produit-chaumiere.html">
 <link rel="stylesheet" href="wabi.css">
 </head>
@@ -87,8 +87,16 @@
     <div class="container product-detail">
 
       <div class="reveal">
-        <div class="product-detail-frame">
-          <img src="IMG_20260819_134136-clean.webp" alt="Chaumière de Pierre envahie de lierre">
+        <div class="product-detail-frame photo">
+          <img id="mainProductImage" src="IMG_chaumiere_pro_face.webp" alt="Chaumière de Pierre, vue en studio">
+        </div>
+        <div class="product-gallery-thumbs">
+          <button type="button" class="product-gallery-thumb active" data-src="IMG_chaumiere_pro_face.webp" data-alt="Chaumière de Pierre, vue en studio" aria-label="Vue studio">
+            <img src="IMG_chaumiere_pro_face.webp" alt="">
+          </button>
+          <button type="button" class="product-gallery-thumb" data-src="IMG_20260819_134136-clean.webp" data-alt="Chaumière de Pierre envahie de lierre" aria-label="Vue détourée">
+            <img src="IMG_20260819_134136-clean.webp" alt="">
+          </button>
         </div>
       </div>
 
@@ -225,12 +233,12 @@
   document.getElementById('addToCart').addEventListener('click', function(){
     var gift = document.getElementById('giftWrap').checked;
     atelierAddToCart(
-      {name:"Chaumière de Pierre", price:15, image:"IMG_20260819_134136-clean.webp", material:"Mousse, plâtre & feuillage"},
+      {name:"Chaumière de Pierre", price:15, image:"IMG_chaumiere_pro_face.webp", material:"Mousse, plâtre & feuillage"},
       gift ? "Chaumière de Pierre + emballage cadeau ajoutés au panier ✓" : "Chaumière de Pierre ajoutée au panier ✓",
       gift ? "Stone Cottage + gift wrap added to cart ✓" : "Stone Cottage added to cart ✓"
     );
     if(gift){
-      atelierAddToCart({name:"Emballage cadeau — Chaumière de Pierre", price:2, image:"IMG_20260819_134136-clean.webp", material:"Papier kraft, ficelle & carte manuscrite"});
+      atelierAddToCart({name:"Emballage cadeau — Chaumière de Pierre", price:2, image:"IMG_chaumiere_pro_face.webp", material:"Papier kraft, ficelle & carte manuscrite"});
     }
   });
 </script>
