@@ -503,9 +503,9 @@ p{margin:0;}
 
 .qr-inline{
   display:inline-block; background:var(--paper-light); border:2px solid var(--ink);
-  box-shadow:4px 4px 0 var(--shadow); padding:.9rem; margin-top:.8rem; transform:rotate(-.6deg);
+  box-shadow:5px 5px 0 var(--shadow); padding:1.1rem; margin-top:.8rem; transform:rotate(-.6deg);
 }
-.qr-inline img{width:140px; height:140px; display:block;}
+.qr-inline img{width:220px; height:220px; max-width:100%; display:block;}
 
 .form-group{margin-bottom:1.2rem;}
 .form-row{display:grid; grid-template-columns:1fr 1fr; gap:1rem;}
