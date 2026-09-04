@@ -315,7 +315,8 @@ p{margin:0;}
   display:flex; align-items:flex-end; justify-content:center;
   overflow:hidden; position:relative;
 }
-.coll-frame img{width:78%; object-fit:contain; filter:drop-shadow(4px 8px 8px rgba(42,35,25,.3));}
+.coll-frame img{width:100%; height:100%; object-fit:cover; filter:none; transition:transform .3s ease;}
+.coll-card:hover .coll-frame img{transform:scale(1.04);}
 .coll-caption{margin-top:.9rem; text-align:center;}
 .coll-caption h3{font-size:1.3rem;}
 .coll-caption span{display:block; margin-top:.2rem; font-family:'Caveat',cursive; color:var(--rust); font-size:1.05rem;}
