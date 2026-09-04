@@ -11,12 +11,12 @@
 <meta property="og:title" content="Ferme en Ruine — L'Atelier Alain Bourgeon">
 <meta property="og:description" content="Ferme en ruine au toit percé, maquette faite main en mousse, plâtre et clôture bois. 15 €.">
 <meta property="og:url" content="https://enzotoni-ux.github.io/atelier-alain-bourgeon/produit-ruine.html">
-<meta property="og:image" content="https://enzotoni-ux.github.io/atelier-alain-bourgeon/IMG_20260829_114933-clean.webp">
+<meta property="og:image" content="https://enzotoni-ux.github.io/atelier-alain-bourgeon/IMG_ruine_pro_face.webp">
 <meta property="og:locale" content="fr_FR">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Ferme en Ruine — L'Atelier Alain Bourgeon">
 <meta name="twitter:description" content="Ferme en ruine au toit percé, maquette faite main en mousse, plâtre et clôture bois. 15 €.">
-<meta name="twitter:image" content="https://enzotoni-ux.github.io/atelier-alain-bourgeon/IMG_20260829_114933-clean.webp">
+<meta name="twitter:image" content="https://enzotoni-ux.github.io/atelier-alain-bourgeon/IMG_ruine_pro_face.webp">
 <link rel="canonical" href="https://enzotoni-ux.github.io/atelier-alain-bourgeon/produit-ruine.html">
 <link rel="stylesheet" href="wabi.css">
 </head>
@@ -87,8 +87,16 @@
     <div class="container product-detail">
 
       <div class="reveal">
-        <div class="product-detail-frame">
-          <img src="IMG_20260829_114933-clean.webp" alt="Ferme en ruine, toit percé">
+        <div class="product-detail-frame photo">
+          <img id="mainProductImage" src="IMG_ruine_pro_face.webp" alt="Ferme en ruine, vue en studio">
+        </div>
+        <div class="product-gallery-thumbs">
+          <button type="button" class="product-gallery-thumb active" data-src="IMG_ruine_pro_face.webp" data-alt="Ferme en ruine, vue en studio" aria-label="Vue studio">
+            <img src="IMG_ruine_pro_face.webp" alt="">
+          </button>
+          <button type="button" class="product-gallery-thumb" data-src="IMG_20260829_114933-clean.webp" data-alt="Ferme en ruine, toit percé" aria-label="Vue détourée">
+            <img src="IMG_20260829_114933-clean.webp" alt="">
+          </button>
         </div>
       </div>
 
@@ -225,12 +233,12 @@
   document.getElementById('addToCart').addEventListener('click', function(){
     var gift = document.getElementById('giftWrap').checked;
     atelierAddToCart(
-      {name:"Ferme en Ruine", price:15, image:"IMG_20260829_114933-clean.webp", material:"Mousse, plâtre & clôture bois"},
+      {name:"Ferme en Ruine", price:15, image:"IMG_ruine_pro_face.webp", material:"Mousse, plâtre & clôture bois"},
       gift ? "Ferme en Ruine + emballage cadeau ajoutés au panier ✓" : "Ferme en Ruine ajoutée au panier ✓",
       gift ? "Ruined Farmhouse + gift wrap added to cart ✓" : "Ruined Farmhouse added to cart ✓"
     );
     if(gift){
-      atelierAddToCart({name:"Emballage cadeau — Ferme en Ruine", price:2, image:"IMG_20260829_114933-clean.webp", material:"Papier kraft, ficelle & carte manuscrite"});
+      atelierAddToCart({name:"Emballage cadeau — Ferme en Ruine", price:2, image:"IMG_ruine_pro_face.webp", material:"Papier kraft, ficelle & carte manuscrite"});
     }
   });
 </script>
