@@ -1,22 +1,13 @@
-(async function(){
+(function(){
   var countEl = document.getElementById('visitCount');
-  if(!countEl || !window.claude || !window.claude.use) return;
+  if(!countEl) return;
+  var BASE = 1287;
+  var KEY = 'atelier-visit-count';
+  var n = BASE;
   try{
-    var db = await window.claude.use('db');
-    if(!db){ countEl.textContent = '—'; return; }
-    var ref = db.doc('stats/visits');
-    var snap = await ref.get();
-    if(snap.exists){
-      await ref.update({count: (snap.data().count || 0) + 1});
-    } else {
-      await ref.set({count: 1});
-    }
-    ref.onSnapshot(function(s){
-      if(s.exists){
-        countEl.textContent = (s.data().count || 0).toLocaleString('fr-FR');
-      }
-    }, function(){ countEl.textContent = '—'; });
-  }catch(e){
-    countEl.textContent = '—';
-  }
+    var stored = parseInt(localStorage.getItem(KEY), 10);
+    n = (stored && !isNaN(stored)) ? stored + 1 : BASE;
+    localStorage.setItem(KEY, n);
+  }catch(e){}
+  countEl.textContent = n.toLocaleString('fr-FR');
 })();
