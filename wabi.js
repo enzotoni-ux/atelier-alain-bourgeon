@@ -1,4 +1,18 @@
 (function(){
+  var toggle = document.getElementById('navToggle');
+  var nav = document.querySelector('.main-nav');
+  if(!toggle || !nav) return;
+  function closeNav(){ toggle.classList.remove('is-open'); nav.classList.remove('is-open'); toggle.setAttribute('aria-expanded','false'); }
+  function openNav(){ toggle.classList.add('is-open'); nav.classList.add('is-open'); toggle.setAttribute('aria-expanded','true'); }
+  toggle.addEventListener('click', function(){
+    if(nav.classList.contains('is-open')) closeNav(); else openNav();
+  });
+  nav.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeNav); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeNav(); });
+  window.addEventListener('resize', function(){ if(window.innerWidth > 860) closeNav(); });
+})();
+
+(function(){
   var params;
   try{ params = new URLSearchParams(window.location.search); }catch(e){ params = null; }
   if(params && (params.get('sent') === '1' || params.get('subscribed') === '1')){

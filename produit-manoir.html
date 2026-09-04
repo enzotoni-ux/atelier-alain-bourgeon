@@ -18,7 +18,7 @@
 <meta name="twitter:description" content="Manoir de pierre à deux cheminées, envahi de mousse et de lierre, maquette faite main. 15 €.">
 <meta name="twitter:image" content="https://enzotoni-ux.github.io/atelier-alain-bourgeon/IMG_manoir_pro_face.webp">
 <link rel="canonical" href="https://enzotoni-ux.github.io/atelier-alain-bourgeon/produit-manoir.html">
-<link rel="stylesheet" href="wabi.css?v=20260904g">
+<link rel="stylesheet" href="wabi.css?v=20260904h">
 </head>
 <body>
 
@@ -41,7 +41,10 @@
       </svg>
       L'Atelier Alain Bourgeon
     </a>
-    <nav class="main-nav">
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mainNav" data-fr="Ouvrir le menu" data-en="Open menu" data-i18n-attr="aria-label">
+      <span></span>
+    </button>
+    <nav class="main-nav" id="mainNav">
       <a href="index.html" data-fr="Accueil" data-en="Home">Accueil</a>
       <a href="boutique.html" class="active" data-fr="Boutique" data-en="Shop">Boutique</a>
       <a href="atelier.html" data-fr="L'atelier" data-en="The workshop">L'atelier</a>
@@ -225,7 +228,7 @@
   </div>
 </div>
 
-<script src="wabi.js?v=20260904g"></script>
+<script src="wabi.js?v=20260904h"></script>
 <script>
   document.getElementById('addToCart').addEventListener('click', function(){
     var gift = document.getElementById('giftWrap').checked;
