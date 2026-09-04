@@ -11,12 +11,12 @@
 <meta property="og:title" content="Maison à Colombages — L'Atelier Alain Bourgeon">
 <meta property="og:description" content="Maison à colombages peinte à la main, maquette en bois et balsa. 15 €.">
 <meta property="og:url" content="https://enzotoni-ux.github.io/atelier-alain-bourgeon/produit-colombages.html">
-<meta property="og:image" content="https://enzotoni-ux.github.io/atelier-alain-bourgeon/IMG_20260710_070147-clean.webp">
+<meta property="og:image" content="https://enzotoni-ux.github.io/atelier-alain-bourgeon/IMG_colombages_pro_face.webp">
 <meta property="og:locale" content="fr_FR">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Maison à Colombages — L'Atelier Alain Bourgeon">
 <meta name="twitter:description" content="Maison à colombages peinte à la main, maquette en bois et balsa. 15 €.">
-<meta name="twitter:image" content="https://enzotoni-ux.github.io/atelier-alain-bourgeon/IMG_20260710_070147-clean.webp">
+<meta name="twitter:image" content="https://enzotoni-ux.github.io/atelier-alain-bourgeon/IMG_colombages_pro_face.webp">
 <link rel="canonical" href="https://enzotoni-ux.github.io/atelier-alain-bourgeon/produit-colombages.html">
 <link rel="stylesheet" href="wabi.css">
 </head>
@@ -87,8 +87,19 @@
     <div class="container product-detail">
 
       <div class="reveal">
-        <div class="product-detail-frame">
-          <img src="IMG_20260710_070147-clean.webp" alt="Maison à colombages">
+        <div class="product-detail-frame photo">
+          <img id="mainProductImage" src="IMG_colombages_pro_face.webp" alt="Maison à colombages, vue de face en studio">
+        </div>
+        <div class="product-gallery-thumbs">
+          <button type="button" class="product-gallery-thumb active" data-src="IMG_colombages_pro_face.webp" data-alt="Maison à colombages, vue de face en studio" aria-label="Vue de face">
+            <img src="IMG_colombages_pro_face.webp" alt="">
+          </button>
+          <button type="button" class="product-gallery-thumb" data-src="IMG_colombages_pro_flottant.webp" data-alt="Maison à colombages, vue flottante" aria-label="Vue flottante">
+            <img src="IMG_colombages_pro_flottant.webp" alt="">
+          </button>
+          <button type="button" class="product-gallery-thumb" data-src="IMG_colombages_pro_eclate.webp" data-alt="Maison à colombages, vue éclatée montrant les étages" aria-label="Vue éclatée">
+            <img src="IMG_colombages_pro_eclate.webp" alt="">
+          </button>
         </div>
       </div>
 
@@ -225,12 +236,12 @@
   document.getElementById('addToCart').addEventListener('click', function(){
     var gift = document.getElementById('giftWrap').checked;
     atelierAddToCart(
-      {name:"Maison à Colombages", price:15, image:"IMG_20260710_070147-clean.webp", material:"Carton bois & balsa peint"},
+      {name:"Maison à Colombages", price:15, image:"IMG_colombages_pro_face.webp", material:"Carton bois & balsa peint"},
       gift ? "Maison à Colombages + emballage cadeau ajoutés au panier ✓" : "Maison à Colombages ajoutée au panier ✓",
       gift ? "Timber-Framed House + gift wrap added to cart ✓" : "Timber-Framed House added to cart ✓"
     );
     if(gift){
-      atelierAddToCart({name:"Emballage cadeau — Maison à Colombages", price:2, image:"IMG_20260710_070147-clean.webp", material:"Papier kraft, ficelle & carte manuscrite"});
+      atelierAddToCart({name:"Emballage cadeau — Maison à Colombages", price:2, image:"IMG_colombages_pro_face.webp", material:"Papier kraft, ficelle & carte manuscrite"});
     }
   });
 </script>

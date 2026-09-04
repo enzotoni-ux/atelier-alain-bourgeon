@@ -159,6 +159,21 @@ window.atelierAddToCart = function(item, msgFr, msgEn){
 };
 atelierUpdateCartBadges();
 
+/* galerie photo fiche produit (no-op ailleurs si absente) */
+(function(){
+  var mainImg = document.getElementById('mainProductImage');
+  var thumbs = document.querySelectorAll('.product-gallery-thumb');
+  if(!mainImg || !thumbs.length) return;
+  thumbs.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      mainImg.src = btn.dataset.src;
+      mainImg.alt = btn.dataset.alt || mainImg.alt;
+      thumbs.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+    });
+  });
+})();
+
 /* filtres boutique (no-op ailleurs si absents) */
 (function(){
   var chips = document.querySelectorAll('.filter-chip');
