@@ -376,6 +376,23 @@ p{margin:0;}
   cursor:pointer; box-shadow:3px 3px 0 var(--paper-light);
 }
 
+/* ---------- teaser "bientot disponible" ---------- */
+.teaser-banner{
+  display:flex; align-items:center; gap:1.4rem; flex-wrap:wrap;
+  background:var(--ink); color:var(--paper-light);
+  border:2px dashed var(--ochre);
+  padding:1.4rem 1.6rem; margin-bottom:2.2rem;
+  position:relative; z-index:2; transform:rotate(-.4deg);
+}
+.teaser-stamp{
+  flex-shrink:0; font-family:'Caveat',cursive; font-weight:700; font-size:1.05rem;
+  background:var(--ochre); color:var(--ink);
+  padding:.4rem 1rem; border-radius:20px; transform:rotate(-3deg);
+  white-space:nowrap;
+}
+.teaser-banner p{color:#C9BFA6; font-size:.92rem; flex:1; min-width:220px;}
+.teaser-banner strong{color:var(--paper-light);}
+
 /* ---------- boutique : filtres & fiches produit ---------- */
 .filters-bar{
   display:flex; justify-content:space-between; align-items:center;
