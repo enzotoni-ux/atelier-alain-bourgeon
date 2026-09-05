@@ -629,7 +629,7 @@ p{margin:0;}
   box-shadow:6px 6px 0 var(--shadow); display:flex; align-items:center; justify-content:center; overflow:hidden;
   transform:rotate(-1deg);
 }
-.blog-image-frame img{width:100%; height:100%; object-fit:cover; filter:none;}
+.blog-image-frame img, .blog-image-frame video{width:100%; height:100%; object-fit:cover; filter:none;}
 .blog-date{font-family:'Caveat',cursive; font-size:1.15rem; color:var(--rust); display:block; margin-bottom:.4rem; transform:rotate(-1deg);}
 .blog-post h2{font-size:clamp(1.5rem,3vw,2rem); margin-bottom:.9rem;}
 .blog-post p{color:var(--ink-soft); margin-bottom:.9rem; line-height:1.7;}
