@@ -22,7 +22,7 @@
 <meta name="twitter:description" content="Manoir de pierre à deux cheminées, envahi de mousse et de lierre, maquette faite main. 15 €.">
 <meta name="twitter:image" content="https://enzotoni-ux.github.io/atelier-alain-bourgeon/IMG_manoir_pro_face.webp">
 <link rel="canonical" href="https://enzotoni-ux.github.io/atelier-alain-bourgeon/produit-manoir.html">
-<link rel="stylesheet" href="wabi.css?v=20260905j">
+<link rel="stylesheet" href="wabi.css?v=20260905k">
 </head>
 <body>
 
@@ -98,10 +98,14 @@
           <img id="mainProductImage" src="IMG_manoir_pro_face.webp" alt="Manoir de pierre à deux cheminées, envahi de mousse">
         </div>
         <div class="product-video-wrap">
-          <div class="product-detail-frame photo product-video-frame">
+          <div class="product-detail-frame photo product-video-frame turntable-wrap">
             <video class="turntable-video" autoplay muted loop playsinline poster="IMG_manoir_pro_face.webp" aria-label="Vue tournante du Manoir Envahi">
               <source src="VIDEO_manoir_360.mp4" type="video/mp4">
             </video>
+            <button type="button" class="turntable-toggle" aria-label="Mettre en pause la vidéo">
+              <svg class="icon-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+              <svg class="icon-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4l13 8-13 8V4z"/></svg>
+            </button>
           </div>
           <span class="product-video-caption" data-fr="Vue tournante — vidéo maison de l'atelier" data-en="Turntable view — in-house workshop video">Vue tournante — vidéo maison de l'atelier</span>
         </div>
@@ -240,7 +244,7 @@
   </div>
 </div>
 
-<script src="wabi.js?v=20260905j"></script>
+<script src="wabi.js?v=20260905k"></script>
 <script>
   document.getElementById('addToCart').addEventListener('click', function(){
     var gift = document.getElementById('giftWrap').checked;

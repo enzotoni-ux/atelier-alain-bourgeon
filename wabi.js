@@ -188,9 +188,23 @@ atelierUpdateCartBadges();
   });
 })();
 
-/* videos maison tournantes : ralenties, la rotation source est trop rapide */
+/* videos maison tournantes : ralenties (rotation source trop rapide) + pause manuelle */
 document.querySelectorAll('.turntable-video').forEach(function(v){
   v.playbackRate = 0.2;
+});
+document.querySelectorAll('.turntable-wrap').forEach(function(wrap){
+  var video = wrap.querySelector('.turntable-video');
+  var btn = wrap.querySelector('.turntable-toggle');
+  if(!video || !btn) return;
+  btn.addEventListener('click', function(){
+    if(video.paused){
+      video.play();
+      wrap.classList.remove('is-paused');
+    } else {
+      video.pause();
+      wrap.classList.add('is-paused');
+    }
+  });
 });
 
 /* filtres boutique (no-op ailleurs si absents) */
