@@ -188,6 +188,11 @@ atelierUpdateCartBadges();
   });
 })();
 
+/* videos maison tournantes : ralenties, la rotation source est trop rapide */
+document.querySelectorAll('.turntable-video').forEach(function(v){
+  v.playbackRate = 0.45;
+});
+
 /* filtres boutique (no-op ailleurs si absents) */
 (function(){
   var chips = document.querySelectorAll('.filter-chip');
