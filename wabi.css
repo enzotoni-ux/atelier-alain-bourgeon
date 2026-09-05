@@ -183,7 +183,7 @@ p{margin:0;}
   display:inline-flex; align-items:center; gap:.4rem;
   font-family:'Caveat',cursive; font-weight:700; font-size:1.1rem;
   padding:.5rem 1.1rem; border:2px solid var(--ink); border-radius:3px;
-  background:var(--paper-light); box-shadow:3px 3px 0 var(--ink);
+  background:var(--paper-light); color:var(--ink); box-shadow:3px 3px 0 var(--ink);
   text-decoration:none; transform:rotate(-1.2deg);
   transition:transform .2s ease, box-shadow .2s ease;
   cursor:pointer;
