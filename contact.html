@@ -230,6 +230,18 @@
       </select>
     </div>
 
+    <div class="form-field">
+      <label for="photos">📷 Photos ou plans</label>
+      <input type="file" id="photos" name="photos" accept="image/jpeg,image/png,image/webp" multiple>
+      <small>JPG, PNG ou WEBP — 4 Mo maximum par fichier.</small>
+    </div>
+
+    <div class="form-field">
+      <label for="documents">📎 Documents / fichiers</label>
+      <input type="file" id="documents" name="documents" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" multiple>
+      <small>PDF, DOC ou DOCX — 4 Mo maximum par fichier.</small>
+    </div>
+
     <div class="cf-turnstile" data-sitekey="0x4AAAAAAFGkEM_C7xsO3Uvq" data-theme="auto"></div>
 
     <button type="submit" class="btn">Envoyer ma demande ✎</button>
@@ -249,6 +261,36 @@ document.getElementById("atelier-contact-form").addEventListener("submit", async
   button.disabled = true;
   message.textContent = "Envoi en cours...";
 
+  const uploadFiles = async (files) => {
+    const uploaded = [];
+    for (const file of files) {
+      if (file.size > 4 * 1024 * 1024) {
+        throw new Error(`${file.name} dépasse 4 Mo.`);
+      }
+      const uploadResponse = await fetch("/api/upload", {
+        method: "POST",
+        headers: {
+          "Content-Type": file.type || "application/octet-stream",
+          "X-File-Name": encodeURIComponent(file.name)
+        },
+        body: file
+      });
+      const uploadResult = await uploadResponse.json();
+      if (!uploadResponse.ok) {
+        throw new Error(uploadResult.error || "Erreur lors de l'envoi d'un fichier.");
+      }
+      uploaded.push(uploadResult);
+    }
+    return uploaded;
+  };
+
+  try {
+    message.textContent = "Envoi des fichiers...";
+    const photos = await uploadFiles(document.getElementById("photos").files);
+    const documents = await uploadFiles(document.getElementById("documents").files);
+
+    message.textContent = "Envoi de la demande...";
+
   const payload = {
     nom: document.getElementById("nom").value,
     email: document.getElementById("email").value,
@@ -258,10 +300,11 @@ document.getElementById("atelier-contact-form").addEventListener("submit", async
     typeMaquette: document.getElementById("typeMaquette").value,
     projet: document.getElementById("projet").value,
     delai: document.getElementById("delai").value,
+    photos,
+    documents,
     turnstileToken: this.querySelector('[name="cf-turnstile-response"]')?.value || ""
   };
 
-  try {
     const response = await fetch("/api/contact", {
       method: "POST",
       headers: {
