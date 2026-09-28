@@ -121,7 +121,130 @@
         </div>
       </div>
 
-    <iframe class="airtable-embed" src="https://airtable.com/embed/appdGPOIhuP8pDo1d/pagETtUUMGzAJHP5y/form" frameborder="0" onmousewheel="" width="100%" height="533" style="background: transparent; border: 1px solid #ccc;"></iframe>
+<div class="atelier-form-wrap">
+  <form id="atelier-contact-form" class="atelier-form">
+
+    <div class="form-row">
+      <div class="form-field">
+        <label for="nom">Nom complet *</label>
+        <input type="text" id="nom" name="nom" required>
+      </div>
+
+      <div class="form-field">
+        <label for="email">Email *</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="telephone">Téléphone</label>
+      <input type="tel" id="telephone" name="telephone">
+    </div>
+
+    <div class="form-field">
+      <label for="origine">Comment m'avez-vous connu ?</label>
+      <select id="origine" name="origine">
+        <option value="">Choisir</option>
+        <option value="Publicité">Publicité</option>
+        <option value="Site internet">Site internet</option>
+        <option value="Recommandation">Recommandation</option>
+        <option value="Réseaux sociaux">Réseaux sociaux</option>
+        <option value="Autre">Autre</option>
+      </select>
+    </div>
+
+    <div class="form-field">
+      <label for="format">Format souhaité *</label>
+      <select id="format" name="format" required>
+        <option value="">Choisir</option>
+        <option value="15 cm">15 cm</option>
+        <option value="22 cm">22 cm</option>
+        <option value="Personnalisée">Personnalisée</option>
+      </select>
+    </div>
+
+    <div class="form-field">
+      <label for="typeMaquette">Type de maquette souhaité *</label>
+      <select id="typeMaquette" name="typeMaquette" required>
+        <option value="">Choisir</option>
+        <option value="Manoir">Manoir</option>
+        <option value="Chaumière">Chaumière</option>
+        <option value="Maison à colombages">Maison à colombages</option>
+        <option value="Ferme en ruine">Ferme en ruine</option>
+        <option value="Projet personnalisé">Projet personnalisé</option>
+      </select>
+    </div>
+
+    <div class="form-field">
+      <label for="projet">Votre projet</label>
+      <textarea id="projet" name="projet" rows="5"
+        placeholder="Décrivez votre projet..."></textarea>
+    </div>
+
+    <div class="form-field">
+      <label for="delai">Délai souhaité *</label>
+      <select id="delai" name="delai" required>
+        <option value="">Choisir</option>
+        <option value="Pas urgent">Pas urgent</option>
+        <option value="Sous 1 mois">Sous 1 mois</option>
+        <option value="Sous 2 à 3 mois">Sous 2 à 3 mois</option>
+        <option value="A définir ensemble">A définir ensemble</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn">Envoyer ma demande ✎</button>
+
+    <p id="form-message"></p>
+
+  </form>
+</div>
+
+<script>
+document.getElementById("atelier-contact-form").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const message = document.getElementById("form-message");
+  const button = this.querySelector('button[type="submit"]');
+
+  button.disabled = true;
+  message.textContent = "Envoi en cours...";
+
+  const payload = {
+    nom: document.getElementById("nom").value,
+    email: document.getElementById("email").value,
+    telephone: document.getElementById("telephone").value,
+    origine: document.getElementById("origine").value,
+    format: document.getElementById("format").value,
+    typeMaquette: document.getElementById("typeMaquette").value,
+    projet: document.getElementById("projet").value,
+    delai: document.getElementById("delai").value
+  };
+
+  try {
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.error || "Erreur");
+    }
+
+    message.textContent = "✓ Votre demande a bien été envoyée.";
+    this.reset();
+
+  } catch (error) {
+    message.textContent = "Une erreur est survenue. Merci de réessayer.";
+  } finally {
+    button.disabled = false;
+  }
+});
+</script>
          
   
 
