@@ -64,7 +64,7 @@ export default async function handler(req, res) {
             "Type de maquette souhaité": typeMaquette || null,
             "Votre projet": projet || "",
             "Délai souhaité": delai || null,
-            "Photos ou plans": photos.map(file => ({ url: file.url, filename: file.filename })),
+            "Photos": photos.map(file => ({ url: file.url, filename: file.filename })),
             "Documents": documents.map(file => ({ url: file.url, filename: file.filename }))
           }
         })
