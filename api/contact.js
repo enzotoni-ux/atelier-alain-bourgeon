@@ -63,7 +63,9 @@ export default async function handler(req, res) {
             "Format souhaité": format || null,
             "Type de maquette souhaité": typeMaquette || null,
             "Votre projet": projet || "",
-            "Délai souhaité": delai || null
+            "Délai souhaité": delai || null,
+            "Photos ou plans": photos.map(file => ({ url: file.url, filename: file.filename })),
+            "Documents": documents.map(file => ({ url: file.url, filename: file.filename }))
           }
         })
       }
@@ -76,41 +78,6 @@ export default async function handler(req, res) {
       return res.status(response.status).json({
         error: "Impossible d'enregistrer la demande."
       });
-    }
-
-    // Enregistrement des photos et documents dans la table "Pièces jointes".
-    const attachmentRecords = [
-      ...photos.map(file => ({
-        fields: {
-          "Photos": [{ url: file.url, filename: file.filename }],
-          "Description": `Envoyé depuis le formulaire par ${nom}`
-        }
-      })),
-      ...documents.map(file => ({
-        fields: {
-          "Documents": [{ url: file.url, filename: file.filename }],
-          "Description": `Envoyé depuis le formulaire par ${nom}`
-        }
-      }))
-    ];
-
-    if (attachmentRecords.length) {
-      const attachmentResponse = await fetch(
-        "https://api.airtable.com/v0/appdGPOIhuP8pDo1d/tbl7t2k4psKk7tcMi",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${process.env.airtable_token}`,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ records: attachmentRecords })
-        }
-      );
-
-      const attachmentData = await attachmentResponse.json();
-      if (!attachmentResponse.ok) {
-        console.error("Erreur Airtable pièces jointes :", attachmentData);
-      }
     }
 
     // Notification email via Resend.
