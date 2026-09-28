@@ -13,7 +13,8 @@ export default async function handler(req, res) {
       format,
       typeMaquette,
       projet,
-      delai
+      delai,
+      turnstileToken
     } = req.body;
 
     // Vérification minimale
@@ -21,6 +22,26 @@ export default async function handler(req, res) {
       return res.status(400).json({
         error: "Le nom et l'email sont obligatoires."
       });
+    }
+
+    if (!turnstileToken) {
+      return res.status(400).json({ error: "Veuillez valider la vérification anti-robot." });
+    }
+
+    const verifyBody = new URLSearchParams();
+    verifyBody.append("secret", process.env.TURNSTILE_SECRET_KEY || "");
+    verifyBody.append("response", turnstileToken);
+
+    const verifyResponse = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: verifyBody.toString()
+    });
+    const verifyData = await verifyResponse.json();
+
+    if (!verifyData.success) {
+      console.error("Erreur Turnstile :", verifyData);
+      return res.status(403).json({ error: "Vérification anti-robot refusée." });
     }
 
     const response = await fetch(
