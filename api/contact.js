@@ -14,6 +14,8 @@ export default async function handler(req, res) {
       typeMaquette,
       projet,
       delai,
+      photos = [],
+      documents = [],
       turnstileToken
     } = req.body;
 
@@ -76,6 +78,41 @@ export default async function handler(req, res) {
       });
     }
 
+    // Enregistrement des photos et documents dans la table "Pièces jointes".
+    const attachmentRecords = [
+      ...photos.map(file => ({
+        fields: {
+          "Photos": [{ url: file.url, filename: file.filename }],
+          "Description": `Envoyé depuis le formulaire par ${nom}`
+        }
+      })),
+      ...documents.map(file => ({
+        fields: {
+          "Documents": [{ url: file.url, filename: file.filename }],
+          "Description": `Envoyé depuis le formulaire par ${nom}`
+        }
+      }))
+    ];
+
+    if (attachmentRecords.length) {
+      const attachmentResponse = await fetch(
+        "https://api.airtable.com/v0/appdGPOIhuP8pDo1d/tbl7t2k4psKk7tcMi",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${process.env.airtable_token}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ records: attachmentRecords })
+        }
+      );
+
+      const attachmentData = await attachmentResponse.json();
+      if (!attachmentResponse.ok) {
+        console.error("Erreur Airtable pièces jointes :", attachmentData);
+      }
+    }
+
     // Notification email via Resend.
     // Avec le domaine de test Resend, l'envoi est autorisé vers l'adresse du compte Resend.
     const emailResponse = await fetch("https://api.resend.com/emails", {
@@ -100,6 +137,8 @@ export default async function handler(req, res) {
           <p><strong>Délai souhaité :</strong> ${escapeHtml(delai || "Non renseigné")}</p>
           <p><strong>Projet :</strong></p>
           <p>${escapeHtml(projet || "Non renseigné").replace(/\n/g, "<br>")}</p>
+          <p><strong>Photos jointes :</strong> ${photos.length}</p>
+          <p><strong>Documents joints :</strong> ${documents.length}</p>
         `
       })
     });
