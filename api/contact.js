@@ -76,8 +76,49 @@ export default async function handler(req, res) {
       });
     }
 
+    // Notification email via Resend.
+    // Avec le domaine de test Resend, l'envoi est autorisé vers l'adresse du compte Resend.
+    const emailResponse = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        from: "Atelier Alain Bourgeon <onboarding@resend.dev>",
+        to: ["enzotoni@gmail.com"],
+        reply_to: email,
+        subject: `Nouvelle demande de maquette — ${nom}`,
+        html: `
+          <h2>Nouvelle demande depuis le site Atelier Alain Bourgeon</h2>
+          <p><strong>Nom :</strong> ${escapeHtml(nom)}</p>
+          <p><strong>Email :</strong> ${escapeHtml(email)}</p>
+          <p><strong>Téléphone :</strong> ${escapeHtml(telephone || "Non renseigné")}</p>
+          <p><strong>Origine :</strong> ${escapeHtml(origine || "Site internet")}</p>
+          <p><strong>Format :</strong> ${escapeHtml(format || "Non renseigné")}</p>
+          <p><strong>Type de maquette :</strong> ${escapeHtml(typeMaquette || "Non renseigné")}</p>
+          <p><strong>Délai souhaité :</strong> ${escapeHtml(delai || "Non renseigné")}</p>
+          <p><strong>Projet :</strong></p>
+          <p>${escapeHtml(projet || "Non renseigné").replace(/\n/g, "<br>")}</p>
+        `
+      })
+    });
+
+    const emailData = await emailResponse.json();
+
+    if (!emailResponse.ok) {
+      // La demande reste enregistrée dans Airtable même si la notification email échoue.
+      console.error("Erreur Resend :", emailData);
+      return res.status(200).json({
+        success: true,
+        emailSent: false,
+        message: "Votre demande a bien été enregistrée."
+      });
+    }
+
     return res.status(200).json({
       success: true,
+      emailSent: true,
       message: "Votre demande a bien été envoyée."
     });
 
@@ -88,4 +129,13 @@ export default async function handler(req, res) {
       error: "Erreur serveur."
     });
   }
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
