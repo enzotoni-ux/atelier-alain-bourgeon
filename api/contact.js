@@ -28,7 +28,7 @@ export default async function handler(req, res) {
       {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${process.env.AIRTABLE_TOKEN}`,
+          Authorization: `Bearer ${process.env.airtable_token}`,
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
