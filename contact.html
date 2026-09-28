@@ -23,6 +23,43 @@
 <meta name="twitter:image" content="https://enzotoni-ux.github.io/atelier-alain-bourgeon/IMG_20260819_134136-clean.webp">
 <link rel="canonical" href="https://enzotoni-ux.github.io/atelier-alain-bourgeon/contact.html">
 <link rel="stylesheet" href="wabi.css?v=20260905k">
+<style>
+/* Formulaire contact intégré — mise en page Atelier */
+.atelier-form-wrap{
+  align-self:start;
+  background:rgba(255,255,255,.34);
+  border:1px solid rgba(42,35,25,.18);
+  border-radius:18px;
+  padding:clamp(1.35rem,2.5vw,2.25rem);
+  box-shadow:0 18px 45px rgba(42,35,25,.08);
+}
+.atelier-form{display:grid;gap:1.15rem}
+.atelier-form .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.atelier-form .form-field{display:flex;flex-direction:column;gap:.45rem;min-width:0}
+.atelier-form label{font-size:.86rem;font-weight:700;letter-spacing:.02em;color:var(--ink)}
+.atelier-form input,.atelier-form select,.atelier-form textarea{
+  width:100%;box-sizing:border-box;border:1px solid rgba(42,35,25,.28);
+  border-radius:10px;background:rgba(255,255,255,.7);color:var(--ink);
+  font:inherit;font-size:1rem;padding:.82rem .9rem;outline:none;
+  transition:border-color .2s ease,box-shadow .2s ease,background .2s ease;
+}
+.atelier-form input,.atelier-form select{min-height:48px}
+.atelier-form textarea{min-height:135px;resize:vertical;line-height:1.5}
+.atelier-form input:focus,.atelier-form select:focus,.atelier-form textarea:focus{
+  border-color:#a94b2b;background:rgba(255,255,255,.92);
+  box-shadow:0 0 0 3px rgba(169,75,43,.12);
+}
+.atelier-form .btn{
+  width:100%;min-height:50px;margin-top:.2rem;border:0;border-radius:10px;
+  cursor:pointer;font-weight:700;letter-spacing:.02em;
+}
+.atelier-form .btn:disabled{opacity:.6;cursor:wait}
+#form-message{min-height:1.4em;margin:0;text-align:center;font-size:.92rem}
+@media(max-width:760px){
+  .atelier-form-wrap{padding:1.15rem;border-radius:14px}
+  .atelier-form .form-row{grid-template-columns:1fr}
+}
+</style>
 </head>
 <body>
 
