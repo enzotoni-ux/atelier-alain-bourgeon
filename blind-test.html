@@ -249,7 +249,7 @@
     T('Teenage Mutant Ninja Turtles', 'Les Tortues Ninja', 1987, C, 'Teenage Mutant Ninja Turtles theme 1987', /ninja turtles/, /./),
     T('Dragon Ball Z (générique FR)', 'Dragon Ball Z', 1990, C, 'Bernard Minet Dragon Ball Z', /dragon ?ball/, /minet|ariane|carletti/),
     T('Les Chevaliers du Zodiaque (générique FR)', 'Les Chevaliers du Zodiaque', 1988, C, 'Bernard Minet Les Chevaliers du Zodiaque', /chevaliers du zodiaque/, /minet/),
-    T('Goldorak (générique FR)', 'Goldorak', 1978, C, 'Goldorak generique', /goldorak/, /./),
+    T('Goldorak (générique FR)', 'Goldorak', 1978, C, 'Goldorak generique', /^goldorak/, /noam|goldies/),
     T('Les Mystérieuses Cités d’or (générique FR)', 'Les Mystérieuses Cités d’or', 1982, C, 'Les Mysterieuses Cites d\'or generique', /cites d.?or/, /./),
     T('Ulysse 31 (générique FR)', 'Ulysse 31', 1981, C, 'Ulysse 31 generique', /ulysse 31/, /./),
     T('Capitaine Flam (générique FR)', 'Capitaine Flam', 1980, C, 'Capitaine Flam generique', /capitaine flam/, /./),
@@ -314,10 +314,12 @@
     var url = 'https://itunes.apple.com/search?media=music&entity=song&limit=15&country=FR&term=' + encodeURIComponent(q);
     return fetchJson(url).catch(function () { return jsonp(url); });
   }
+  // Écarte les versions qui ne sont pas l'originale reconnaissable.
+  var BAD = /instrumental|karaoke|remix|extended|tribute|cover|live|version piano/;
   function resolveTrack(t) {
     return itunes(t.q).then(function (data) {
       var hit = (data.results || []).filter(function (r) {
-        return r.previewUrl && t.tr.test(norm(r.trackName)) && t.ar.test(norm(r.artistName));
+        return r.previewUrl && !BAD.test(norm(r.trackName)) && t.tr.test(norm(r.trackName)) && t.ar.test(norm(r.artistName));
       })[0];
       if (!hit) return null;
       return {
