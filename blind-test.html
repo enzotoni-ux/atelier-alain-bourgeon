@@ -232,11 +232,9 @@
     T('Men in Black', 'Men in Black', 1997, F, 'Will Smith Men in Black', /men in black/, /will smith/),
     T('I Don’t Want to Miss a Thing', 'Armageddon', 1998, F, 'Aerosmith I Don\'t Want to Miss a Thing', /dont want to miss a thing|don.?t want to miss a thing/, /aerosmith/),
     // Disney
-    T('La Chanson des mers (Under the Sea)', 'La Petite Sirène', 1989, C, 'Under the Sea Little Mermaid', /under the sea/, /./),
-    T('Beauty and the Beast', 'La Belle et la Bête', 1991, C, 'Celine Dion Peabo Bryson Beauty and the Beast', /beauty and the beast/, /dion|bryson|lansbury/),
+        T('Beauty and the Beast', 'La Belle et la Bête', 1991, C, 'Celine Dion Peabo Bryson Beauty and the Beast', /beauty and the beast/, /dion|bryson|lansbury/),
     T('A Whole New World', 'Aladdin', 1992, C, 'Peabo Bryson Regina Belle A Whole New World', /whole new world/, /bryson|belle|salonga|kane/),
     T('Circle of Life', 'Le Roi Lion', 1994, C, 'Elton John Circle of Life', /circle of life/, /elton john|twillie|lebo/),
-    T('Hakuna Matata', 'Le Roi Lion', 1994, C, 'Hakuna Matata Lion King', /hakuna matata/, /./),
     T('Can You Feel the Love Tonight', 'Le Roi Lion', 1994, C, 'Elton John Can You Feel the Love Tonight', /can you feel the love tonight/, /elton john/),
     T('Colors of the Wind', 'Pocahontas', 1995, C, 'Vanessa Williams Colors of the Wind', /colors of the wind/, /vanessa williams|judy kuhn/),
     T('Go the Distance', 'Hercule', 1997, C, 'Michael Bolton Go the Distance', /go the distance/, /bolton|bart/),
@@ -260,6 +258,217 @@
     T('Sailor Moon (générique FR)', 'Sailor Moon', 1993, C, 'Sailor Moon generique francais', /sailor moon/, /./)
   ];
 
+  // Aperçus audio Apple déjà résolus (aucun appel d'API nécessaire). Clé = requête de l'entrée.
+  var AUDIO_BASE = 'https://audio-ssl.itunes.apple.com/itunes-assets/';
+  var ART_BASE = 'https://is1-ssl.mzstatic.com/image/thumb/';
+  var STATIC = {
+ "Ray Parker Jr Ghostbusters": [
+  "AudioPreview211/v4/70/1f/f1/701ff165-58e2-75eb-464b-fec3483f93bd/mzaf_15159076127980316987.plus.aac.p.m4a",
+  "Music115/v4/9a/70/43/9a704362-976d-ec4b-0367-54d368cb0ef8/886445902204.jpg",
+  "Ghostbusters — Ray Parker Jr."
+ ],
+ "Berlin Take My Breath Away": [
+  "AudioPreview211/v4/fb/74/fb/fb74fb0b-83f3-186a-4833-e0ebdb86cf10/mzaf_6965137412837280913.plus.aac.p.m4a",
+  "Music115/v4/81/2f/27/812f27f8-4c88-7b16-8a54-5113fa169781/dj.jvcruggi.jpg",
+  "Take My Breath Away — Berlin"
+ ],
+ "Kenny Loggins Danger Zone": [
+  "AudioPreview211/v4/8d/c8/19/8dc81935-5620-0b29-3f4c-acc3f6479796/mzaf_14998514993249023640.plus.aac.p.m4a",
+  "Music115/v4/81/2f/27/812f27f8-4c88-7b16-8a54-5113fa169781/dj.jvcruggi.jpg",
+  "Danger Zone — Kenny Loggins"
+ ],
+ "Survivor Eye of the Tiger": [
+  "AudioPreview221/v4/88/98/17/889817e8-2454-4696-dd3e-8bdef3f5ed7e/mzaf_18139591310479474983.plus.aac.p.m4a",
+  "Features115/v4/49/21/4d/49214d77-2eb5-60a1-75d3-67d30b449326/dj.szkhyuyj.jpg",
+  "Eye of the Tiger — Survivor"
+ ],
+ "Bill Medley Jennifer Warnes Time of My Life": [
+  "AudioPreview221/v4/41/f3/49/41f34968-bfb6-7253-58f6-e2d56b0e0979/mzaf_6987448208011331365.plus.aac.p.m4a",
+  "Music125/v4/8c/f2/1f/8cf21f62-eed1-64c0-e710-df52dc3556c3/078635640823.jpg",
+  "(I've Had) The Time of My Life — Bill Medley & Jennifer Warnes"
+ ],
+ "Kenny Loggins Footloose": [
+  "AudioPreview211/v4/ad/73/f4/ad73f415-8c25-f3ba-2d1f-84796bf6a482/mzaf_6722001418989362696.plus.aac.p.m4a",
+  "Music124/v4/8c/52/92/8c5292a8-8a85-69e3-b618-7eab1f959f24/mzi.wqmsznel.jpg",
+  "Footloose — Kenny Loggins"
+ ],
+ "Irene Cara What a Feeling": [
+  "AudioPreview211/v4/ee/f0/fd/eef0fda5-3a77-ba9a-41e1-31e0fe603faa/mzaf_4287430643698303778.plus.aac.p.m4a",
+  "Music122/v4/a6/89/fb/a689fb59-04a8-dd18-d4d4-94c0918f1463/3256.jpg",
+  "Flashdance...What a Feeling — Irene Cara"
+ ],
+ "Huey Lewis and the News The Power of Love": [
+  "AudioPreview221/v4/73/1e/31/731e311f-820f-7855-3ccd-21a2fe5d06c2/mzaf_12448959661475577246.plus.aac.p.m4a",
+  "Music122/v4/00/da/b3/00dab3f6-5b8a-de2b-9399-0d40984807ea/13UABIM54788.rgb.jpg",
+  "The Power of Love — Huey Lewis and the News"
+ ],
+ "Harold Faltermeyer Axel F": [
+  "AudioPreview221/v4/4a/6a/6f/4a6a6faf-b97b-f28a-a033-71ac2fcca002/mzaf_2643552052454050783.plus.aac.p.m4a",
+  "Music211/v4/f2/6b/e2/f26be2f8-a14a-37d6-4ab0-726f39e3d269/8721093067436.png",
+  "Axel F — H. Faltermeyer"
+ ],
+ "Limahl Never Ending Story": [
+  "AudioPreview221/v4/a0/ce/f8/a0cef824-62da-6c85-436f-2364607b35df/mzaf_7970330275671256190.plus.aac.p.m4a",
+  "Music113/v4/b8/4f/8f/b84f8f4e-b61e-7433-39e4-56b6b9d6e9ca/842474138250.jpg",
+  "Never Ending Story — Limahl"
+ ],
+ "Joe Esposito You're the Best": [
+  "AudioPreview112/v4/b5/6f/36/b56f36cf-aecc-1e81-ed75-0e1c13820bb3/mzaf_13734999795514992478.plus.aac.p.m4a",
+  "Music112/v4/a6/b6/25/a6b625a3-87fd-8c40-06a5-f69181911b5e/196589147202.jpg",
+  "You're the Best — Joe Esposito"
+ ],
+ "Cyndi Lauper The Goonies R Good Enough": [
+  "AudioPreview211/v4/d7/99/6f/d7996ff3-ff51-e3f5-90e3-965ee46f6943/mzaf_7248693301716785843.plus.aac.p.m4a",
+  "Music/a7/b9/3f/mzi.onqtzxrs.jpg",
+  "The Goonies 'R' Good Enough — Cyndi Lauper"
+ ],
+ "Queen Princes of the Universe": [
+  "AudioPreview211/v4/d6/47/fd/d647fd0c-0f07-1c98-644a-57dd517caa2c/mzaf_10810716433300823428.plus.aac.p.m4a",
+  "Music221/v4/15/c7/55/15c755bc-7603-3ce3-e243-e59f1f9863ea/602527724171.jpg",
+  "Princes Of The Universe — Queen"
+ ],
+ "Richard Sanderson Reality": [
+  "AudioPreview221/v4/75/6a/54/756a5431-3824-52e1-3c0a-c2846b6e0df4/mzaf_13915807686240340827.plus.aac.p.m4a",
+  "Music124/v4/be/d5/f2/bed5f298-0a82-69b9-22a4-76b77d5f8d1d/cover.jpg",
+  "Reality — Richard Sanderson"
+ ],
+ "Bryan Adams Everything I Do": [
+  "AudioPreview211/v4/d0/c9/f6/d0c9f679-5af6-a0d3-ea72-ca97144aec33/mzaf_3810195087857353563.plus.aac.p.m4a",
+  "Music112/v4/a1/e2/48/a1e248b2-fa77-1537-3702-642ba4fa3d48/06UMGIM43948.rgb.jpg",
+  "(Everything I Do) I Do It for You — Bryan Adams"
+ ],
+ "Whitney Houston I Will Always Love You": [
+  "AudioPreview221/v4/03/d2/1a/03d21aca-c69e-09af-03ef-118004e68ab5/mzaf_17408932698913708736.plus.aac.p.m4a",
+  "Music115/v4/82/f3/e9/82f3e968-8174-c5eb-7fc5-36384d050129/dj.mdauihuy.jpg",
+  "I Will Always Love You — Whitney Houston"
+ ],
+ "Bruce Springsteen Streets of Philadelphia": [
+  "AudioPreview221/v4/53/c2/dc/53c2dc1a-80b7-6faf-b115-cb26feba4c27/mzaf_3935405806104254596.plus.aac.p.m4a",
+  "Music/e5/d6/fc/mzi.npwnakpt.jpg",
+  "Streets of Philadelphia — Bruce Springsteen"
+ ],
+ "Dick Dale Misirlou": [
+  "AudioPreview211/v4/68/6a/3e/686a3eaa-d9fa-f5bb-3ad0-41d5ff1242d3/mzaf_1754524748973980427.plus.aac.p.m4a",
+  "Music124/v4/36/7d/0b/367d0b3d-e360-255f-a096-bb16c4c6d83c/cover.jpg",
+  "Misirlou — Dick Dale"
+ ],
+ "Seal Kiss from a Rose": [
+  "AudioPreview211/v4/5b/32/60/5b32607f-683f-4298-1c4c-3f2086508444/mzaf_572188254823172236.plus.aac.p.m4a",
+  "Music115/v4/9c/b5/79/9cb579e1-0b40-3fd1-961e-2e0a65e69f4a/s06.mfkmyngx.jpg",
+  "Kiss from a Rose — Seal"
+ ],
+ "Coolio Gangsta's Paradise": [
+  "AudioPreview211/v4/db/4b/4f/db4b4ff6-5fb3-fb50-7dbb-ea4c45ffdab5/mzaf_6510633620048230208.plus.aac.p.m4a",
+  "Music221/v4/b7/d4/ce/b7d4cee5-38ab-34af-5605-1588e9a34fec/081227515461.png",
+  "Gangsta's Paradise — Coolio"
+ ],
+ "Celine Dion My Heart Will Go On": [
+  "AudioPreview211/v4/f4/e9/69/f4e9695a-ab90-1946-abe0-77e8fa96ccfc/mzaf_10170763914731960323.plus.aac.p.m4a",
+  "Music211/v4/e3/35/d0/e335d074-3d62-f1ca-0ebd-dbc79f7eb477/886447917251.jpg",
+  "My Heart Will Go On — Céline Dion"
+ ],
+ "Will Smith Men in Black": [
+  "AudioPreview211/v4/df/76/60/df7660a8-6330-d384-2df7-c3ac9566bd8c/mzaf_5968128030680647840.plus.aac.p.m4a",
+  "Music114/v4/eb/3c/15/eb3c1520-e377-fe3f-e53d-32da66fa4490/888880552938.jpg",
+  "Men In Black — Will Smith"
+ ],
+ "Aerosmith I Don't Want to Miss a Thing": [
+  "AudioPreview211/v4/2b/cc/11/2bcc117d-4af2-16e7-d6d6-ada6daf94b89/mzaf_4404710048553507758.plus.aac.p.m4a",
+  "Music115/v4/0a/f1/af/0af1af45-7deb-3252-15e2-c1394b574d64/mzi.lfxshysm.jpg",
+  "I Don't Want to Miss a Thing — Aerosmith"
+ ],
+ "Celine Dion Peabo Bryson Beauty and the Beast": [
+  "AudioPreview211/v4/2c/f4/ea/2cf4eae3-f59e-f9d8-7ccc-4eebd5811b13/mzaf_15036118080882261345.plus.aac.p.m4a",
+  "Music221/v4/30/11/10/301110ce-9f74-c277-49d5-3b63e6cfc62b/5099747150890.jpg",
+  "Beauty and the Beast — Celine Dion & Peabo Bryson"
+ ],
+ "Peabo Bryson Regina Belle A Whole New World": [
+  "AudioPreview125/v4/32/bf/6f/32bf6fe2-6a8c-e9f0-7211-a74e2e60decb/mzaf_11807374227283182460.plus.aac.p.m4a",
+  "Music/37/59/b5/mzi.ofbzeaxc.jpg",
+  "A Whole New World — Peabo Bryson & Regina Belle"
+ ],
+ "Elton John Circle of Life": [
+  "AudioPreview221/v4/35/de/34/35de3461-09fb-40e1-b513-3c7eaa7befb2/mzaf_16742578288606025043.plus.aac.p.m4a",
+  "Music221/v4/22/bf/c7/22bfc7d6-d67c-6a89-ef8d-b3221f68239e/24UM1IM02084.rgb.jpg",
+  "Circle of Life — Elton John"
+ ],
+ "Elton John Can You Feel the Love Tonight": [
+  "AudioPreview211/v4/3b/e5/45/3be545fb-06f3-25cf-80ca-7ab106709a95/mzaf_15516297195397312409.plus.aac.p.m4a",
+  "Music116/v4/ad/c8/b3/adc8b37d-1c47-e0d1-45b7-e598252d3c23/13UABIM57030.rgb.jpg",
+  "Can You Feel the Love Tonight — Elton John"
+ ],
+ "Vanessa Williams Colors of the Wind": [
+  "AudioPreview221/v4/3c/5d/f1/3c5df102-d1e3-6c3b-82a5-af15f4f9e2a2/mzaf_7581542915560091536.plus.aac.p.m4a",
+  "Music116/v4/ea/25/56/ea25568a-2297-6fa8-1106-92a3abbe4259/14DMGIM04771.rgb.jpg",
+  "Colors of the Wind — Vanessa Williams"
+ ],
+ "Michael Bolton Go the Distance": [
+  "AudioPreview211/v4/b3/d9/dc/b3d9dc36-e52a-c27e-eba1-4a3582389a19/mzaf_10470110584214769758.plus.aac.p.m4a",
+  "Music/fd/5b/65/mzi.vqgowswf.jpg",
+  "Go the Distance — Michael Bolton"
+ ],
+ "I'll Make a Man Out of You Mulan": [
+  "AudioPreview221/v4/0f/36/68/0f36686c-5e20-6fa3-86d8-0aa19a1a8025/mzaf_12152013571508836328.plus.aac.p.m4a",
+  "Music126/v4/a2/8d/7c/a28d7cf3-b9a3-9232-0414-771ead69a46c/06PNDIM00133.rgb.jpg",
+  "I'll Make a Man Out of You — Donny Osmond"
+ ],
+ "Phil Collins You'll Be in My Heart": [
+  "AudioPreview211/v4/08/fc/47/08fc476e-a468-6d99-7a38-10dd069438ad/mzaf_9160167947158091816.plus.aac.p.m4a",
+  "Music126/v4/09/ff/d4/09ffd48c-f525-ae2b-be96-b12696d83a49/18UMGIM62087.rgb.jpg",
+  "You'll Be In My Heart — Phil Collins"
+ ],
+ "Jason Paige Pokemon Theme": [
+  "AudioPreview211/v4/71/42/13/714213ec-a4ac-9172-3a0d-d1ad5733d58a/mzaf_5797999801456200509.plus.aac.p.m4a",
+  "Music128/v4/aa/fa/ba/aafabad9-7a7b-1a39-41b7-5b017eea4d73/artwork.jpg",
+  "Pokémon Theme — Jason Paige"
+ ],
+ "Teenage Mutant Ninja Turtles theme 1987": [
+  "AudioPreview221/v4/d3/ee/8f/d3ee8f3c-b804-0ce4-660a-a192d92a869d/mzaf_16726094752305918425.plus.aac.p.m4a",
+  "Music115/v4/42/54/e0/4254e0c7-ff1e-6351-d012-2c165c9d9d10/mzm.ibbvosdk.jpg",
+  "Teenage Mutant Ninja Turtles Cartoon Opening Theme (1987)"
+ ],
+ "Bernard Minet Dragon Ball Z": [
+  "AudioPreview221/v4/4a/77/61/4a776156-cc07-8da1-3460-35d844078311/mzaf_8880931688975818346.plus.aac.p.m4a",
+  "Music125/v4/0a/45/01/0a450167-fcc7-4c34-8175-0982a6ac7835/cover.jpg",
+  "Dragon Ball et Dragon Ball Z — Bernard Minet"
+ ],
+ "Bernard Minet Les Chevaliers du Zodiaque": [
+  "AudioPreview125/v4/3b/4f/44/3b4f4442-08d7-f354-ca8c-916bd34e02ac/mzaf_7772687750674477046.plus.aac.p.m4a",
+  "Music3/v4/3a/5d/63/3a5d6331-23d0-5da8-8afe-fac5200c73f8/cover.jpg",
+  "Les chevaliers du Zodiaque — Bernard Minet"
+ ],
+ "Goldorak generique": [
+  "AudioPreview115/v4/d2/59/43/d2594323-8b16-a26c-4a45-5b61d1d3cf17/mzaf_1159589806937079417.plus.aac.p.m4a",
+  "Music118/v4/ca/56/0e/ca560e20-0473-f499-525d-f417c1b7e5d5/3596973475794_cover.jpg",
+  "Goldorak — Noam"
+ ],
+ "Les Mysterieuses Cites d'or generique": [
+  "AudioPreview211/v4/c6/33/31/c63331d0-1310-fe31-30a3-b1ab323ebca7/mzaf_9074400633711146935.plus.aac.p.m4a",
+  "Music4/v4/a3/35/ca/a335ca82-037a-c168-293c-2ed5b0b63443/3596973161499_cover.jpg",
+  "Les mystérieuses cités d'or — Jacques Cardona"
+ ],
+ "Capitaine Flam generique": [
+  "AudioPreview211/v4/e1/27/52/e127521c-e8c1-c748-370b-967e34cfd8be/mzaf_443346885530322888.plus.aac.p.m4a",
+  "Music124/v4/1e/41/6f/1e416f37-287f-6671-295c-d3b3fea6a219/18UMGIM70783.rgb.jpg",
+  "Cap'tain Flam — Bernard Minet"
+ ],
+ "Albator generique": [
+  "AudioPreview115/v4/46/8d/2e/468d2e95-465c-6724-c942-b1177c3b2e62/mzaf_7045286392996428187.plus.aac.p.m4a",
+  "Music5/v4/92/ae/a4/92aea4fe-d190-7fc0-8649-4d07fd6bd01b/cover.jpg",
+  "Albator, le corsaire de l'espace — Dorothée & co"
+ ],
+ "Inspecteur Gadget generique": [
+  "AudioPreview125/v4/8a/2f/d0/8a2fd0e5-5d16-c919-0c87-94658636095d/mzaf_16532357467302950062.plus.aac.p.m4a",
+  "Music5/v4/aa/74/f5/aa74f5ce-e6ff-c00e-e239-988fa8ea3728/3596973163493_cover.jpg",
+  "Inspecteur Gadget — Jacques Cardona"
+ ],
+ "Sailor Moon generique francais": [
+  "AudioPreview115/v4/37/f8/55/37f855c0-1a68-eb80-8061-1c5d9a1a5abb/mzaf_3505903645440055290.plus.aac.p.m4a",
+  "Music3/v4/4d/7b/93/4d7b93f4-c8ab-21f4-2faa-9d11b40f07ac/cover.jpg",
+  "Sailor Moon — Bernard Minet"
+ ]
+};
+
   // --- DOM ---
   var $ = function (id) { return document.getElementById(id); };
   var screens = { start: $('screen-start'), play: $('screen-play'), end: $('screen-end') };
@@ -279,6 +488,11 @@
   var SILENCE = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=';
   var cur = new Audio(), nxt = new Audio();
   cur.preload = nxt.preload = 'auto';
+  [cur, nxt].forEach(function (a) {
+    a.addEventListener('error', function () {
+      if (a === cur && current && a.src.indexOf('data:') !== 0) advance();
+    });
+  });
 
   function unlockAudio() {
     // Les navigateurs mobiles n'autorisent la lecture qu'après un geste utilisateur :
@@ -317,6 +531,13 @@
   // Écarte les versions qui ne sont pas l'originale reconnaissable.
   var BAD = /instrumental|karaoke|remix|extended|tribute|cover|live|version piano/;
   function resolveTrack(t) {
+    var st = STATIC[t.q];
+    if (st) {
+      return Promise.resolve({
+        title: t.title, source: t.source, year: t.year, kind: t.kind,
+        url: AUDIO_BASE + st[0], art: ART_BASE + st[1] + '/300x300bb.jpg', played: st[2]
+      });
+    }
     return itunes(t.q).then(function (data) {
       var hit = (data.results || []).filter(function (r) {
         return r.previewUrl && !BAD.test(norm(r.trackName)) && t.tr.test(norm(r.trackName)) && t.ar.test(norm(r.artistName));
@@ -375,7 +596,7 @@
     nextP.then(function (item) {
       if (!item) {
         show('start');
-        el.startError.textContent = 'Impossible de charger les extraits (connexion ou service Apple indisponible). Réessaie dans un instant.';
+        el.startError.textContent = 'Impossible de charger les extraits. Vérifie ta connexion, puis ouvre la page directement dans Chrome ou Safari (pas dans un aperçu intégré) et réessaie.';
         el.startError.classList.remove('hidden');
         return;
       }
