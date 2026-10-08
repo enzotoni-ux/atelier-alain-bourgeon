@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Blind Test 80s &amp; 90s</title>
+<style>
+  :root {
+    --bg: #0d0b1e;
+    --bg-2: #1a1536;
+    --card: #17133a;
+    --line: #2f2862;
+    --text: #f3f0ff;
+    --muted: #a59fd0;
+    --pink: #ff3d9a;
+    --cyan: #27e6ff;
+    --yellow: #ffd23f;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: var(--text);
+    background: radial-gradient(1200px 600px at 50% -10%, #3a1d6e 0%, transparent 60%), var(--bg);
+    background-attachment: fixed;
+    display: flex; justify-content: center;
+    padding: 24px 16px 48px;
+  }
+  main { width: 100%; max-width: 560px; }
+  h1 {
+    margin: 8px 0 4px; text-align: center;
+    font-size: clamp(2rem, 9vw, 3rem); line-height: 1; letter-spacing: .02em;
+    font-weight: 900; font-style: italic; text-transform: uppercase;
+    background: linear-gradient(90deg, var(--pink), var(--yellow) 50%, var(--cyan));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .sub { text-align: center; color: var(--muted); margin: 0 0 24px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+    padding: 20px;
+  }
+  .hidden { display: none !important; }
+
+  /* Écran de départ */
+  .field-label { display: block; font-weight: 600; margin-bottom: 8px; }
+  .seg { display: flex; gap: 8px; margin-bottom: 20px; }
+  .seg input { position: absolute; opacity: 0; pointer-events: none; }
+  .seg label {
+    flex: 1; text-align: center; padding: 12px 0; border-radius: 10px; cursor: pointer;
+    border: 1px solid var(--line); background: var(--bg-2); font-weight: 700;
+  }
+  .seg input:checked + label { border-color: var(--cyan); color: var(--cyan); box-shadow: 0 0 0 1px var(--cyan) inset; }
+  .seg input:focus-visible + label { outline: 2px solid var(--yellow); outline-offset: 2px; }
+  .note { color: var(--muted); font-size: .85rem; margin: 16px 0 0; line-height: 1.45; }
+  .error { color: #ff8a8a; margin: 12px 0 0; font-size: .95rem; }
+
+  button {
+    font: inherit; cursor: pointer; border-radius: 12px; border: 1px solid var(--line);
+    background: var(--bg-2); color: var(--text); padding: 12px 16px; font-weight: 700; min-height: 48px;
+  }
+  button:hover { border-color: var(--cyan); }
+  button:focus-visible { outline: 2px solid var(--yellow); outline-offset: 2px; }
+  button.primary {
+    width: 100%; border: 0; font-size: 1.1rem; color: #12082b;
+    background: linear-gradient(90deg, var(--pink), var(--yellow));
+  }
+  button.primary:hover { filter: brightness(1.08); }
+
+  /* Écran de jeu */
+  .counter { display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-weight: 600; }
+  .chip {
+    padding: 4px 12px; border-radius: 999px; font-size: .85rem; font-weight: 700;
+    border: 1px solid var(--cyan); color: var(--cyan);
+  }
+  .chip.film { border-color: var(--pink); color: var(--pink); }
+  .ring-wrap { position: relative; width: 240px; height: 240px; margin: 20px auto; }
+  .ring-wrap svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .ring-bg { fill: none; stroke: var(--line); stroke-width: 10; }
+  .ring-fg {
+    fill: none; stroke: url(#grad); stroke-width: 10; stroke-linecap: round;
+    stroke-dasharray: 339.292; stroke-dashoffset: 0;
+  }
+  .ring-center {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+  }
+  .secs { font-size: 4.5rem; font-weight: 900; line-height: 1; font-variant-numeric: tabular-nums; }
+  .qmark { color: var(--muted); font-size: 1rem; margin-top: 4px; }
+  .controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .prev { text-align: center; color: var(--muted); font-size: .9rem; margin: 16px 0 0; min-height: 1.3em; }
+  .prev b { color: var(--text); }
+
+  .reveal {
+    display: flex; gap: 14px; align-items: center; margin-top: 16px;
+    background: var(--bg-2); border: 1px solid var(--yellow); border-radius: 12px; padding: 12px;
+  }
+  .reveal img { width: 72px; height: 72px; border-radius: 8px; object-fit: cover; background: var(--line); flex: none; }
+  .reveal h2 { margin: 0 0 2px; font-size: 1.15rem; }
+  .reveal p { margin: 0; color: var(--muted); font-size: .9rem; overflow-wrap: anywhere; }
+
+  /* Résultats */
+  .results h2 { margin: 0 0 12px; }
+  .results ol { list-style: none; padding: 0; margin: 0 0 16px; display: grid; gap: 8px; }
+  .results li {
+    display: flex; gap: 12px; align-items: center; background: var(--bg-2);
+    border: 1px solid var(--line); border-radius: 10px; padding: 8px;
+  }
+  .results li img { width: 48px; height: 48px; border-radius: 6px; object-fit: cover; background: var(--line); flex: none; }
+  .results li .t { font-weight: 700; }
+  .results li .s { color: var(--muted); font-size: .85rem; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ring-fg { transition: stroke-dashoffset .1s linear; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>Blind Test</h1>
+  <p class="sub">Films &amp; dessins animés des années 80 et 90</p>
+
+  <!-- Départ -->
+  <section id="screen-start" class="card">
+    <span class="field-label" id="count-label">Nombre de morceaux</span>
+    <div class="seg" role="radiogroup" aria-labelledby="count-label">
+      <input type="radio" name="count" id="c10" value="10"><label for="c10">10</label>
+      <input type="radio" name="count" id="c20" value="20" checked><label for="c20">20</label>
+      <input type="radio" name="count" id="c30" value="30"><label for="c30">30</label>
+    </div>
+    <button class="primary" id="btn-start">Lancer le blind test</button>
+    <p class="error hidden" id="start-error" role="alert"></p>
+    <p class="note">
+      Chaque extrait dure 10 secondes puis le suivant s'enchaîne tout seul.
+      Les extraits sont les aperçus officiels fournis par Apple (iTunes) : une connexion internet est nécessaire.
+      Raccourcis : <kbd>Espace</kbd> pause, <kbd>→</kbd> passer, <kbd>R</kbd> révéler.
+    </p>
+  </section>
+
+  <!-- Jeu -->
+  <section id="screen-play" class="card hidden">
+    <div class="counter">
+      <span id="round" aria-live="polite">Morceau 1 / 20</span>
+      <span class="chip" id="kind">Film</span>
+    </div>
+
+    <div class="ring-wrap">
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <defs>
+          <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#ff3d9a"/><stop offset="1" stop-color="#27e6ff"/>
+          </linearGradient>
+        </defs>
+        <circle class="ring-bg" cx="60" cy="60" r="54"/>
+        <circle class="ring-fg" id="ring" cx="60" cy="60" r="54"/>
+      </svg>
+      <div class="ring-center">
+        <div class="secs" id="secs">10</div>
+        <div class="qmark" id="status">Chargement…</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button id="btn-pause">Pause</button>
+      <button id="btn-reveal">Révéler</button>
+      <button id="btn-skip">Passer</button>
+    </div>
+
+    <div class="reveal hidden" id="reveal">
+      <img id="reveal-art" alt="">
+      <div>
+        <h2 id="reveal-title"></h2>
+        <p id="reveal-src"></p>
+        <p id="reveal-played"></p>
+      </div>
+    </div>
+
+    <p class="prev" id="prev"></p>
+  </section>
+
+  <!-- Fin -->
+  <section id="screen-end" class="card results hidden">
+    <h2>Les réponses</h2>
+    <ol id="results"></ol>
+    <button class="primary" id="btn-again">Rejouer</button>
+  </section>
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  var CLIP_SECONDS = 10;
+  var FADE_SECONDS = 0.5;
+  var LOAD_TIMEOUT_MS = 9000;
+  var RING_LEN = 339.292;
+
+  function norm(s) {
+    return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  }
+  // title, source, year, kind, iTunes query, track-name regex, artist regex
+  function T(title, source, year, kind, q, tr, ar) {
+    return { title: title, source: source, year: year, kind: kind, q: q, tr: tr, ar: ar };
+  }
+  var F = 'Film', C = 'Dessin animé';
+
+  // Les regex servent de garde-fou : si iTunes renvoie une autre version ou un autre morceau,
+  // l'entrée est ignorée plutôt que de jouer un titre qui ne correspond pas à la réponse affichée.
+  var TRACKS = [
+    // Films
+    T('Ghostbusters', 'SOS Fantômes', 1984, F, 'Ray Parker Jr Ghostbusters', /ghostbusters/, /ray parker/),
+    T('Take My Breath Away', 'Top Gun', 1986, F, 'Berlin Take My Breath Away', /take my breath away/, /berlin/),
+    T('Danger Zone', 'Top Gun', 1986, F, 'Kenny Loggins Danger Zone', /danger zone/, /loggins/),
+    T('Eye of the Tiger', 'Rocky III', 1982, F, 'Survivor Eye of the Tiger', /eye of the tiger/, /survivor/),
+    T('(I’ve Had) The Time of My Life', 'Dirty Dancing', 1987, F, 'Bill Medley Jennifer Warnes Time of My Life', /time of my life/, /medley|warnes/),
+    T('Footloose', 'Footloose', 1984, F, 'Kenny Loggins Footloose', /^footloose/, /loggins/),
+    T('Flashdance… What a Feeling', 'Flashdance', 1983, F, 'Irene Cara What a Feeling', /what a feeling/, /irene cara/),
+    T('The Power of Love', 'Retour vers le futur', 1985, F, 'Huey Lewis and the News The Power of Love', /power of love/, /huey lewis/),
+    T('Axel F', 'Le Flic de Beverly Hills', 1984, F, 'Harold Faltermeyer Axel F', /axel f/, /faltermeyer/),
+    T('Never Ending Story', 'L’Histoire sans fin', 1984, F, 'Limahl Never Ending Story', /never ending story/, /limahl/),
+    T('You’re the Best', 'Karaté Kid', 1984, F, 'Joe Esposito You\'re the Best', /you.?re the best/, /esposito/),
+    T('Goonies ‘R’ Good Enough', 'Les Goonies', 1985, F, 'Cyndi Lauper The Goonies R Good Enough', /goonies/, /lauper/),
+    T('Princes of the Universe', 'Highlander', 1986, F, 'Queen Princes of the Universe', /princes of the universe/, /queen/),
+    T('Reality', 'La Boum', 1980, F, 'Richard Sanderson Reality', /reality/, /sanderson/),
+    T('Everything I Do (I Do It for You)', 'Robin des Bois', 1991, F, 'Bryan Adams Everything I Do', /everything i do/, /bryan adams/),
+    T('I Will Always Love You', 'Body Guard', 1992, F, 'Whitney Houston I Will Always Love You', /i will always love you/, /whitney/),
+    T('Streets of Philadelphia', 'Philadelphia', 1993, F, 'Bruce Springsteen Streets of Philadelphia', /streets of philadelphia/, /springsteen/),
+    T('Misirlou', 'Pulp Fiction', 1994, F, 'Dick Dale Misirlou', /misirlou/, /dick dale/),
+    T('Kiss from a Rose', 'Batman Forever', 1995, F, 'Seal Kiss from a Rose', /kiss from a rose/, /seal/),
+    T('Gangsta’s Paradise', 'Esprits rebelles', 1995, F, 'Coolio Gangsta\'s Paradise', /gangsta/, /coolio/),
+    T('My Heart Will Go On', 'Titanic', 1997, F, 'Celine Dion My Heart Will Go On', /my heart will go on/, /celine dion/),
+    T('Men in Black', 'Men in Black', 1997, F, 'Will Smith Men in Black', /men in black/, /will smith/),
+    T('I Don’t Want to Miss a Thing', 'Armageddon', 1998, F, 'Aerosmith I Don\'t Want to Miss a Thing', /dont want to miss a thing|don.?t want to miss a thing/, /aerosmith/),
+    // Disney
+    T('La Chanson des mers (Under the Sea)', 'La Petite Sirène', 1989, C, 'Under the Sea Little Mermaid', /under the sea/, /./),
+    T('Beauty and the Beast', 'La Belle et la Bête', 1991, C, 'Celine Dion Peabo Bryson Beauty and the Beast', /beauty and the beast/, /dion|bryson|lansbury/),
+    T('A Whole New World', 'Aladdin', 1992, C, 'Peabo Bryson Regina Belle A Whole New World', /whole new world/, /bryson|belle|salonga|kane/),
+    T('Circle of Life', 'Le Roi Lion', 1994, C, 'Elton John Circle of Life', /circle of life/, /elton john|twillie|lebo/),
+    T('Hakuna Matata', 'Le Roi Lion', 1994, C, 'Hakuna Matata Lion King', /hakuna matata/, /./),
+    T('Can You Feel the Love Tonight', 'Le Roi Lion', 1994, C, 'Elton John Can You Feel the Love Tonight', /can you feel the love tonight/, /elton john/),
+    T('Colors of the Wind', 'Pocahontas', 1995, C, 'Vanessa Williams Colors of the Wind', /colors of the wind/, /vanessa williams|judy kuhn/),
+    T('Go the Distance', 'Hercule', 1997, C, 'Michael Bolton Go the Distance', /go the distance/, /bolton|bart/),
+    T('I’ll Make a Man Out of You', 'Mulan', 1998, C, 'I\'ll Make a Man Out of You Mulan', /make a man out of you/, /./),
+    T('You’ll Be in My Heart', 'Tarzan', 1999, C, 'Phil Collins You\'ll Be in My Heart', /be in my heart/, /phil collins/),
+    // Dessins animés (séries)
+    T('Les Simpson (générique)', 'Les Simpson', 1989, C, 'Danny Elfman The Simpsons Theme', /simpsons/, /elfman/),
+    T('Pokémon Theme', 'Pokémon', 1998, C, 'Jason Paige Pokemon Theme', /pokemon theme|gotta catch/, /paige|pokemon/),
+    T('DuckTales Theme', 'La Bande à Picsou', 1987, C, 'Jeff Pescetti DuckTales Theme', /ducktales/, /pescetti|disney|various/),
+    T('Teenage Mutant Ninja Turtles', 'Les Tortues Ninja', 1987, C, 'Teenage Mutant Ninja Turtles theme 1987', /ninja turtles/, /./),
+    T('Dragon Ball Z (générique FR)', 'Dragon Ball Z', 1990, C, 'Bernard Minet Dragon Ball Z', /dragon ?ball/, /minet|ariane|carletti/),
+    T('Les Chevaliers du Zodiaque (générique FR)', 'Les Chevaliers du Zodiaque', 1988, C, 'Bernard Minet Les Chevaliers du Zodiaque', /chevaliers du zodiaque/, /minet/),
+    T('Goldorak (générique FR)', 'Goldorak', 1978, C, 'Goldorak generique', /goldorak/, /./),
+    T('Les Mystérieuses Cités d’or (générique FR)', 'Les Mystérieuses Cités d’or', 1982, C, 'Les Mysterieuses Cites d\'or generique', /cites d.?or/, /./),
+    T('Ulysse 31 (générique FR)', 'Ulysse 31', 1981, C, 'Ulysse 31 generique', /ulysse 31/, /./),
+    T('Capitaine Flam (générique FR)', 'Capitaine Flam', 1980, C, 'Capitaine Flam generique', /capitaine flam/, /./),
+    T('Albator (générique FR)', 'Albator', 1980, C, 'Albator generique', /albator/, /./),
+    T('Cobra (générique FR)', 'Cobra', 1982, C, 'Cobra generique dessin anime', /cobra/, /./),
+    T('Olive et Tom (générique FR)', 'Olive et Tom', 1988, C, 'Olive et Tom generique', /olive et tom/, /./),
+    T('Inspecteur Gadget (générique FR)', 'Inspecteur Gadget', 1983, C, 'Inspecteur Gadget generique', /inspecteur gadget/, /./),
+    T('Sailor Moon (générique FR)', 'Sailor Moon', 1993, C, 'Sailor Moon generique francais', /sailor moon/, /./)
+  ];
+
+  // --- DOM ---
+  var $ = function (id) { return document.getElementById(id); };
+  var screens = { start: $('screen-start'), play: $('screen-play'), end: $('screen-end') };
+  var el = {
+    round: $('round'), kind: $('kind'), ring: $('ring'), secs: $('secs'), status: $('status'),
+    pause: $('btn-pause'), reveal: $('btn-reveal'), skip: $('btn-skip'),
+    revealBox: $('reveal'), revealArt: $('reveal-art'), revealTitle: $('reveal-title'),
+    revealSrc: $('reveal-src'), revealPlayed: $('reveal-played'),
+    prev: $('prev'), results: $('results'), startError: $('start-error')
+  };
+
+  function show(name) {
+    Object.keys(screens).forEach(function (k) { screens[k].classList.toggle('hidden', k !== name); });
+  }
+
+  // --- Audio : deux éléments, l'un joue pendant que l'autre précharge le morceau suivant ---
+  var SILENCE = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=';
+  var cur = new Audio(), nxt = new Audio();
+  cur.preload = nxt.preload = 'auto';
+
+  function unlockAudio() {
+    // Les navigateurs mobiles n'autorisent la lecture qu'après un geste utilisateur :
+    // on « réveille » les deux éléments pendant le clic sur Lancer.
+    [cur, nxt].forEach(function (a) {
+      a.src = SILENCE;
+      var p = a.play();
+      if (p && p.catch) p.catch(function () {});
+    });
+  }
+
+  // --- iTunes ---
+  function fetchJson(url) {
+    var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    var timer = ctrl && setTimeout(function () { ctrl.abort(); }, 8000);
+    return fetch(url, ctrl ? { signal: ctrl.signal } : undefined)
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .finally(function () { if (timer) clearTimeout(timer); });
+  }
+  function jsonp(url) {
+    return new Promise(function (resolve, reject) {
+      var cb = 'bt_cb_' + Math.random().toString(36).slice(2);
+      var s = document.createElement('script');
+      var timer = setTimeout(function () { cleanup(); reject(new Error('timeout')); }, 8000);
+      function cleanup() { clearTimeout(timer); delete window[cb]; s.remove(); }
+      window[cb] = function (d) { cleanup(); resolve(d); };
+      s.onerror = function () { cleanup(); reject(new Error('jsonp')); };
+      s.src = url + '&callback=' + cb;
+      document.head.appendChild(s);
+    });
+  }
+  function itunes(q) {
+    var url = 'https://itunes.apple.com/search?media=music&entity=song&limit=15&country=FR&term=' + encodeURIComponent(q);
+    return fetchJson(url).catch(function () { return jsonp(url); });
+  }
+  function resolveTrack(t) {
+    return itunes(t.q).then(function (data) {
+      var hit = (data.results || []).filter(function (r) {
+        return r.previewUrl && t.tr.test(norm(r.trackName)) && t.ar.test(norm(r.artistName));
+      })[0];
+      if (!hit) return null;
+      return {
+        title: t.title, source: t.source, year: t.year, kind: t.kind,
+        url: hit.previewUrl,
+        art: (hit.artworkUrl100 || '').replace('100x100', '300x300'),
+        played: hit.trackName + ' — ' + hit.artistName
+      };
+    }).catch(function () { return null; });
+  }
+
+  // --- État de la partie ---
+  var pool, poolIdx, handed, total, nextP, history, current, gen = 0;
+  var paused = false, advancing = false, loadTimer = null, rafId = null;
+
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1)), x = a[i]; a[i] = a[j]; a[j] = x;
+    }
+    return a;
+  }
+
+  function nextResolved(myGen) {
+    return (function loop() {
+      if (myGen !== gen || handed >= total || poolIdx >= pool.length) return Promise.resolve(null);
+      return resolveTrack(pool[poolIdx++]).then(function (item) {
+        if (myGen !== gen) return null;
+        if (item) { handed++; return item; }
+        return loop();
+      });
+    })();
+  }
+
+  function prepareNext() {
+    var myGen = gen;
+    nextP = nextResolved(myGen).then(function (item) {
+      if (item && myGen === gen) { nxt.src = item.url; nxt.load(); }
+      return item;
+    });
+  }
+
+  function startGame() {
+    var n = parseInt(document.querySelector('input[name=count]:checked').value, 10);
+    gen++;
+    pool = shuffle(TRACKS.slice()); poolIdx = 0; handed = 0; total = n;
+    history = []; current = null; paused = false; advancing = false;
+    el.startError.classList.add('hidden');
+    unlockAudio();
+    prepareNext();
+    show('play');
+    resetPlayUi();
+    el.status.textContent = 'Chargement…';
+    nextP.then(function (item) {
+      if (!item) {
+        show('start');
+        el.startError.textContent = 'Impossible de charger les extraits (connexion ou service Apple indisponible). Réessaie dans un instant.';
+        el.startError.classList.remove('hidden');
+        return;
+      }
+      advance();
+    });
+  }
+
+  function resetPlayUi() {
+    el.revealBox.classList.add('hidden');
+    el.ring.style.strokeDashoffset = 0;
+    el.secs.textContent = CLIP_SECONDS;
+    el.pause.textContent = 'Pause';
+  }
+
+  function advance() {
+    if (advancing) return;
+    advancing = true;
+    var myGen = gen;
+    clearTimeout(loadTimer);
+    if (current) history.push({ item: current });
+    var previous = current;
+    nextP.then(function (item) {
+      advancing = false;
+      if (myGen !== gen) return;
+      if (!item) { finish(); return; }
+      // Bascule sur l'élément préchargé, l'ancien sert à précharger la suite.
+      cur.pause();
+      var t = cur; cur = nxt; nxt = t;
+      prepareNext();
+      current = item;
+      paused = false;
+      resetPlayUi();
+      el.round.textContent = 'Morceau ' + (history.length + 1) + ' / ' + total;
+      el.kind.textContent = item.kind;
+      el.kind.classList.toggle('film', item.kind === F);
+      el.status.textContent = 'Chargement…';
+      if (previous) {
+        el.prev.textContent = '';
+        el.prev.appendChild(document.createTextNode('Précédent : '));
+        var b = document.createElement('b');
+        b.textContent = previous.title + ' (' + previous.source + ')';
+        el.prev.appendChild(b);
+      }
+      cur.volume = 1;
+      try { cur.currentTime = 0; } catch (e) {}
+      loadTimer = setTimeout(function () {
+        // Aucun son au bout de 9 s : on passe au suivant plutôt que de bloquer la partie.
+        if (myGen === gen && current === item) advance();
+      }, LOAD_TIMEOUT_MS);
+      var p = cur.play();
+      if (p && p.catch) p.catch(function () { if (myGen === gen && current === item) advance(); });
+      startLoop(item);
+    });
+  }
+
+  function startLoop(item) {
+    cancelAnimationFrame(rafId);
+    var myGen = gen;
+    (function tick() {
+      if (myGen !== gen || current !== item) return;
+      var t = cur.currentTime || 0;
+      if (!paused && !cur.paused && t > 0) {
+        clearTimeout(loadTimer);
+        el.status.textContent = 'À toi de deviner !';
+      }
+      var left = Math.max(0, CLIP_SECONDS - t);
+      el.secs.textContent = Math.ceil(left);
+      el.ring.style.strokeDashoffset = RING_LEN * Math.min(1, t / CLIP_SECONDS);
+      if (left < FADE_SECONDS) cur.volume = Math.max(0, left / FADE_SECONDS);
+      if (t >= CLIP_SECONDS || cur.ended) { advance(); return; }
+      rafId = requestAnimationFrame(tick);
+    })();
+  }
+
+  function togglePause() {
+    if (!current) return;
+    paused = !paused;
+    if (paused) { cur.pause(); el.pause.textContent = 'Reprendre'; el.status.textContent = 'En pause'; }
+    else { cur.play().catch(function () {}); el.pause.textContent = 'Pause'; el.status.textContent = 'À toi de deviner !'; }
+  }
+
+  function revealCurrent() {
+    if (!current) return;
+    el.revealTitle.textContent = current.title;
+    el.revealSrc.textContent = current.source + ' · ' + current.year;
+    el.revealPlayed.textContent = 'Extrait : ' + current.played;
+    el.revealArt.src = current.art || '';
+    el.revealBox.classList.remove('hidden');
+  }
+
+  function finish() {
+    gen++;
+    cancelAnimationFrame(rafId); clearTimeout(loadTimer);
+    cur.pause(); nxt.pause();
+    el.results.textContent = '';
+    history.forEach(function (h, i) {
+      var li = document.createElement('li');
+      var img = document.createElement('img');
+      img.alt = ''; img.src = h.item.art || '';
+      var box = document.createElement('div');
+      var t = document.createElement('div'); t.className = 't';
+      t.textContent = (i + 1) + '. ' + h.item.title;
+      var s = document.createElement('div'); s.className = 's';
+      s.textContent = h.item.source + ' · ' + h.item.year;
+      box.appendChild(t); box.appendChild(s);
+      li.appendChild(img); li.appendChild(box);
+      el.results.appendChild(li);
+    });
+    show('end');
+  }
+
+  // --- Événements ---
+  $('btn-start').addEventListener('click', startGame);
+  $('btn-again').addEventListener('click', function () { show('start'); });
+  el.pause.addEventListener('click', togglePause);
+  el.reveal.addEventListener('click', revealCurrent);
+  el.skip.addEventListener('click', advance);
+  document.addEventListener('keydown', function (e) {
+    if (screens.play.classList.contains('hidden')) return;
+    if (e.code === 'Space') { e.preventDefault(); togglePause(); }
+    else if (e.code === 'ArrowRight') advance();
+    else if (e.key === 'r' || e.key === 'R') revealCurrent();
+  });
+})();
+</script>
+</body>
+</html>
