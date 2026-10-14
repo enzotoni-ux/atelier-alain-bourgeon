@@ -52,12 +52,7 @@ erDiagram
         phone  Telephone
         text   Adresse
         select Origine
-        long   Votre_projet
-        select Delai_souhaite
         date   Date_de_la_demande
-        files  Photos
-        files  Documents
-        select Consentement
     }
     COMMANDE {
         text     N_commande PK
@@ -151,12 +146,11 @@ Les champs `Nom`, `Email`, `Téléphone`, `Consentement RGPD`, `Photos`, `Docume
 ## 7. Points faibles à régler avant la validation
 
 1. **Le lien Jotform → Airtable n'est pas prouvé.** Les 4 commandes et 3 contacts de la base sont fictifs (« (fictif) », emails `@example.com`). Aucune ligne ne vient d'une vraie soumission. Aucune automatisation n'existe dans la base : si Jotform ne crée pas aussi le Contact et le lien `Client`, ce rattachement n'a lieu nulle part. **Test à faire** : soumettre le formulaire depuis le site en ligne, puis vérifier qu'une ligne apparaît dans Commandes, avec photos et consentement.
-2. **Photos et Documents existent dans 3 tables** (Contact, Commandes, Pièces jointes). Risque de doublons et de pièces perdues. Choix à trancher : soit Commandes ne garde que la réception brute Jotform et une automatisation copie vers Pièces jointes, soit on supprime les champs en trop.
-3. **Nom, email, téléphone, projet, délai sont aussi dupliqués** entre Contact et Commandes. C'est défendable (réception brute du formulaire), mais le coach posera la question : à documenter ou à nettoyer.
-4. **Consentement** : le champ Contact n'a qu'une option (« Oui »), il ne distingue pas « non renseigné » de « refusé ». La case à cocher de Commandes est plus propre.
-5. **`api/contact.js` dans le dépôt** écrit encore dans l'ancienne base « Fil Rouge 1 » (`appdGPOIhuP8pDo1d`). Le site utilise maintenant Jotform : ce code est mort, ou pire, il envoie encore des données ailleurs si l'ancien formulaire est réactivé. À retirer ou à documenter comme archive.
-6. **Numérotation à la main** (`CMD-2026-XXX`, `DEV-…`, `PAY-…`) : source d'erreurs. Un champ Numéro automatique ou une formule règle le sujet.
-7. **Prix total saisi à la main**, alors que le montant du devis accepté existe déjà. Un rollup du devis accepté éviterait deux sources de vérité.
+2. ~~Doublons Photos / Documents / projet / délai / consentement dans Contact~~ **Réglé le 14/10** : supprimés de Contact. La réception du formulaire vit uniquement dans Commandes maquettes ; Pièces jointes sert au classement par type.
+3. **Nom, email, téléphone restent dans Commandes et dans Contact** : voulu, ce sont les champs saisis par Jotform qui servent à retrouver ou créer le contact. À mentionner au coach.
+4. **`api/contact.js` dans le dépôt** écrit encore dans l'ancienne base « Fil Rouge 1 » (`appdGPOIhuP8pDo1d`). Le site utilise maintenant Jotform : ce code est mort, ou pire, il envoie encore des données ailleurs si l'ancien formulaire est réactivé. À retirer ou à documenter comme archive.
+5. **Numérotation à la main** (`CMD-2026-XXX`, `DEV-…`, `PAY-…`) : source d'erreurs. Un champ Numéro automatique ou une formule règle le sujet.
+6. **Prix total saisi à la main**, alors que le montant du devis accepté existe déjà. Un rollup du devis accepté éviterait deux sources de vérité.
 
 ## 8. Bonus : agent IA
 
