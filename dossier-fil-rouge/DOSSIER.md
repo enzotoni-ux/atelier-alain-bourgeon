@@ -145,7 +145,7 @@ Les champs `Nom`, `Email`, `Téléphone`, `Consentement RGPD`, `Photos`, `Docume
 | Base Airtable structurée (≥ 2 tables liées, champs documentés) | ✅ 5 tables, 4 liens, descriptions sur chaque champ | |
 | Formulaire Jotform connecté | ⚠️ Publié et intégré au site, **flux vers Airtable non vérifié** | Voir §7 |
 | Interface Airtable | ✅ 4 pages | Vérifier qu'elle est publiée / partageable |
-| Bonus : agent IA | ❌ Non fait | Voir §8 |
+| Bonus : agent IA | ⚠️ Chatbot Chatbase présent sur la page d'accueil du site | Pas relié au formulaire ni à la base : voir §8 |
 | Bonus : vues personnalisées par accès | ❌ Non fait | |
 
 ## 7. Points faibles à régler avant la validation
@@ -158,7 +158,11 @@ Les champs `Nom`, `Email`, `Téléphone`, `Consentement RGPD`, `Photos`, `Docume
 6. **Numérotation à la main** (`CMD-2026-XXX`, `DEV-…`, `PAY-…`) : source d'erreurs. Un champ Numéro automatique ou une formule règle le sujet.
 7. **Prix total saisi à la main**, alors que le montant du devis accepté existe déjà. Un rollup du devis accepté éviterait deux sources de vérité.
 
-## 8. Bonus possible : agent IA
+## 8. Bonus : agent IA
+
+**Existant** : un chatbot Chatbase est embarqué sur `index.html` (page d'accueil). Il n'est pas sur la page Contact (le bot vocal Jotform y a été retiré) et il n'écrit rien dans Airtable. La consigne parle d'un agent « intégré à votre formulaire ou à votre base » : tel quel, il peut être jugé hors critère. Deux façons de le rendre conforme : remettre un agent dans le formulaire Jotform, ou ajouter l'automatisation Airtable ci-dessous.
+
+**Piste côté base** :
 
 Le plus rentable et le plus simple à démontrer : une **automatisation Airtable avec bloc IA** déclenchée à la création d'une commande (« Nouvelle demande »), qui :
 - résume la description du projet en 2 lignes,
