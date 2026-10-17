@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Test chat LLM</title>
+</head>
+<body>
+
+<h1>Test chat LLM</h1>
+<p>Cette page sert uniquement à tester /api/chat.</p>
+
+<form id="form">
+  <label for="msg">Message</label>
+  <input id="msg" type="text" required maxlength="1000">
+  <button type="submit">Envoyer</button>
+</form>
+<pre id="out"></pre>
+
+<script>
+const history = [];
+const out = document.getElementById("out");
+document.getElementById("form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const input = document.getElementById("msg");
+  history.push({ role: "user", content: input.value });
+  out.textContent += "Vous : " + input.value + "\n";
+  input.value = "";
+  try {
+    const r = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: history })
+    });
+    const data = await r.json();
+    if (!r.ok) throw new Error(data.error || r.status);
+    history.push({ role: "assistant", content: data.reply });
+    out.textContent += "Assistant : " + data.reply + "\n\n";
+  } catch (err) {
+    history.pop();
+    out.textContent += "Erreur : " + err.message + "\n\n";
+  }
+});
+</script>
+
+</body>
+</html>
