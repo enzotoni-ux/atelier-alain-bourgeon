@@ -1,12 +1,17 @@
-// Endpoint de chat branché sur une API LLM gratuite compatible OpenAI
-// (Groq, OpenRouter, Mistral, Gemini en mode OpenAI…).
-// Variables d'environnement Vercel :
-//   LLM_API_KEY  (obligatoire) clé du fournisseur
-//   LLM_API_URL  (optionnel)   défaut : https://api.groq.com/openai/v1/chat/completions
-//   LLM_MODEL    (optionnel)   défaut : llama-3.1-8b-instant
+// Endpoint de chat branché sur plusieurs API LLM gratuites (format OpenAI).
+// Les fournisseurs sont essayés dans l'ordre ; si l'un échoue (quota, panne),
+// on passe au suivant. Seuls ceux dont la clé est définie dans Vercel sont utilisés.
+// Chaque modèle peut être remplacé par une variable <NOM>_MODEL (ex. GROQ_MODEL).
+// Les modèles par défaut sont à vérifier : les offres gratuites changent souvent.
 
-const API_URL = process.env.LLM_API_URL || "https://api.groq.com/openai/v1/chat/completions";
-const MODEL = process.env.LLM_MODEL || "llama-3.1-8b-instant";
+const PROVIDERS = [
+  { name: "GROQ", url: "https://api.groq.com/openai/v1/chat/completions", model: "llama-3.1-8b-instant" },
+  { name: "CEREBRAS", url: "https://api.cerebras.ai/v1/chat/completions", model: "llama3.1-8b" },
+  { name: "GEMINI", url: "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", model: "gemini-2.0-flash" },
+  { name: "MISTRAL", url: "https://api.mistral.ai/v1/chat/completions", model: "mistral-small-latest" },
+  { name: "OPENROUTER", url: "https://openrouter.ai/api/v1/chat/completions", model: "meta-llama/llama-3.1-8b-instruct:free" }
+].map(p => ({ ...p, key: process.env[p.name + "_API_KEY"], model: process.env[p.name + "_MODEL"] || p.model }))
+ .filter(p => p.key);
 
 const MAX_MESSAGES = 10;
 const MAX_CHARS = 1000;
@@ -23,7 +28,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Méthode non autorisée" });
   }
 
-  if (!process.env.LLM_API_KEY) {
+  if (!PROVIDERS.length) {
     return res.status(500).json({ error: "Chat non configuré." });
   }
 
@@ -37,37 +42,40 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Message invalide." });
   }
 
-  try {
-    const response = await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.LLM_API_KEY}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model: MODEL,
-        messages: [{ role: "system", content: SYSTEM_PROMPT }, ...messages],
-        max_tokens: 400,
-        temperature: 0.4
-      })
-    });
+  const payload = [{ role: "system", content: SYSTEM_PROMPT }, ...messages];
 
-    const data = await response.json();
+  for (const provider of PROVIDERS) {
+    try {
+      const response = await fetch(provider.url, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${provider.key}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          model: provider.model,
+          messages: payload,
+          max_tokens: 400,
+          temperature: 0.4
+        }),
+        signal: AbortSignal.timeout(15000)
+      });
 
-    if (!response.ok) {
-      console.error("Erreur LLM :", data);
-      return res.status(502).json({ error: "Le service de chat est indisponible." });
+      const data = await response.json();
+      const reply = data.choices && data.choices[0] && data.choices[0].message
+        ? data.choices[0].message.content
+        : "";
+
+      if (response.ok && reply) {
+        return res.status(200).json({ reply, provider: provider.name.toLowerCase() });
+      }
+      console.error(`Erreur ${provider.name} :`, response.status, data);
+    } catch (error) {
+      console.error(`Erreur ${provider.name} :`, error);
     }
-
-    const reply = data.choices && data.choices[0] && data.choices[0].message
-      ? data.choices[0].message.content
-      : "";
-
-    return res.status(200).json({ reply });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Erreur serveur." });
   }
+
+  return res.status(502).json({ error: "Le service de chat est indisponible." });
 }
 
 // On ne garde que user/assistant : le client ne peut pas injecter de message "system".
