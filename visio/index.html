@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Visio">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<!-- Clé publique Cloudflare Turnstile (laisser vide : l'envoi par le serveur est alors désactivé, l'invitation passe par la messagerie de l'utilisateur) -->
+<meta name="turnstile-sitekey" content="">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Visio</title>
+<style>
+  :root {
+    --blue: #1a73e8; --blue-hover: #1b66c9; --blue-soft: #e8f0fe;
+    --text: #202124; --muted: #5f6368; --line: #dadce0; --bg: #fff;
+    --dark: #202124; --dark-2: #3c4043; --dark-3: #5f6368; --red: #ea4335;
+    --font: Roboto, "Segoe UI", Helvetica, Arial, sans-serif;
+    --safe-b: env(safe-area-inset-bottom, 0px);
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { font: 400 16px/1.5 var(--font); color: var(--text); background: var(--bg); -webkit-tap-highlight-color: transparent; }
+  [hidden] { display: none !important; }
+  button, input, textarea { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+  .i { width: 24px; height: 24px; fill: currentColor; flex: none; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 48px; padding: 0 24px; border-radius: 24px; border: 1px solid transparent;
+    background: transparent; font-weight: 500; letter-spacing: .01em;
+  }
+  .btn.primary { background: var(--blue); color: #fff; }
+  .btn.primary:hover:not(:disabled) { background: var(--blue-hover); box-shadow: 0 1px 3px rgba(60,64,67,.3); }
+  .btn.outline { border-color: var(--line); color: var(--blue); }
+  .btn.outline:hover { background: var(--blue-soft); }
+  .btn.text { color: var(--blue); padding: 0 12px; }
+  .btn.text:hover:not(:disabled) { background: var(--blue-soft); }
+  .btn:disabled { background: rgba(60,64,67,.12); color: rgba(60,64,67,.38); cursor: not-allowed; }
+  .btn.text:disabled { background: transparent; }
+
+  /* ---------- accueil ---------- */
+  .topbar { display: flex; align-items: center; justify-content: space-between; padding: 8px 24px; height: 64px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-size: 22px; color: var(--text); font-weight: 500; }
+  .brand .i { color: var(--blue); width: 32px; height: 32px; }
+  .clock { color: var(--muted); font-size: 18px; }
+  .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; max-width: 1200px; margin: 0 auto; padding: 48px 24px; }
+  .hero h1 { font-size: 44px; line-height: 52px; font-weight: 400; margin: 0 0 16px; }
+  .hero p { font-size: 22px; line-height: 28px; color: var(--muted); margin: 0 0 40px; max-width: 520px; }
+  .actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; position: relative; }
+  .codebox { display: flex; align-items: center; gap: 8px; height: 48px; padding: 0 12px; border: 1px solid #80868b; border-radius: 4px; color: var(--muted); }
+  .codebox:focus-within { border: 2px solid var(--blue); padding: 0 11px; }
+  .codebox input { border: 0; outline: 0; background: transparent; width: 190px; height: 44px; }
+  .hr { border: 0; border-top: 1px solid var(--line); margin: 32px 0 16px; max-width: 520px; }
+  .hero small { color: var(--muted); font-size: 14px; }
+  .art { display: grid; place-items: center; }
+  .art div { width: min(380px, 70vw); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #e8f0fe, #d2e3fc); display: grid; place-items: center; }
+  .art .i { width: 45%; height: 45%; color: var(--blue); }
+  .menu { position: absolute; top: 56px; left: 0; z-index: 5; min-width: 320px; padding: 8px 0; background: #fff; border-radius: 4px; box-shadow: 0 2px 6px 2px rgba(60,64,67,.15), 0 1px 2px rgba(60,64,67,.3); }
+  .menu button { display: flex; gap: 16px; align-items: center; width: 100%; padding: 12px 16px; border: 0; background: none; text-align: left; }
+  .menu button:hover { background: #f1f3f4; }
+  .menu .i { color: var(--muted); }
+
+  /* ---------- pré-participation ---------- */
+  .prejoin { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 48px; align-items: center; max-width: 1100px; margin: 0 auto; padding: 24px; }
+  .pv { position: relative; aspect-ratio: 16 / 9; background: var(--dark); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15); }
+  .pv video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+  .pv .msg { position: absolute; inset: 0; display: grid; place-items: center; color: #fff; font-size: 20px; text-align: center; padding: 24px; }
+  .pv .nm { position: absolute; left: 16px; top: 12px; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.6); font-weight: 500; }
+  .pv .ctls { position: absolute; left: 0; right: 0; bottom: 16px; display: flex; justify-content: center; gap: 16px; }
+  .round { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.7); background: rgba(32,33,36,.5); color: #fff; }
+  .round:hover { background: rgba(32,33,36,.8); }
+  .round.off { background: var(--red); border-color: var(--red); }
+  .round:disabled { opacity: .5; cursor: not-allowed; }
+  .join { text-align: center; }
+  .join h2 { font-size: 28px; line-height: 36px; font-weight: 400; margin: 0 0 8px; }
+  .join .sub { color: var(--muted); margin: 0 0 24px; overflow-wrap: anywhere; }
+  .field { display: block; text-align: left; margin-bottom: 24px; position: relative; }
+  .field input { width: 100%; height: 56px; padding: 0 16px; border: 1px solid #80868b; border-radius: 4px; background: #fff; }
+  .field input:focus { border: 2px solid var(--blue); padding: 0 15px; outline: 0; }
+  .field span { position: absolute; top: -9px; left: 12px; padding: 0 4px; background: #fff; font-size: 12px; color: var(--muted); }
+  .join .btn.primary { min-width: 160px; }
+  .err { color: #d93025; min-height: 24px; font-size: 14px; margin: 12px 0 0; }
+  .hint { color: var(--muted); font-size: 13px; margin-top: 24px; text-align: left; }
+
+  /* ---------- salle ---------- */
+  #room { height: 100%; height: 100dvh; display: flex; flex-direction: column; background: var(--dark); color: #fff; }
+  .stage { flex: 1; min-height: 0; display: flex; padding: 16px 16px 0; gap: 16px; }
+  .grid { flex: 1; min-width: 0; display: grid; gap: 12px; grid-template-columns: repeat(var(--cols, 1), 1fr); grid-auto-rows: 1fr; align-content: center; }
+  .tile { position: relative; background: var(--dark-2); border-radius: 8px; overflow: hidden; min-height: 0; }
+  .tile video { width: 100%; height: 100%; object-fit: cover; background: var(--dark-2); }
+  .tile.screen video { object-fit: contain; background: #000; }
+  .tile.local:not(.screen) video { transform: scaleX(-1); }
+  .tile .name { position: absolute; left: 12px; bottom: 10px; max-width: calc(100% - 24px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; font-weight: 500; text-shadow: 0 1px 3px rgba(0,0,0,.8); }
+  .tile .off { position: absolute; inset: 0; display: none; place-items: center; background: var(--dark-2); }
+  .tile.cam-off .off { display: grid; }
+  .avatar { width: 96px; height: 96px; border-radius: 50%; display: grid; place-items: center; font-size: 44px; text-transform: uppercase; color: #fff; background: var(--av, #1a73e8); }
+  .tile .mm { position: absolute; right: 10px; top: 10px; width: 28px; height: 28px; border-radius: 50%; background: rgba(32,33,36,.8); display: none; place-items: center; }
+  .tile.mic-off .mm { display: grid; }
+  .tile .mm .i { width: 18px; height: 18px; }
+
+  .side { width: 360px; flex: none; background: #fff; color: var(--text); border-radius: 8px; display: flex; flex-direction: column; min-height: 0; }
+  .side header { display: flex; align-items: center; justify-content: space-between; padding: 8px 8px 8px 24px; }
+  .side h2 { font-size: 18px; font-weight: 400; margin: 0; }
+  .icon-btn { width: 40px; height: 40px; border-radius: 50%; border: 0; background: transparent; display: grid; place-items: center; color: var(--muted); flex: none; }
+  .icon-btn:hover { background: #f1f3f4; }
+  .people { list-style: none; margin: 0; padding: 8px 24px; overflow-y: auto; flex: 1; }
+  .people li { display: flex; align-items: center; gap: 12px; padding: 8px 0; }
+  .people .avatar { width: 32px; height: 32px; font-size: 15px; }
+  .messages { flex: 1; overflow-y: auto; padding: 8px 24px; display: flex; flex-direction: column; gap: 12px; }
+  .messages .note { background: #f1f3f4; color: var(--muted); font-size: 12px; text-align: center; padding: 8px 12px; border-radius: 4px; }
+  .m b { font-size: 14px; font-weight: 500; margin-right: 8px; }
+  .m time { font-size: 12px; color: var(--muted); }
+  .m p { margin: 2px 0 0; font-size: 14px; overflow-wrap: anywhere; }
+  .side form { display: flex; align-items: center; margin: 12px 16px 16px; background: #f1f3f4; border-radius: 24px; padding-left: 16px; }
+  .side form input { flex: 1; min-width: 0; height: 48px; border: 0; background: transparent; outline: 0; }
+  .side form button { color: var(--blue); }
+  .side form button:disabled { opacity: .4; cursor: default; }
+
+  .bar { height: calc(80px + var(--safe-b)); padding: 0 16px var(--safe-b); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; }
+  .bar .l { display: flex; align-items: center; gap: 12px; min-width: 0; font-weight: 500; }
+  .bar .l .sep { width: 1px; height: 16px; background: var(--dark-3); }
+  .bar .l .code { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bar .c { display: flex; gap: 12px; align-items: center; }
+  .bar .r { display: flex; justify-content: flex-end; gap: 4px; }
+  .ctl { width: 48px; height: 48px; border-radius: 50%; border: 0; background: var(--dark-2); color: #fff; display: grid; place-items: center; position: relative; }
+  .ctl:hover { background: #4a4d51; }
+  .ctl.off { background: var(--red); }
+  .ctl.off:hover { background: #d93025; }
+  .ctl.on { background: #d3e3fd; color: #041e49; }
+  .ctl.end { width: 64px; border-radius: 24px; background: var(--red); }
+  .ctl.end:hover { background: #d93025; }
+  .ctl:disabled { opacity: .4; cursor: not-allowed; }
+  .ctl.flat { background: transparent; }
+  .ctl.flat:hover { background: var(--dark-2); }
+  .ctl.flat.on { background: #d3e3fd; }
+  .dot { position: absolute; top: 8px; right: 8px; width: 10px; height: 10px; border-radius: 50%; background: #34a853; border: 2px solid var(--dark); }
+
+  /* ---------- dialogue & toasts ---------- */
+  dialog { border: 0; border-radius: 8px; padding: 0; width: min(440px, calc(100vw - 32px)); max-height: calc(100vh - 32px); color: var(--text); box-shadow: 0 4px 12px rgba(0,0,0,.3); }
+  dialog::backdrop { background: rgba(0,0,0,.35); }
+  dialog .in { padding: 24px; overflow-y: auto; }
+  dialog h2 { font-size: 22px; font-weight: 400; margin: 0 0 8px; padding-right: 40px; }
+  dialog .x { position: absolute; top: 12px; right: 12px; }
+  dialog .desc { color: var(--muted); font-size: 14px; margin: 0 0 16px; }
+  .linkrow { display: flex; align-items: center; justify-content: space-between; gap: 8px; background: #f1f3f4; border-radius: 4px; padding: 8px 8px 8px 16px; margin-bottom: 24px; }
+  .linkrow span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; }
+  dialog h3 { font-size: 14px; font-weight: 500; margin: 0 0 8px; }
+  dialog textarea { width: 100%; min-height: 76px; resize: vertical; padding: 12px 16px; border: 1px solid #80868b; border-radius: 4px; background: #fff; }
+  dialog textarea:focus { border: 2px solid var(--blue); padding: 11px 15px; outline: 0; }
+  .dlg-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  #tsBox { margin-top: 12px; }
+  .ok { color: #188038; font-size: 14px; margin: 8px 0 0; }
+  .toast { position: fixed; left: 24px; bottom: calc(96px + var(--safe-b)); background: #323232; color: #fff; padding: 12px 16px; border-radius: 4px; z-index: 20; font-size: 14px; box-shadow: 0 3px 5px rgba(0,0,0,.3); }
+  #installTip { margin-top: 16px; font-size: 14px; color: var(--muted); }
+
+  @media (max-width: 900px) {
+    .topbar { padding: 8px 16px; }
+    .hero, .prejoin { grid-template-columns: 1fr; }
+    .hero { padding: 16px; }
+    .hero h1 { font-size: 30px; line-height: 38px; }
+    .hero p { font-size: 17px; line-height: 24px; margin-bottom: 24px; }
+    .art { display: none; }
+    .prejoin { gap: 24px; padding: 16px; }
+    .menu { min-width: 0; right: 0; }
+    .codebox { flex: 1; } .codebox input { width: 100%; min-width: 0; }
+    .side { position: fixed; inset: 8px 8px calc(88px + var(--safe-b)); width: auto; z-index: 8; }
+    .bar { grid-template-columns: 1fr; }
+    .bar .l { display: none; }
+    .bar .r { position: static; }
+    .bar .c { justify-content: center; gap: 8px; }
+    .bar .r { display: none; }
+    .stage { padding: 8px 8px 0; }
+    .mobile-extra { display: grid !important; }
+  }
+  .mobile-extra { display: none; }
+  @media (prefers-reduced-motion: no-preference) {
+    .btn, .ctl, .round, .icon-btn { transition: background-color .15s ease, box-shadow .15s ease; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/></symbol>
+  <symbol id="i-mic-off" viewBox="0 0 24 24"><path d="M19 11h-1.7c0 .74-.16 1.43-.43 2.05l1.23 1.23c.56-.98.9-2.09.9-3.28zm-4.02.17c0-.06.02-.11.02-.17V5c0-1.66-1.34-3-3-3S9 3.34 9 5v.18l5.98 5.99zM4.27 3L3 4.27l6.01 6.01V11c0 1.66 1.33 3 2.99 3 .22 0 .44-.03.65-.08l1.66 1.66c-.71.33-1.5.52-2.31.52-2.76 0-5.3-2.1-5.3-5.1H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c.91-.13 1.77-.45 2.54-.9L19.73 21 21 19.73 4.27 3z"/></symbol>
+  <symbol id="i-cam" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></symbol>
+  <symbol id="i-cam-off" viewBox="0 0 24 24"><path d="M21 6.5l-4 4V7c0-.55-.45-1-1-1H9.82L21 17.18V6.5zM3.27 2L2 3.27 4.73 6H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.21 0 .39-.08.55-.18L19.73 21 21 19.73 3.27 2z"/></symbol>
+  <symbol id="i-end" viewBox="0 0 24 24"><path d="M12 9c-1.6 0-3.15.25-4.6.72v3.1c0 .39-.23.74-.56.9-.98.49-1.87 1.12-2.66 1.85-.18.18-.43.28-.7.28-.28 0-.53-.11-.71-.29L.29 13.08c-.18-.17-.29-.42-.29-.7 0-.28.11-.53.29-.71C3.34 8.78 7.46 7 12 7s8.66 1.78 11.71 4.67c.18.18.29.43.29.71 0 .28-.11.53-.29.71l-2.48 2.48c-.18.18-.43.29-.71.29-.27 0-.52-.11-.7-.28-.79-.73-1.68-1.36-2.66-1.85-.33-.16-.56-.51-.56-.9v-3.1C15.15 9.25 13.6 9 12 9z"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></symbol>
+  <symbol id="i-people" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></symbol>
+  <symbol id="i-present" viewBox="0 0 24 24"><path d="M21 3H3c-1.11 0-2 .89-2 2v14c0 1.1.89 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.11-.9-2-2-2zm0 16.02H3V4.98h18v14.04zM10 12H8l4-4 4 4h-2v4h-4v-4z"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></symbol>
+  <symbol id="i-newcall" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4zM14 13h-3v3H9v-3H6v-2h3V8h2v3h3v2z"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></symbol>
+  <symbol id="i-add" viewBox="0 0 24 24"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></symbol>
+  <symbol id="i-kbd" viewBox="0 0 24 24"><path d="M20 5H4c-1.1 0-1.99.9-1.99 2L2 17c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-9 3h2v2h-2V8zm0 3h2v2h-2v-2zM8 8h2v2H8V8zm0 3h2v2H8v-2zm-1 2H5v-2h2v2zm0-3H5V8h2v2zm9 7H8v-2h8v2zm0-4h-2v-2h2v2zm0-3h-2V8h2v2zm3 3h-2v-2h2v2zm0-3h-2V8h2v2z"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></symbol>
+</svg>
+
+<!-- ========== ACCUEIL ========== -->
+<div id="home">
+  <header class="topbar">
+    <div class="brand"><svg class="i"><use href="#i-cam"/></svg>Visio</div>
+    <div class="clock" id="homeClock"></div>
+  </header>
+  <main class="hero">
+    <div>
+      <h1>Visioconférences pour tous, directement dans le navigateur</h1>
+      <p>Créez une réunion, invitez vos contacts par e-mail et parlez-vous en face à face. Sans compte, sans installation.</p>
+      <div class="actions">
+        <button class="btn primary" id="newBtn" type="button" aria-haspopup="menu" aria-expanded="false"><svg class="i"><use href="#i-newcall"/></svg>Nouvelle réunion</button>
+        <div class="menu" id="newMenu" role="menu" hidden>
+          <button type="button" role="menuitem" id="laterBtn"><svg class="i"><use href="#i-link"/></svg>Créer une réunion pour plus tard</button>
+          <button type="button" role="menuitem" id="inviteBtn"><svg class="i"><use href="#i-add"/></svg>Créer et inviter par e-mail</button>
+          <button type="button" role="menuitem" id="nowBtn"><svg class="i"><use href="#i-newcall"/></svg>Démarrer une réunion instantanée</button>
+        </div>
+        <div class="codebox">
+          <svg class="i"><use href="#i-kbd"/></svg>
+          <input id="codeInput" type="text" placeholder="Saisissez un code ou un lien" aria-label="Code ou lien de la réunion" autocomplete="off" autocapitalize="off" spellcheck="false">
+        </div>
+        <button class="btn text" id="goBtn" type="button" disabled>Participer</button>
+      </div>
+      <hr class="hr">
+      <small>Les flux audio et vidéo passent directement entre participants (WebRTC) et ne sont pas enregistrés. 6 personnes maximum par réunion.</small>
+      <p id="installTip" hidden></p>
+    </div>
+    <div class="art" aria-hidden="true"><div><svg class="i"><use href="#i-cam"/></svg></div></div>
+  </main>
+</div>
+
+<!-- ========== PRÉ-PARTICIPATION ========== -->
+<div id="prejoin" hidden>
+  <header class="topbar">
+    <div class="brand"><svg class="i"><use href="#i-cam"/></svg>Visio</div>
+    <div class="clock" id="preClock"></div>
+  </header>
+  <main class="prejoin">
+    <div class="pv">
+      <video id="pvVideo" autoplay muted playsinline></video>
+      <div class="msg" id="pvMsg">Démarrage de la caméra…</div>
+      <div class="nm" id="pvName"></div>
+      <div class="ctls">
+        <button class="round" id="pvMic" type="button" aria-label="Couper le micro"><svg class="i"><use href="#i-mic"/></svg></button>
+        <button class="round" id="pvCam" type="button" aria-label="Couper la caméra"><svg class="i"><use href="#i-cam"/></svg></button>
+      </div>
+    </div>
+    <div class="join">
+      <h2>Prêt à participer ?</h2>
+      <p class="sub" id="pvCode"></p>
+      <label class="field"><span>Votre nom</span><input id="nameInput" type="text" maxlength="30" autocomplete="nickname"></label>
+      <button class="btn primary" id="joinBtn" type="button" disabled>Participer</button>
+      <button class="btn outline" id="pvInvite" type="button">Inviter</button>
+      <p class="err" id="joinErr" role="alert"></p>
+      <p class="hint">Derrière certains pare-feu d’entreprise, la connexion peut échouer (pas de relais TURN). Seul l’échange de connexion transite par le service PeerJS.</p>
+    </div>
+  </main>
+</div>
+
+<!-- ========== SALLE ========== -->
+<div id="room" hidden>
+  <div class="stage">
+    <div class="grid" id="grid"></div>
+    <aside class="side" id="peoplePanel" hidden aria-label="Personnes">
+      <header><h2>Personnes</h2><button class="icon-btn" type="button" data-close aria-label="Fermer"><svg class="i"><use href="#i-close"/></svg></button></header>
+      <ul class="people" id="peopleList"></ul>
+    </aside>
+    <aside class="side" id="chatPanel" hidden aria-label="Messages dans l’appel">
+      <header><h2>Messages dans l’appel</h2><button class="icon-btn" type="button" data-close aria-label="Fermer"><svg class="i"><use href="#i-close"/></svg></button></header>
+      <div class="messages" id="messages" aria-live="polite"><div class="note">Les messages ne sont visibles que par les participants présents et disparaissent à la fin de l’appel.</div></div>
+      <form id="chatForm">
+        <input id="chatInput" type="text" maxlength="500" placeholder="Envoyer un message" aria-label="Message" autocomplete="off">
+        <button class="icon-btn" id="sendBtn" type="submit" aria-label="Envoyer" disabled><svg class="i"><use href="#i-send"/></svg></button>
+      </form>
+    </aside>
+  </div>
+  <div class="bar">
+    <div class="l"><span id="roomClock"></span><span class="sep"></span><span class="code" id="roomCode"></span></div>
+    <div class="c">
+      <button class="ctl" id="micBtn" type="button" aria-label="Couper le micro" title="Micro (M)"><svg class="i"><use href="#i-mic"/></svg></button>
+      <button class="ctl" id="camBtn" type="button" aria-label="Couper la caméra" title="Caméra (V)"><svg class="i"><use href="#i-cam"/></svg></button>
+      <button class="ctl" id="shareBtn" type="button" aria-label="Présenter maintenant" title="Présenter maintenant"><svg class="i"><use href="#i-present"/></svg></button>
+      <button class="ctl mobile-extra" id="chatBtn2" type="button" aria-label="Discussion"><svg class="i"><use href="#i-chat"/></svg><span class="dot" id="chatDot2" hidden></span></button>
+      <button class="ctl mobile-extra" id="peopleBtn2" type="button" aria-label="Personnes"><svg class="i"><use href="#i-people"/></svg></button>
+      <button class="ctl mobile-extra" id="infoBtn2" type="button" aria-label="Inviter ou détails"><svg class="i"><use href="#i-info"/></svg></button>
+      <button class="ctl end" id="leaveBtn" type="button" aria-label="Quitter l’appel" title="Quitter l’appel"><svg class="i"><use href="#i-end"/></svg></button>
+    </div>
+    <div class="r">
+      <button class="ctl flat" id="infoBtn" type="button" aria-label="Détails de la réunion" title="Détails de la réunion"><svg class="i"><use href="#i-info"/></svg></button>
+      <button class="ctl flat" id="peopleBtn" type="button" aria-label="Personnes" title="Personnes"><svg class="i"><use href="#i-people"/></svg></button>
+      <button class="ctl flat" id="chatBtn" type="button" aria-label="Discuter avec tous les participants" title="Discussion (C)"><svg class="i"><use href="#i-chat"/></svg><span class="dot" id="chatDot" hidden></span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== DÉTAILS / INVITATION ========== -->
+<dialog id="detailsDlg" aria-labelledby="dlgTitle">
+  <button class="icon-btn x" type="button" id="dlgClose" aria-label="Fermer"><svg class="i"><use href="#i-close"/></svg></button>
+  <div class="in">
+    <h2 id="dlgTitle">Détails de la réunion</h2>
+    <p class="desc" id="dlgDesc"></p>
+    <div class="linkrow"><span id="dlgLink"></span><button class="icon-btn" type="button" id="dlgCopy" aria-label="Copier le lien"><svg class="i"><use href="#i-copy"/></svg></button></div>
+    <h3>Inviter par e-mail</h3>
+    <textarea id="mailInput" aria-label="Adresses e-mail" placeholder="nom@exemple.com, autre@exemple.com" inputmode="email" autocapitalize="off"></textarea>
+    <div id="tsBox"></div>
+    <div class="dlg-actions">
+      <button class="btn primary" type="button" id="mailSend">Envoyer les invitations</button>
+      <button class="btn outline" type="button" id="mailTo">Ouvrir ma messagerie</button>
+      <button class="btn outline" type="button" id="dlgShare" hidden>Partager le lien</button>
+    </div>
+    <p class="err" id="mailErr" role="alert"></p>
+    <p class="ok" id="mailOk" role="status" hidden></p>
+    <div class="dlg-actions" id="dlgJoinRow" hidden><button class="btn primary" type="button" id="dlgJoin">Participer maintenant</button></div>
+  </div>
+</dialog>
+
+<script src="peerjs.min.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var MAX_PEERS = 6;
+  var ID_PREFIX = 'visio';
+  var tsMeta = document.querySelector('meta[name="turnstile-sitekey"]');
+  var TURNSTILE_KEY = tsMeta ? tsMeta.content.trim() : '';
+  var EMAIL_RE = /^[^\s@<>"',;]+@[^\s@<>"',;]+\.[^\s@<>"',;]{2,}$/;
+  var COLORS = ['#1a73e8', '#188038', '#a142f4', '#e8710a', '#d93025', '#129eaf', '#c26401', '#7e57c2'];
+  var $ = function (id) { return document.getElementById(id); };
+  var qs = new URLSearchParams(location.search);
+
+  var peerOpts = { config: { iceServers: [
+    { urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:stun1.l.google.com:19302' }
+  ] } };
+  if (qs.get('peerHost')) {
+    peerOpts.host = qs.get('peerHost');
+    peerOpts.port = Number(qs.get('peerPort') || 9000);
+    peerOpts.path = qs.get('peerPath') || '/';
+    peerOpts.secure = qs.get('peerSecure') === '1';
+  }
+
+  var state = {
+    stream: null, screen: null, camOn: true, micOn: true,
+    name: '', code: '', peer: null, slot: -1,
+    calls: {}, conns: {}, names: {}, joined: false
+  };
+  var mediaReady = Promise.resolve();
+
+  /* ---------- PWA ---------- */
+  if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+    navigator.serviceWorker.register('sw.js').catch(function () {});
+  }
+  var standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  var deferredInstall = null;
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault(); deferredInstall = e;
+    var tip = $('installTip'); tip.hidden = false; tip.textContent = '';
+    var b = document.createElement('button'); b.className = 'btn outline'; b.type = 'button'; b.textContent = 'Installer l’application';
+    b.addEventListener('click', function () { deferredInstall.prompt(); tip.hidden = true; });
+    tip.appendChild(b);
+  });
+  if (!standalone && /iphone|ipad|ipod/i.test(navigator.userAgent)) {
+    var tip = $('installTip'); tip.hidden = false;
+    tip.textContent = 'Pour l’ajouter à l’écran d’accueil : bouton Partager de Safari, puis « Sur l’écran d’accueil ».';
+  }
+
+  /* ---------- utilitaires ---------- */
+  function icon(btn, name) { btn.querySelector('use').setAttribute('href', '#i-' + name); }
+  function toast(text) {
+    var t = document.createElement('div');
+    t.className = 'toast'; t.setAttribute('role', 'status'); t.textContent = text;
+    document.body.appendChild(t);
+    setTimeout(function () { t.remove(); }, 3500);
+  }
+  function slug(s) { return s.toLowerCase().trim().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, ''); }
+  function randomCode() {
+    var w = 'abcdefghjkmnpqrstuvwxyz', s = '';
+    var a = new Uint32Array(10); crypto.getRandomValues(a);
+    for (var i = 0; i < 10; i++) s += w[a[i] % w.length];
+    return s.slice(0, 3) + '-' + s.slice(3, 7) + '-' + s.slice(7);
+  }
+  function slotId(code, i) { return ID_PREFIX + '-' + code + '-' + i; }
+  function inviteLink(code) { return location.origin + location.pathname + '#' + encodeURIComponent(code); }
+  function parseCode(v) {
+    v = v.trim();
+    var h = v.indexOf('#');
+    if (h >= 0) v = v.slice(h + 1);
+    else if (/^https?:/i.test(v)) { try { v = new URL(v).searchParams.get('salle') || ''; } catch (e) { v = ''; } }
+    try { v = decodeURIComponent(v); } catch (e) {}
+    return slug(v);
+  }
+  function colorFor(name) {
+    var h = 0; for (var i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) | 0;
+    return COLORS[Math.abs(h) % COLORS.length];
+  }
+  function clock() {
+    var d = new Date();
+    var hm = d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    var day = d.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' });
+    $('homeClock').textContent = hm + ' • ' + day;
+    $('preClock').textContent = hm + ' • ' + day;
+    $('roomClock').textContent = hm;
+  }
+  clock(); setInterval(clock, 15000);
+  function show(id) {
+    ['home', 'prejoin', 'room'].forEach(function (s) { $(s).hidden = s !== id; });
+    var m = document.querySelector('meta[name="theme-color"]');
+    if (m) m.content = id === 'room' ? '#202124' : '#ffffff';
+  }
+
+  /* ---------- médias ---------- */
+  function getMedia() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      return Promise.reject(new Error('HTTPS est requis pour accéder à la caméra.'));
+    }
+    return navigator.mediaDevices.getUserMedia({
+      video: { width: { ideal: 1280 }, height: { ideal: 720 }, facingMode: 'user' },
+      audio: { echoCancellation: true, noiseSuppression: true }
+    }).catch(function () { return navigator.mediaDevices.getUserMedia({ video: false, audio: true }); });
+  }
+  function applyTrackStates() {
+    if (!state.stream) return;
+    state.stream.getVideoTracks().forEach(function (t) { t.enabled = state.camOn; });
+    state.stream.getAudioTracks().forEach(function (t) { t.enabled = state.micOn; });
+  }
+  function hasVideo() { return !!(state.stream && state.stream.getVideoTracks().length); }
+  function hasAudio() { return !!(state.stream && state.stream.getAudioTracks().length); }
+
+  /* ---------- accueil ---------- */
+  $('newBtn').addEventListener('click', function (e) {
+    e.stopPropagation();
+    var open = $('newMenu').hidden;
+    $('newMenu').hidden = !open;
+    this.setAttribute('aria-expanded', String(open));
+  });
+  document.addEventListener('click', function () { $('newMenu').hidden = true; $('newBtn').setAttribute('aria-expanded', 'false'); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') $('newMenu').hidden = true; });
+
+  $('laterBtn').addEventListener('click', function () { openDetails(randomCode(), 'later'); });
+  $('inviteBtn').addEventListener('click', function () { openDetails(randomCode(), 'later', true); });
+  $('nowBtn').addEventListener('click', function () { showPrejoin(randomCode()); });
+  $('codeInput').addEventListener('input', function () { $('goBtn').disabled = !parseCode(this.value); });
+  $('codeInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') goCode(); });
+  $('goBtn').addEventListener('click', goCode);
+  function goCode() { var c = parseCode($('codeInput').value); if (c) showPrejoin(c); }
+
+  /* ---------- pré-participation ---------- */
+  function showPrejoin(code) {
+    state.code = code;
+    history.replaceState(null, '', '#' + encodeURIComponent(code));
+    show('prejoin');
+    $('pvCode').textContent = code;
+    try { $('nameInput').value = localStorage.getItem('visio-name') || ''; } catch (e) {}
+    syncName();
+    $('pvMsg').hidden = false; $('pvMsg').textContent = 'Démarrage de la caméra…';
+    if (!state.stream) {
+      mediaReady = getMedia().then(function (s) {
+        state.stream = s; applyTrackStates();
+        $('pvVideo').srcObject = s;
+        syncPrejoinMedia();
+      }).catch(function () {
+        $('pvMsg').textContent = 'Caméra et micro inaccessibles. Autorisez-les dans votre navigateur ou rejoignez en simple spectateur.';
+      });
+    } else { $('pvVideo').srcObject = state.stream; syncPrejoinMedia(); }
+  }
+  function syncPrejoinMedia() {
+    if (!hasVideo()) { $('pvMsg').hidden = false; $('pvMsg').textContent = 'Aucune caméra détectée'; }
+    else if (!state.camOn) { $('pvMsg').hidden = false; $('pvMsg').textContent = 'La caméra est désactivée'; }
+    else $('pvMsg').hidden = true;
+    var m = $('pvMic'), c = $('pvCam');
+    m.disabled = !hasAudio(); c.disabled = !hasVideo();
+    m.classList.toggle('off', !state.micOn || !hasAudio()); c.classList.toggle('off', !state.camOn || !hasVideo());
+    icon(m, state.micOn && hasAudio() ? 'mic' : 'mic-off'); icon(c, state.camOn && hasVideo() ? 'cam' : 'cam-off');
+    m.setAttribute('aria-label', state.micOn ? 'Couper le micro' : 'Activer le micro');
+    c.setAttribute('aria-label', state.camOn ? 'Couper la caméra' : 'Activer la caméra');
+  }
+  $('pvMic').addEventListener('click', function () { state.micOn = !state.micOn; applyTrackStates(); syncPrejoinMedia(); });
+  $('pvCam').addEventListener('click', function () { state.camOn = !state.camOn; applyTrackStates(); syncPrejoinMedia(); });
+  function syncName() {
+    var n = $('nameInput').value.trim();
+    $('pvName').textContent = n;
+    $('joinBtn').disabled = !n;
+  }
+  $('nameInput').addEventListener('input', syncName);
+  $('nameInput').addEventListener('keydown', function (e) { if (e.key === 'Enter' && !$('joinBtn').disabled) $('joinBtn').click(); });
+  $('pvInvite').addEventListener('click', function () { openDetails(state.code, 'prejoin', true); });
+
+  $('joinBtn').addEventListener('click', function () {
+    state.name = $('nameInput').value.trim();
+    if (!state.name) return;
+    try { localStorage.setItem('visio-name', state.name); } catch (e) {}
+    $('joinErr').textContent = '';
+    $('joinBtn').disabled = true; $('joinBtn').textContent = 'Connexion…';
+    mediaReady.then(function () { claimSlot(state.code, 0); });
+  });
+
+  /* ---------- connexion P2P (emplacements 0..5) ---------- */
+  function claimSlot(code, i) {
+    if (i >= MAX_PEERS) { fail('Cette réunion est complète (' + MAX_PEERS + ' participants maximum).'); return; }
+    var peer = new Peer(slotId(code, i), peerOpts);
+    var settled = false;
+    peer.on('open', function () {
+      settled = true; state.peer = peer; state.slot = i;
+      enterRoom();
+      for (var j = 0; j < MAX_PEERS; j++) if (j !== i) dial(slotId(code, j));
+    });
+    peer.on('call', function (call) { call.answer(state.stream || undefined); wireCall(call); });
+    peer.on('connection', wireData);
+    peer.on('error', function (err) {
+      if (err.type === 'unavailable-id' && !settled) { peer.destroy(); claimSlot(code, i + 1); }
+      else if (err.type === 'peer-unavailable') { /* emplacement libre */ }
+      else if (!settled) fail('Connexion au service impossible (' + err.type + ').');
+      else toast('Erreur réseau : ' + err.type);
+    });
+    peer.on('disconnected', function () { if (state.joined && !peer.destroyed) peer.reconnect(); });
+  }
+  function fail(msg) {
+    $('joinErr').textContent = msg;
+    $('joinBtn').textContent = 'Participer'; syncName();
+    if (state.peer) { state.peer.destroy(); state.peer = null; }
+  }
+
+  var _silent;
+  function silentStream() { return _silent || (_silent = new MediaStream()); }
+  function dial(id) {
+    if (state.calls[id] || state.conns[id]) return;
+    wireData(state.peer.connect(id, { reliable: true }));
+    var call = state.peer.call(id, state.stream || silentStream(), { metadata: { name: state.name } });
+    if (call) wireCall(call);
+  }
+  function wireCall(call) {
+    var id = call.peer;
+    if (state.calls[id]) return;
+    state.calls[id] = call;
+    call.on('stream', function (remote) { addRemoteTile(id, remote, call.metadata && call.metadata.name); });
+    call.on('close', function () { dropPeer(id); });
+    call.on('error', function () { dropPeer(id); });
+  }
+  function wireData(dc) {
+    var id = dc.peer;
+    dc.on('open', function () {
+      state.conns[id] = dc;
+      dc.send({ t: 'hello', name: state.name, cam: state.camOn && hasVideo(), mic: state.micOn && hasAudio() });
+    });
+    dc.on('data', function (m) { onData(id, m); });
+    dc.on('close', function () { delete state.conns[id]; });
+  }
+  function broadcast(msg) {
+    Object.keys(state.conns).forEach(function (id) { var c = state.conns[id]; if (c && c.open) c.send(msg); });
+  }
+  function onData(id, m) {
+    if (!m || typeof m !== 'object') return;
+    if (m.t === 'hello' || m.t === 'state') {
+      if (m.t === 'hello' && typeof m.name === 'string') setName(id, m.name);
+      var tile = $('tile-' + id);
+      if (tile) {
+        tile.classList.toggle('mic-off', m.mic === false);
+        tile.classList.toggle('cam-off', m.cam === false);
+      }
+    } else if (m.t === 'chat' && typeof m.text === 'string') {
+      addMessage(state.names[id] || 'Participant', m.text.slice(0, 500), false);
+      if ($('chatPanel').hidden) { $('chatDot').hidden = false; $('chatDot2').hidden = false; }
+    }
+  }
+  function setName(id, name) {
+    name = String(name).slice(0, 30);
+    state.names[id] = name;
+    var tile = $('tile-' + id);
+    if (tile) {
+      tile.querySelector('.name').textContent = name;
+      var av = tile.querySelector('.avatar'); av.textContent = name[0] || '?'; av.style.setProperty('--av', colorFor(name));
+    }
+    renderPeople();
+  }
+
+  /* ---------- salle ---------- */
+  function enterRoom() {
+    state.joined = true;
+    show('room');
+    $('roomCode').textContent = state.code;
+    addLocalTile(); syncControls(); layout(); renderPeople();
+  }
+  function makeTile(id, name, isLocal) {
+    var t = document.createElement('div');
+    t.className = 'tile' + (isLocal ? ' local' : ''); t.id = 'tile-' + id;
+    var v = document.createElement('video'); v.autoplay = true; v.playsInline = true; if (isLocal) v.muted = true;
+    var off = document.createElement('div'); off.className = 'off';
+    var av = document.createElement('div'); av.className = 'avatar'; av.textContent = name[0] || '?'; av.style.setProperty('--av', colorFor(name));
+    off.appendChild(av);
+    var nm = document.createElement('div'); nm.className = 'name'; nm.textContent = isLocal ? 'Vous' : name;
+    var mm = document.createElement('div'); mm.className = 'mm'; mm.setAttribute('aria-label', 'Micro coupé');
+    mm.innerHTML = '<svg class="i"><use href="#i-mic-off"/></svg>';
+    t.append(v, off, nm, mm);
+    return t;
+  }
+  function addLocalTile() {
+    var t = makeTile('local', state.name, true);
+    $('grid').appendChild(t);
+    t.querySelector('video').srcObject = state.stream;
+  }
+  function addRemoteTile(id, stream, name) {
+    var tile = $('tile-' + id);
+    if (!tile) {
+      var label = state.names[id] || name || 'Participant';
+      state.names[id] = label;
+      tile = makeTile(id, label, false);
+      $('grid').appendChild(tile);
+      toast(label + ' a rejoint la réunion');
+      renderPeople();
+    }
+    var video = tile.querySelector('video');
+    if (video.srcObject !== stream) video.srcObject = stream;
+    layout();
+  }
+  function dropPeer(id) {
+    var label = state.names[id];
+    delete state.calls[id]; delete state.names[id];
+    if (state.conns[id]) { try { state.conns[id].close(); } catch (e) {} delete state.conns[id]; }
+    var tile = $('tile-' + id);
+    if (tile) { tile.remove(); if (label) toast(label + ' a quitté la réunion'); }
+    layout(); renderPeople();
+  }
+  function layout() {
+    var n = $('grid').children.length || 1;
+    var narrow = window.matchMedia('(max-width: 900px)').matches;
+    $('grid').style.setProperty('--cols', narrow ? (n <= 3 ? 1 : 2) : (n <= 1 ? 1 : n <= 4 ? 2 : 3));
+  }
+  window.addEventListener('resize', layout);
+  function renderPeople() {
+    var ul = $('peopleList'); ul.textContent = '';
+    var all = [[state.name + ' (vous)', state.name]];
+    Object.keys(state.names).forEach(function (id) { if ($('tile-' + id)) all.push([state.names[id], state.names[id]]); });
+    all.forEach(function (p) {
+      var li = document.createElement('li');
+      var av = document.createElement('div'); av.className = 'avatar'; av.textContent = p[1][0] || '?'; av.style.setProperty('--av', colorFor(p[1]));
+      var sp = document.createElement('span'); sp.textContent = p[0];
+      li.append(av, sp); ul.appendChild(li);
+    });
+  }
+
+  /* ---------- commandes ---------- */
+  function syncControls() {
+    var mic = $('micBtn'), cam = $('camBtn');
+    mic.disabled = !hasAudio(); cam.disabled = !hasVideo();
+    var micOn = state.micOn && hasAudio(), camOn = state.camOn && hasVideo();
+    mic.classList.toggle('off', !micOn); cam.classList.toggle('off', !camOn);
+    icon(mic, micOn ? 'mic' : 'mic-off'); icon(cam, camOn ? 'cam' : 'cam-off');
+    mic.setAttribute('aria-label', micOn ? 'Couper le micro' : 'Activer le micro');
+    cam.setAttribute('aria-label', camOn ? 'Couper la caméra' : 'Activer la caméra');
+    var local = $('tile-local');
+    if (local) {
+      local.classList.toggle('mic-off', !micOn);
+      local.classList.toggle('cam-off', !camOn && !state.screen);
+    }
+    broadcast({ t: 'state', cam: camOn, mic: micOn });
+  }
+  function toggleMic() { state.micOn = !state.micOn; applyTrackStates(); syncControls(); }
+  function toggleCam() { state.camOn = !state.camOn; applyTrackStates(); syncControls(); }
+
+  function replaceOutgoingVideo(track) {
+    Object.keys(state.calls).forEach(function (id) {
+      var pc = state.calls[id].peerConnection; if (!pc) return;
+      pc.getSenders().forEach(function (s) { if (s.track && s.track.kind === 'video') s.replaceTrack(track); });
+    });
+  }
+  function toggleShare() {
+    if (state.screen) { stopShare(); return; }
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) { toast('Le partage d’écran n’est pas pris en charge sur cet appareil.'); return; }
+    navigator.mediaDevices.getDisplayMedia({ video: true }).then(function (s) {
+      state.screen = s;
+      var track = s.getVideoTracks()[0];
+      track.addEventListener('ended', stopShare);
+      replaceOutgoingVideo(track);
+      var local = $('tile-local');
+      local.querySelector('video').srcObject = s;
+      local.classList.add('screen'); local.classList.remove('cam-off');
+      $('shareBtn').classList.add('on');
+      $('shareBtn').setAttribute('aria-label', 'Arrêter la présentation');
+    }).catch(function () {});
+  }
+  function stopShare() {
+    if (!state.screen) return;
+    state.screen.getTracks().forEach(function (t) { t.stop(); });
+    state.screen = null;
+    var cam = state.stream && state.stream.getVideoTracks()[0];
+    if (cam) replaceOutgoingVideo(cam);
+    var local = $('tile-local');
+    local.querySelector('video').srcObject = state.stream;
+    local.classList.remove('screen');
+    $('shareBtn').classList.remove('on');
+    $('shareBtn').setAttribute('aria-label', 'Présenter maintenant');
+    syncControls();
+  }
+
+  function togglePanel(which) {
+    var panels = { people: $('peoplePanel'), chat: $('chatPanel') };
+    Object.keys(panels).forEach(function (k) {
+      var open = k === which && panels[k].hidden;
+      panels[k].hidden = !open;
+      $(k + 'Btn').classList.toggle('on', open);
+      $(k + 'Btn2').classList.toggle('on', open);
+    });
+    if (which === 'chat' && !$('chatPanel').hidden) { $('chatDot').hidden = true; $('chatDot2').hidden = true; $('chatInput').focus(); }
+  }
+  ['peopleBtn', 'peopleBtn2'].forEach(function (id) { $(id).addEventListener('click', function () { togglePanel('people'); }); });
+  ['chatBtn', 'chatBtn2'].forEach(function (id) { $(id).addEventListener('click', function () { togglePanel('chat'); }); });
+  document.querySelectorAll('[data-close]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      $('peoplePanel').hidden = true; $('chatPanel').hidden = true;
+      ['peopleBtn', 'chatBtn', 'peopleBtn2', 'chatBtn2'].forEach(function (i) { $(i).classList.remove('on'); });
+    });
+  });
+
+  function addMessage(author, text, mine) {
+    var box = $('messages');
+    var d = document.createElement('div'); d.className = 'm';
+    var b = document.createElement('b'); b.textContent = mine ? 'Vous' : author;
+    var t = document.createElement('time'); t.textContent = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    var p = document.createElement('p'); p.textContent = text;
+    d.append(b, t, p); box.appendChild(d); box.scrollTop = box.scrollHeight;
+  }
+  $('chatInput').addEventListener('input', function () { $('sendBtn').disabled = !this.value.trim(); });
+  $('chatForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var text = $('chatInput').value.trim(); if (!text) return;
+    broadcast({ t: 'chat', text: text });
+    addMessage(state.name, text, true);
+    $('chatInput').value = ''; $('sendBtn').disabled = true;
+  });
+
+  function leave() {
+    state.joined = false;
+    stopShare();
+    if (state.peer) { state.peer.destroy(); state.peer = null; }
+    if (state.stream) state.stream.getTracks().forEach(function (t) { t.stop(); });
+    location.href = location.pathname;
+  }
+  $('micBtn').addEventListener('click', toggleMic);
+  $('camBtn').addEventListener('click', toggleCam);
+  $('shareBtn').addEventListener('click', toggleShare);
+  $('leaveBtn').addEventListener('click', leave);
+  ['infoBtn', 'infoBtn2'].forEach(function (id) { $(id).addEventListener('click', function () { openDetails(state.code, 'room'); }); });
+  window.addEventListener('beforeunload', function () { if (state.peer) state.peer.destroy(); });
+  document.addEventListener('keydown', function (e) {
+    if (!state.joined || e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.ctrlKey || e.metaKey || e.altKey) return;
+    var k = e.key.toLowerCase();
+    if (k === 'm') toggleMic(); else if (k === 'v') toggleCam(); else if (k === 'c') togglePanel('chat');
+  });
+
+  /* ---------- détails & invitation par e-mail ---------- */
+  var dlgCtx = { code: '', origin: 'room' };
+  var tsToken = '', tsWidget = null, tsLoading = false;
+
+  if (!TURNSTILE_KEY) {
+    // Pas d'envoi côté serveur configuré : l'invitation passe par la messagerie de l'utilisateur.
+    $('mailSend').hidden = true; $('tsBox').hidden = true;
+    $('mailTo').classList.replace('outline', 'primary'); $('mailTo').textContent = 'Inviter par e-mail';
+  }
+  if (navigator.share) $('dlgShare').hidden = false;
+
+  function openDetails(code, origin, focusMail) {
+    dlgCtx = { code: code, origin: origin };
+    $('dlgTitle').textContent = origin === 'later' ? 'Voici votre réunion' : 'Détails de la réunion';
+    $('dlgDesc').textContent = origin === 'later'
+      ? 'Envoyez ce lien aux personnes à inviter, et gardez-le pour rejoindre la réunion plus tard.'
+      : 'Partagez ce lien avec les personnes que vous souhaitez inviter.';
+    $('dlgLink').textContent = inviteLink(code);
+    $('dlgJoinRow').hidden = origin !== 'later';
+    $('mailErr').textContent = ''; $('mailOk').hidden = true;
+    $('newMenu').hidden = true;
+    if (!$('detailsDlg').open) $('detailsDlg').showModal();
+    if (focusMail) $('mailInput').focus();
+    if (TURNSTILE_KEY) loadTurnstile();
+  }
+  $('dlgClose').addEventListener('click', function () { $('detailsDlg').close(); });
+  $('dlgCopy').addEventListener('click', function () {
+    var url = inviteLink(dlgCtx.code);
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(function () { toast('Lien de la réunion copié'); }, function () { window.prompt('Copiez ce lien :', url); });
+    else window.prompt('Copiez ce lien :', url);
+  });
+  $('dlgShare').addEventListener('click', function () {
+    navigator.share({ title: 'Invitation à une visioconférence', text: (state.name || 'Quelqu’un') + ' vous invite à une visioconférence.', url: inviteLink(dlgCtx.code) }).catch(function () {});
+  });
+  $('dlgJoin').addEventListener('click', function () { $('detailsDlg').close(); showPrejoin(dlgCtx.code); });
+
+  function readEmails() {
+    var list = $('mailInput').value.split(/[\s,;]+/).map(function (s) { return s.trim(); }).filter(Boolean);
+    var bad = list.filter(function (e) { return !EMAIL_RE.test(e); });
+    if (!list.length) { $('mailErr').textContent = 'Ajoutez au moins une adresse e-mail.'; return null; }
+    if (bad.length) { $('mailErr').textContent = 'Adresse non valide : ' + bad[0]; return null; }
+    if (list.length > 10) { $('mailErr').textContent = '10 invités maximum par envoi.'; return null; }
+    $('mailErr').textContent = '';
+    return list;
+  }
+  function mailText() {
+    var who = state.name || 'Quelqu’un';
+    return { subject: who + ' vous invite à une visioconférence',
+      body: who + ' vous invite à rejoindre une visioconférence.\n\nRejoindre : ' + inviteLink(dlgCtx.code) + '\n\nAucun compte n’est nécessaire. Autorisez la caméra et le micro dans votre navigateur.' };
+  }
+  $('mailTo').addEventListener('click', function () {
+    var list = readEmails(); if (!list) return;
+    var m = mailText();
+    location.href = 'mailto:' + list.join(',') + '?subject=' + encodeURIComponent(m.subject) + '&body=' + encodeURIComponent(m.body);
+  });
+  $('mailSend').addEventListener('click', function () {
+    var list = readEmails(); if (!list) return;
+    var btn = this; $('mailOk').hidden = true;
+    if (!tsToken) { $('mailErr').textContent = 'Validez d’abord la vérification anti-robot ci-dessus.'; return; }
+    btn.disabled = true; btn.textContent = 'Envoi…';
+    fetch('/api/invite', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ emails: list, link: inviteLink(dlgCtx.code), from: state.name, turnstileToken: tsToken })
+    }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (!res.ok) throw new Error(res.j.error || 'Envoi impossible.');
+        if (res.j.failed && res.j.failed.length) {
+          $('mailErr').textContent = 'Non envoyé à : ' + res.j.failed.join(', ') + '. Utilisez « Ouvrir ma messagerie » pour ces adresses.';
+        }
+        if (res.j.sent) { $('mailOk').textContent = res.j.sent + ' invitation(s) envoyée(s).'; $('mailOk').hidden = false; $('mailInput').value = ''; }
+      })
+      .catch(function (e) { $('mailErr').textContent = (e.message || 'Envoi impossible.') + ' Vous pouvez utiliser « Ouvrir ma messagerie ».'; })
+      .then(function () {
+        btn.disabled = false; btn.textContent = 'Envoyer les invitations';
+        tsToken = ''; if (window.turnstile && tsWidget !== null) { try { window.turnstile.reset(tsWidget); } catch (e) {} }
+      });
+  });
+
+  function loadTurnstile() {
+    if (tsWidget !== null || tsLoading) return;
+    tsLoading = true;
+    var render = function () {
+      try { tsWidget = window.turnstile.render('#tsBox', { sitekey: TURNSTILE_KEY, callback: function (t) { tsToken = t; }, 'expired-callback': function () { tsToken = ''; } }); }
+      catch (e) { tsLoading = false; }
+    };
+    if (window.turnstile) { render(); return; }
+    var s = document.createElement('script');
+    s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+    s.async = true; s.onload = render; s.onerror = function () { tsLoading = false; };
+    document.head.appendChild(s);
+  }
+
+  /* ---------- démarrage ---------- */
+  if (typeof Peer === 'undefined') {
+    $('joinErr').textContent = 'Le module de connexion (PeerJS) n’a pas pu être chargé. Vérifiez votre connexion.';
+  }
+  var initial = qs.get('salle') || (location.hash ? location.hash.slice(1) : '');
+  try { initial = decodeURIComponent(initial); } catch (e) {}
+  initial = slug(initial);
+  if (initial) showPrejoin(initial); else show('home');
+})();
+</script>
+</body>
+</html>
