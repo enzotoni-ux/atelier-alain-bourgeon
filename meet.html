@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Visio — Atelier</title>
+<style>
+  :root {
+    --bg: #131416;
+    --surface: #1f2124;
+    --surface-2: #2b2e33;
+    --text: #f1f3f4;
+    --muted: #9aa0a6;
+    --accent: #8ab4f8;
+    --danger: #d93025;
+    --radius: 12px;
+    --bar-h: 72px;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  [hidden] { display: none !important; }
+  button, input { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* ---------- Accueil ---------- */
+  #home {
+    min-height: 100%;
+    display: grid;
+    place-items: center;
+    padding: 24px 16px;
+  }
+  .home-card { width: 100%; max-width: 440px; }
+  .home-card h1 { font-size: 1.75rem; font-weight: 500; margin: 0 0 8px; }
+  .home-card p { color: var(--muted); margin: 0 0 24px; }
+  .preview {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background: #000;
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .preview video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+  .preview .placeholder {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    color: var(--muted); text-align: center; padding: 16px;
+  }
+  .field { display: block; margin-bottom: 16px; }
+  .field span { display: block; font-size: .875rem; color: var(--muted); margin-bottom: 4px; }
+  .field input {
+    width: 100%; padding: 12px 14px; background: var(--surface);
+    border: 1px solid var(--surface-2); border-radius: 8px;
+  }
+  .row { display: flex; gap: 8px; }
+  .row > * { flex: 1; }
+  .btn {
+    min-height: 44px; padding: 10px 18px; border-radius: 999px; border: 0;
+    background: var(--surface-2); cursor: pointer;
+  }
+  .btn:hover { background: #383c42; }
+  .btn.primary { background: var(--accent); color: #0b1d3a; font-weight: 600; }
+  .btn.primary:hover { background: #a4c3fa; }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
+  .error { color: #f28b82; min-height: 1.5em; margin: 12px 0 0; font-size: .9rem; }
+  .note { color: var(--muted); font-size: .8rem; margin-top: 24px; }
+
+  /* ---------- Salle ---------- */
+  #room { height: 100%; display: flex; flex-direction: column; }
+  .stage { flex: 1; min-height: 0; display: flex; }
+  .grid {
+    flex: 1; min-width: 0; padding: 12px; display: grid; gap: 12px;
+    grid-template-columns: repeat(var(--cols, 1), 1fr);
+    grid-auto-rows: 1fr;
+  }
+  .tile {
+    position: relative; background: var(--surface); border-radius: var(--radius);
+    overflow: hidden; min-height: 0;
+  }
+  .tile video { width: 100%; height: 100%; object-fit: cover; background: #000; }
+  .tile.screen video { object-fit: contain; }
+  .tile.local:not(.screen) video { transform: scaleX(-1); }
+  .tile .name {
+    position: absolute; left: 10px; bottom: 8px; padding: 2px 8px;
+    background: rgba(0,0,0,.6); border-radius: 6px; font-size: .85rem;
+    max-width: calc(100% - 20px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .tile .off {
+    position: absolute; inset: 0; display: none; place-items: center;
+    background: var(--surface);
+  }
+  .tile.cam-off .off { display: grid; }
+  .avatar {
+    width: 84px; height: 84px; border-radius: 50%; background: #5f6368;
+    display: grid; place-items: center; font-size: 2rem; text-transform: uppercase;
+  }
+  .tile .muted-badge {
+    position: absolute; right: 10px; top: 10px; width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(0,0,0,.6); display: none; place-items: center; font-size: .9rem;
+  }
+  .tile.mic-off .muted-badge { display: grid; }
+
+  .chat {
+    width: 320px; max-width: 100%; background: var(--surface); margin: 12px 12px 12px 0;
+    border-radius: var(--radius); display: flex; flex-direction: column; min-height: 0;
+  }
+  .chat h2 { font-size: 1rem; font-weight: 500; margin: 0; padding: 14px 16px; border-bottom: 1px solid var(--surface-2); }
+  .messages { flex: 1; overflow-y: auto; padding: 12px 16px; display: flex; flex-direction: column; gap: 10px; }
+  .msg b { font-size: .8rem; color: var(--muted); display: block; font-weight: 500; }
+  .msg p { margin: 0; overflow-wrap: anywhere; }
+  .chat form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--surface-2); }
+  .chat input { flex: 1; min-width: 0; padding: 10px 12px; background: var(--bg); border: 1px solid var(--surface-2); border-radius: 8px; }
+
+  .bar {
+    height: var(--bar-h); display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; padding: 0 16px;
+  }
+  .bar .info { color: var(--muted); font-size: .9rem; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .controls { display: flex; gap: 10px; }
+  .ctl {
+    width: 48px; height: 48px; border-radius: 50%; border: 0; cursor: pointer;
+    background: var(--surface-2); font-size: 1.2rem; display: grid; place-items: center;
+  }
+  .ctl:hover { background: #3c4043; }
+  .ctl[aria-pressed="true"] { background: var(--danger); }
+  .ctl.active { background: var(--accent); color: #0b1d3a; }
+  .ctl.leave { background: var(--danger); width: 64px; border-radius: 24px; }
+  .ctl:disabled { opacity: .4; cursor: not-allowed; }
+  .bar .right { display: flex; justify-content: flex-end; min-width: 0; }
+
+  .toast {
+    position: fixed; left: 50%; top: 16px; transform: translateX(-50%);
+    background: var(--surface-2); padding: 10px 16px; border-radius: 8px; z-index: 10;
+    box-shadow: 0 4px 16px rgba(0,0,0,.4);
+  }
+
+  @media (max-width: 760px) {
+    .stage { flex-direction: column; }
+    .chat { width: auto; margin: 0 12px 12px; max-height: 40%; }
+    .bar .info, .bar .right { display: none; }
+    .bar { justify-content: center; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .btn, .ctl { transition: background-color .15s ease; }
+  }
+</style>
+</head>
+<body>
+
+<main id="home">
+  <div class="home-card">
+    <h1>Visioconférence</h1>
+    <p>Créez une salle ou rejoignez-en une avec son code. Jusqu’à 6 personnes, sans compte.</p>
+
+    <div class="preview">
+      <video id="previewVideo" autoplay muted playsinline></video>
+      <div class="placeholder" id="previewPlaceholder">Autorisez la caméra et le micro pour voir l’aperçu.</div>
+    </div>
+    <div class="row" style="margin-bottom:16px">
+      <button class="btn" id="homeCam" type="button" aria-pressed="false">Caméra : activée</button>
+      <button class="btn" id="homeMic" type="button" aria-pressed="false">Micro : activé</button>
+    </div>
+
+    <label class="field">
+      <span>Votre nom</span>
+      <input id="nameInput" type="text" maxlength="30" autocomplete="nickname" required>
+    </label>
+    <label class="field">
+      <span>Code de la salle (laisser vide pour en créer une)</span>
+      <input id="codeInput" type="text" maxlength="40" autocomplete="off" autocapitalize="off" spellcheck="false">
+    </label>
+    <button class="btn primary" id="joinBtn" type="button" style="width:100%">Créer la salle</button>
+    <p class="error" id="homeError" role="alert"></p>
+    <p class="note">Les flux audio et vidéo passent directement entre les participants (WebRTC, non enregistrés). Seul l’échange de connexion transite par le service PeerJS. Derrière certains pare-feu d’entreprise, la connexion peut échouer faute de relais TURN.</p>
+  </div>
+</main>
+
+<div id="room" hidden>
+  <div class="stage">
+    <div class="grid" id="grid"></div>
+    <aside class="chat" id="chat" hidden aria-label="Discussion">
+      <h2>Discussion</h2>
+      <div class="messages" id="messages" aria-live="polite"></div>
+      <form id="chatForm">
+        <input id="chatInput" type="text" maxlength="500" aria-label="Message" autocomplete="off">
+        <button class="btn primary" type="submit">Envoyer</button>
+      </form>
+    </aside>
+  </div>
+  <div class="bar">
+    <div class="info" id="roomInfo"></div>
+    <div class="controls">
+      <button class="ctl" id="micBtn" type="button" aria-pressed="false" aria-label="Couper le micro" title="Micro (M)">🎤</button>
+      <button class="ctl" id="camBtn" type="button" aria-pressed="false" aria-label="Couper la caméra" title="Caméra (V)">📷</button>
+      <button class="ctl" id="shareBtn" type="button" aria-label="Partager l’écran" title="Partager l’écran">🖥️</button>
+      <button class="ctl" id="chatBtn" type="button" aria-label="Afficher la discussion" title="Discussion (C)">💬</button>
+      <button class="ctl" id="copyBtn" type="button" aria-label="Copier le lien d’invitation" title="Copier le lien">🔗</button>
+      <button class="ctl leave" id="leaveBtn" type="button" aria-label="Quitter l’appel" title="Quitter">📞</button>
+    </div>
+    <div class="right"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.5/dist/peerjs.min.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var MAX_PEERS = 6;                 // places par salle (maillage complet : au-delà, le débit explose)
+  var ID_PREFIX = 'atelier-meet';
+  var $ = function (id) { return document.getElementById(id); };
+
+  // Paramètres de test/déploiement : ?peerHost=...&peerPort=...&peerSecure=0
+  var qs = new URLSearchParams(location.search);
+  var peerOpts = {
+    config: { iceServers: [
+      { urls: 'stun:stun.l.google.com:19302' },
+      { urls: 'stun:stun1.l.google.com:19302' }
+    ] }
+  };
+  if (qs.get('peerHost')) {
+    peerOpts.host = qs.get('peerHost');
+    peerOpts.port = Number(qs.get('peerPort') || 9000);
+    peerOpts.path = qs.get('peerPath') || '/';
+    peerOpts.secure = qs.get('peerSecure') === '1';
+  }
+
+  var state = {
+    stream: null,         // caméra + micro locaux
+    screen: null,         // partage d’écran en cours
+    camOn: true,
+    micOn: true,
+    name: '',
+    code: '',
+    peer: null,
+    slot: -1,
+    calls: {},            // peerId -> MediaConnection
+    conns: {},            // peerId -> DataConnection
+    names: {},            // peerId -> nom affiché
+    joined: false
+  };
+
+  /* ---------- utilitaires ---------- */
+  function toast(text) {
+    var t = document.createElement('div');
+    t.className = 'toast'; t.setAttribute('role', 'status'); t.textContent = text;
+    document.body.appendChild(t);
+    setTimeout(function () { t.remove(); }, 3000);
+  }
+  function slug(s) { return s.toLowerCase().trim().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, ''); }
+  function randomCode() {
+    var w = 'abcdefghjkmnpqrstuvwxyz23456789', s = '';
+    for (var i = 0; i < 10; i++) s += w[Math.floor(Math.random() * w.length)];
+    return s.slice(0, 3) + '-' + s.slice(3, 7) + '-' + s.slice(7);
+  }
+  function slotId(code, i) { return ID_PREFIX + '-' + code + '-' + i; }
+
+  /* ---------- médias locaux ---------- */
+  function getMedia() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      return Promise.reject(new Error('Ce navigateur ne permet pas l’accès à la caméra (HTTPS requis).'));
+    }
+    return navigator.mediaDevices.getUserMedia({ video: { width: { ideal: 1280 }, height: { ideal: 720 } }, audio: { echoCancellation: true, noiseSuppression: true } })
+      .catch(function () {
+        // Repli : audio seul si pas de caméra
+        return navigator.mediaDevices.getUserMedia({ video: false, audio: true });
+      });
+  }
+  function applyTrackStates() {
+    if (!state.stream) return;
+    state.stream.getVideoTracks().forEach(function (t) { t.enabled = state.camOn; });
+    state.stream.getAudioTracks().forEach(function (t) { t.enabled = state.micOn; });
+  }
+
+  /* ---------- accueil ---------- */
+  function setHomeToggle(btn, label, on) {
+    btn.textContent = label + ' : ' + (on ? 'activé' : 'désactivé');
+    btn.setAttribute('aria-pressed', on ? 'false' : 'true');
+  }
+  var mediaReady = Promise.resolve();
+  function startPreview() {
+    mediaReady = getMedia().then(function (s) {
+      state.stream = s;
+      applyTrackStates();
+      $('previewVideo').srcObject = s;
+      $('previewPlaceholder').hidden = true;
+      if (!s.getVideoTracks().length) {
+        state.camOn = false; $('homeCam').disabled = true; setHomeToggle($('homeCam'), 'Caméra', false);
+        $('previewPlaceholder').hidden = false; $('previewPlaceholder').textContent = 'Aucune caméra détectée.';
+      }
+    }).catch(function (e) {
+      $('homeError').textContent = 'Caméra/micro inaccessibles : ' + (e.message || e.name) + ' Vous pourrez quand même rejoindre en spectateur.';
+    });
+  }
+
+  $('homeCam').addEventListener('click', function () {
+    state.camOn = !state.camOn; applyTrackStates(); setHomeToggle(this, 'Caméra', state.camOn);
+  });
+  $('homeMic').addEventListener('click', function () {
+    state.micOn = !state.micOn; applyTrackStates(); setHomeToggle(this, 'Micro', state.micOn);
+  });
+  $('codeInput').addEventListener('input', function () {
+    $('joinBtn').textContent = this.value.trim() ? 'Rejoindre' : 'Créer la salle';
+  });
+  $('joinBtn').addEventListener('click', joinFromHome);
+  ['nameInput', 'codeInput'].forEach(function (id) {
+    $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') joinFromHome(); });
+  });
+
+  try { $('nameInput').value = localStorage.getItem('meet-name') || ''; } catch (e) {}
+  var urlCode = qs.get('salle') || (location.hash ? decodeURIComponent(location.hash.slice(1)) : '');
+  if (urlCode) { $('codeInput').value = slug(urlCode); $('joinBtn').textContent = 'Rejoindre'; }
+
+  function joinFromHome() {
+    var name = $('nameInput').value.trim();
+    if (!name) { $('homeError').textContent = 'Indiquez votre nom.'; $('nameInput').focus(); return; }
+    var code = slug($('codeInput').value) || randomCode();
+    $('homeError').textContent = '';
+    $('joinBtn').disabled = true;
+    try { localStorage.setItem('meet-name', name); } catch (e) {}
+    state.name = name; state.code = code;
+    mediaReady.then(function () { connect(code); });
+  }
+
+  /* ---------- connexion (maillage P2P, emplacements 0..MAX_PEERS-1) ---------- */
+  function connect(code) {
+    claimSlot(code, 0);
+  }
+
+  function claimSlot(code, i) {
+    if (i >= MAX_PEERS) {
+      fail('La salle est pleine (' + MAX_PEERS + ' personnes maximum).');
+      return;
+    }
+    var peer = new Peer(slotId(code, i), peerOpts);
+    var settled = false;
+
+    peer.on('open', function () {
+      settled = true;
+      state.peer = peer; state.slot = i;
+      enterRoom();
+      for (var j = 0; j < MAX_PEERS; j++) if (j !== i) dial(slotId(code, j));
+    });
+    peer.on('call', function (call) {
+      // l’appelant n’a pas de flux obligatoire ; on répond avec le nôtre
+      call.answer(outgoingStream());
+      wireCall(call);
+    });
+    peer.on('connection', wireData);
+    peer.on('error', function (err) {
+      if (err.type === 'unavailable-id' && !settled) {
+        peer.destroy(); claimSlot(code, i + 1);
+      } else if (err.type === 'peer-unavailable') {
+        // emplacement vide : normal lors du balayage
+      } else if (!settled) {
+        fail('Connexion au service impossible (' + err.type + ').');
+      } else {
+        toast('Erreur réseau : ' + err.type);
+      }
+    });
+    peer.on('disconnected', function () { if (state.joined && !peer.destroyed) peer.reconnect(); });
+  }
+
+  function fail(msg) {
+    $('homeError').textContent = msg;
+    $('joinBtn').disabled = false;
+    if (state.peer) { state.peer.destroy(); state.peer = null; }
+  }
+
+  function outgoingStream() {
+    return state.stream || undefined;
+  }
+
+  function dial(id) {
+    if (state.calls[id] || state.conns[id]) return;
+    var dc = state.peer.connect(id, { reliable: true, metadata: { name: state.name } });
+    wireData(dc);
+    var call = state.peer.call(id, state.stream || silentStream(), { metadata: { name: state.name } });
+    if (call) wireCall(call);
+  }
+
+  // PeerJS exige un MediaStream pour appeler ; spectateur sans caméra = flux vide.
+  var _silent;
+  function silentStream() {
+    if (!_silent) _silent = new MediaStream();
+    return _silent;
+  }
+
+  function wireCall(call) {
+    var id = call.peer;
+    if (state.calls[id]) { return; }
+    state.calls[id] = call;
+    call.on('stream', function (remote) { addRemoteTile(id, remote, call.metadata && call.metadata.name); });
+    call.on('close', function () { dropPeer(id); });
+    call.on('error', function () { dropPeer(id); });
+  }
+
+  function wireData(dc) {
+    var id = dc.peer;
+    dc.on('open', function () {
+      state.conns[id] = dc;
+      dc.send({ t: 'hello', name: state.name, cam: state.camOn, mic: state.micOn });
+    });
+    dc.on('data', function (m) { onData(id, m); });
+    dc.on('close', function () { delete state.conns[id]; });
+  }
+
+  function broadcast(msg) {
+    Object.keys(state.conns).forEach(function (id) {
+      var c = state.conns[id];
+      if (c && c.open) c.send(msg);
+    });
+  }
+
+  function onData(id, m) {
+    if (!m || typeof m !== 'object') return;
+    if (m.t === 'hello' || m.t === 'state') {
+      if (m.t === 'hello' && typeof m.name === 'string') setName(id, m.name);
+      var tile = $('tile-' + id);
+      if (tile) {
+        tile.classList.toggle('mic-off', m.mic === false);
+        tile.dataset.cam = m.cam === false ? 'off' : 'on';
+        updateCamOff(tile);
+      }
+    } else if (m.t === 'chat' && typeof m.text === 'string') {
+      addMessage(state.names[id] || 'Participant', m.text.slice(0, 500), false);
+      if ($('chat').hidden) { $('chatBtn').classList.add('active'); }
+    }
+  }
+
+  function setName(id, name) {
+    name = String(name).slice(0, 30);
+    state.names[id] = name;
+    var tile = $('tile-' + id);
+    if (tile) {
+      tile.querySelector('.name').textContent = name;
+      tile.querySelector('.avatar').textContent = (name[0] || '?');
+    }
+  }
+
+  /* ---------- salle ---------- */
+  function enterRoom() {
+    state.joined = true;
+    $('home').hidden = true; $('room').hidden = false;
+    $('roomInfo').textContent = 'Salle : ' + state.code;
+    history.replaceState(null, '', '#' + encodeURIComponent(state.code));
+    addLocalTile();
+    syncControls();
+    layout();
+  }
+
+  function makeTile(id, name, isLocal) {
+    var t = document.createElement('div');
+    t.className = 'tile' + (isLocal ? ' local' : '');
+    t.id = 'tile-' + id;
+    var v = document.createElement('video');
+    v.autoplay = true; v.playsInline = true; if (isLocal) v.muted = true;
+    var off = document.createElement('div'); off.className = 'off';
+    var av = document.createElement('div'); av.className = 'avatar'; av.textContent = (name[0] || '?');
+    off.appendChild(av);
+    var nm = document.createElement('div'); nm.className = 'name'; nm.textContent = name + (isLocal ? ' (vous)' : '');
+    var mb = document.createElement('div'); mb.className = 'muted-badge'; mb.textContent = '🔇'; mb.setAttribute('aria-label', 'Micro coupé');
+    t.append(v, off, nm, mb);
+    return t;
+  }
+
+  function addLocalTile() {
+    var t = makeTile('local', state.name, true);
+    $('grid').appendChild(t);
+    t.querySelector('video').srcObject = state.stream;
+    t.dataset.cam = state.camOn && state.stream && state.stream.getVideoTracks().length ? 'on' : 'off';
+    t.classList.toggle('mic-off', !state.micOn);
+    updateCamOff(t);
+  }
+
+  function addRemoteTile(id, stream, name) {
+    var tile = $('tile-' + id);
+    if (!tile) {
+      var label = state.names[id] || name || 'Participant';
+      state.names[id] = label;
+      tile = makeTile(id, label, false);
+      tile.dataset.cam = 'on';
+      $('grid').appendChild(tile);
+      toast(label + ' a rejoint la salle');
+    }
+    var video = tile.querySelector('video');
+    if (video.srcObject !== stream) video.srcObject = stream;
+    layout();
+  }
+
+  function dropPeer(id) {
+    var label = state.names[id];
+    delete state.calls[id]; delete state.names[id];
+    if (state.conns[id]) { try { state.conns[id].close(); } catch (e) {} delete state.conns[id]; }
+    var tile = $('tile-' + id);
+    if (tile) { tile.remove(); if (label) toast(label + ' a quitté la salle'); }
+    layout();
+  }
+
+  function updateCamOff(tile) {
+    tile.classList.toggle('cam-off', tile.dataset.cam === 'off');
+  }
+
+  function layout() {
+    var n = $('grid').children.length || 1;
+    var cols = n <= 1 ? 1 : n <= 4 ? 2 : 3;
+    $('grid').style.setProperty('--cols', cols);
+  }
+
+  /* ---------- commandes ---------- */
+  function syncControls() {
+    var hasVideo = state.stream && state.stream.getVideoTracks().length;
+    var hasAudio = state.stream && state.stream.getAudioTracks().length;
+    var mic = $('micBtn'), cam = $('camBtn');
+    mic.disabled = !hasAudio; cam.disabled = !hasVideo;
+    mic.setAttribute('aria-pressed', String(!state.micOn));
+    mic.setAttribute('aria-label', state.micOn ? 'Couper le micro' : 'Activer le micro');
+    cam.setAttribute('aria-pressed', String(!state.camOn));
+    cam.setAttribute('aria-label', state.camOn ? 'Couper la caméra' : 'Activer la caméra');
+    var local = $('tile-local');
+    if (local) {
+      local.classList.toggle('mic-off', !state.micOn);
+      local.dataset.cam = state.camOn && hasVideo ? 'on' : 'off';
+      updateCamOff(local);
+    }
+    broadcast({ t: 'state', cam: state.camOn && !!hasVideo, mic: state.micOn });
+  }
+
+  function toggleMic() { state.micOn = !state.micOn; applyTrackStates(); syncControls(); }
+  function toggleCam() { state.camOn = !state.camOn; applyTrackStates(); syncControls(); }
+
+  function replaceOutgoingVideo(track) {
+    Object.keys(state.calls).forEach(function (id) {
+      var pc = state.calls[id].peerConnection;
+      if (!pc) return;
+      pc.getSenders().forEach(function (s) {
+        if (s.track && s.track.kind === 'video') s.replaceTrack(track);
+      });
+    });
+  }
+
+  function toggleShare() {
+    if (state.screen) { stopShare(); return; }
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) {
+      toast('Partage d’écran non pris en charge sur cet appareil.'); return;
+    }
+    navigator.mediaDevices.getDisplayMedia({ video: true }).then(function (s) {
+      state.screen = s;
+      var track = s.getVideoTracks()[0];
+      track.addEventListener('ended', stopShare);
+      replaceOutgoingVideo(track);
+      var local = $('tile-local');
+      local.querySelector('video').srcObject = s;
+      local.classList.add('screen');
+      local.dataset.cam = 'on'; updateCamOff(local);
+      $('shareBtn').classList.add('active');
+      $('shareBtn').setAttribute('aria-label', 'Arrêter le partage');
+    }).catch(function () { /* annulé par l’utilisateur */ });
+  }
+
+  function stopShare() {
+    if (!state.screen) return;
+    state.screen.getTracks().forEach(function (t) { t.stop(); });
+    state.screen = null;
+    var cam = state.stream && state.stream.getVideoTracks()[0];
+    if (cam) replaceOutgoingVideo(cam);
+    var local = $('tile-local');
+    local.querySelector('video').srcObject = state.stream;
+    local.classList.remove('screen');
+    $('shareBtn').classList.remove('active');
+    $('shareBtn').setAttribute('aria-label', 'Partager l’écran');
+    syncControls();
+  }
+
+  function toggleChat() {
+    var c = $('chat');
+    c.hidden = !c.hidden;
+    $('chatBtn').classList.toggle('active', !c.hidden);
+    $('chatBtn').setAttribute('aria-label', c.hidden ? 'Afficher la discussion' : 'Masquer la discussion');
+    if (!c.hidden) $('chatInput').focus();
+  }
+
+  function addMessage(author, text, mine) {
+    var box = $('messages');
+    var d = document.createElement('div'); d.className = 'msg';
+    var b = document.createElement('b'); b.textContent = mine ? 'Vous' : author;
+    var p = document.createElement('p'); p.textContent = text;
+    d.append(b, p); box.appendChild(d);
+    box.scrollTop = box.scrollHeight;
+  }
+
+  $('chatForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var text = $('chatInput').value.trim();
+    if (!text) return;
+    broadcast({ t: 'chat', text: text });
+    addMessage(state.name, text, true);
+    $('chatInput').value = '';
+  });
+
+  function copyLink() {
+    var url = location.origin + location.pathname + '#' + encodeURIComponent(state.code);
+    var done = function () { toast('Lien copié'); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(done, function () { window.prompt('Copiez ce lien :', url); });
+    } else { window.prompt('Copiez ce lien :', url); }
+  }
+
+  function leave() {
+    state.joined = false;
+    stopShare();
+    broadcast({ t: 'bye' });
+    if (state.peer) { state.peer.destroy(); state.peer = null; }
+    if (state.stream) state.stream.getTracks().forEach(function (t) { t.stop(); });
+    location.href = location.pathname;
+  }
+
+  $('micBtn').addEventListener('click', toggleMic);
+  $('camBtn').addEventListener('click', toggleCam);
+  $('shareBtn').addEventListener('click', toggleShare);
+  $('chatBtn').addEventListener('click', toggleChat);
+  $('copyBtn').addEventListener('click', copyLink);
+  $('leaveBtn').addEventListener('click', leave);
+  window.addEventListener('beforeunload', function () { if (state.peer) state.peer.destroy(); });
+
+  document.addEventListener('keydown', function (e) {
+    if (!state.joined || e.target.tagName === 'INPUT' || e.ctrlKey || e.metaKey || e.altKey) return;
+    var k = e.key.toLowerCase();
+    if (k === 'm') toggleMic();
+    else if (k === 'v') toggleCam();
+    else if (k === 'c') toggleChat();
+  });
+
+  if (typeof Peer === 'undefined') {
+    $('homeError').textContent = 'Le module de connexion (PeerJS) n’a pas pu être chargé. Vérifiez votre connexion.';
+    $('joinBtn').disabled = true;
+  }
+  startPreview();
+})();
+</script>
+</body>
+</html>
