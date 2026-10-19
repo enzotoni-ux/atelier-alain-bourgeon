@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Paddock – Formule 1 et Ferrari</title>
+<meta name="description" content="Histoire de la Formule 1, Scuderia Ferrari, écuries, pilotes légendaires et circuits mythiques.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700&family=Barlow:wght@400;500&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+
+<header class="nav">
+  <a class="logo" href="#top">PADDOCK<span>.</span></a>
+  <nav aria-label="Navigation principale">
+    <a href="#ferrari">Ferrari</a>
+    <a href="#ecuries">Écuries</a>
+    <a href="#pilotes">Pilotes</a>
+    <a href="#circuits">Circuits</a>
+    <a href="#histoire">Histoire</a>
+  </nav>
+</header>
+
+<main id="contenu">
+  <section class="hero" id="top">
+    <p class="kicker">Championnat du monde depuis 1950</p>
+    <h1>Formule 1</h1>
+    <p class="lead">Vingt voitures, environ 24 courses par an, et une écurie qui n'a manqué aucune saison depuis le début : Ferrari.</p>
+    <div class="lights" id="lights" role="img" aria-label="Feux de départ">
+      <i></i><i></i><i></i><i></i><i></i>
+    </div>
+    <button class="btn" id="replay" type="button">Relancer le départ</button>
+  </section>
+
+  <section class="stats" aria-label="Chiffres clés Ferrari">
+    <div><b data-count="16">16</b><span>titres constructeurs, record</span></div>
+    <div><b data-count="15">15</b><span>titres pilotes</span></div>
+    <div><b>1950</b><span>première saison</span></div>
+    <div><b>1951</b><span>première victoire</span></div>
+  </section>
+
+  <section id="ferrari" class="block">
+    <h2>Scuderia Ferrari</h2>
+    <div class="cols">
+      <div>
+        <p>Fondée par Enzo Ferrari en 1929 à Modène, la Scuderia a d'abord fait courir des Alfa Romeo avant de construire ses propres monoplaces. Elle est installée à Maranello.</p>
+        <p>Sa première victoire en championnat du monde date du Grand Prix de Grande-Bretagne 1951, à Silverstone, avec José Froilán González. Elle est la seule écurie présente à chaque saison depuis 1950.</p>
+        <p>Le rouge s'appelle <em>rosso corsa</em> : c'était la couleur attribuée à l'Italie dans les courses internationales du début du XXe siècle.</p>
+      </div>
+      <aside class="card">
+        <h3>Champions du monde sur Ferrari</h3>
+        <ul class="plain">
+          <li><span>1952, 1953</span> Alberto Ascari</li>
+          <li><span>1956</span> Juan Manuel Fangio</li>
+          <li><span>1958</span> Mike Hawthorn</li>
+          <li><span>1961</span> Phil Hill</li>
+          <li><span>1964</span> John Surtees</li>
+          <li><span>1975, 1977</span> Niki Lauda</li>
+          <li><span>1979</span> Jody Scheckter</li>
+          <li><span>2000–2004</span> Michael Schumacher</li>
+          <li><span>2007</span> Kimi Räikkönen</li>
+        </ul>
+      </aside>
+    </div>
+    <p class="note">L'ère Schumacher–Todt–Brawn est la plus dominante de l'histoire de la marque. En 2004, la F2004 a gagné 15 des 18 courses.</p>
+  </section>
+
+  <section id="ecuries" class="block alt">
+    <h2>Les écuries</h2>
+    <div class="tabs" role="tablist" aria-label="Écuries">
+      <button role="tab" aria-selected="true" aria-controls="p-ferrari" id="t-ferrari">Ferrari</button>
+      <button role="tab" aria-selected="false" aria-controls="p-mclaren" id="t-mclaren" tabindex="-1">McLaren</button>
+      <button role="tab" aria-selected="false" aria-controls="p-williams" id="t-williams" tabindex="-1">Williams</button>
+      <button role="tab" aria-selected="false" aria-controls="p-mercedes" id="t-mercedes" tabindex="-1">Mercedes</button>
+      <button role="tab" aria-selected="false" aria-controls="p-redbull" id="t-redbull" tabindex="-1">Red Bull</button>
+    </div>
+    <div class="panel" id="p-ferrari" role="tabpanel" aria-labelledby="t-ferrari">
+      <h3>Ferrari <small>Maranello, Italie · depuis 1950</small></h3>
+      <p>Seize titres constructeurs, de 1961 à 2008. Moteur, châssis et pilotes maison : c'est le seul grand nom qui construit tout lui-même depuis le début.</p>
+    </div>
+    <div class="panel" id="p-mclaren" role="tabpanel" aria-labelledby="t-mclaren" hidden>
+      <h3>McLaren <small>Woking, Angleterre · depuis 1966</small></h3>
+      <p>Fondée par le Néo-Zélandais Bruce McLaren. Elle a marqué les années 1980–90 avec Prost et Senna, associés à Honda, puis a retrouvé le sommet dans les années 2020.</p>
+    </div>
+    <div class="panel" id="p-williams" role="tabpanel" aria-labelledby="t-williams" hidden>
+      <h3>Williams <small>Grove, Angleterre · depuis 1977</small></h3>
+      <p>Créée par Frank Williams. Première victoire en 1979, puis une domination dans les années 1980–90 avec Mansell, Prost, Hill et Villeneuve.</p>
+    </div>
+    <div class="panel" id="p-mercedes" role="tabpanel" aria-labelledby="t-mercedes" hidden>
+      <h3>Mercedes <small>Brackley, Angleterre · retour en 2010</small></h3>
+      <p>Huit titres constructeurs consécutifs, de 2014 à 2021, grâce au passage aux moteurs hybrides V6 turbo. Lewis Hamilton y a gagné six de ses sept titres.</p>
+    </div>
+    <div class="panel" id="p-redbull" role="tabpanel" aria-labelledby="t-redbull" hidden>
+      <h3>Red Bull Racing <small>Milton Keynes, Angleterre · depuis 2005</small></h3>
+      <p>Née du rachat de Jaguar. Quatre titres avec Sebastian Vettel (2010–2013), puis quatre avec Max Verstappen (2021–2024).</p>
+    </div>
+  </section>
+
+  <section id="pilotes" class="block">
+    <h2>Pilotes de légende</h2>
+    <p class="hint">Cliquez sur un en-tête de colonne pour trier.</p>
+    <div class="table-wrap">
+      <table id="drivers">
+        <thead>
+          <tr>
+            <th data-key="name" scope="col"><button type="button">Pilote</button></th>
+            <th data-key="country" scope="col"><button type="button">Pays</button></th>
+            <th data-key="titles" scope="col" class="num"><button type="button">Titres</button></th>
+            <th scope="col">Écurie(s) marquante(s)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-name="Michael Schumacher" data-country="Allemagne" data-titles="7"><td>Michael Schumacher</td><td>Allemagne</td><td class="num">7</td><td>Benetton, Ferrari</td></tr>
+          <tr data-name="Lewis Hamilton" data-country="Royaume-Uni" data-titles="7"><td>Lewis Hamilton</td><td>Royaume-Uni</td><td class="num">7</td><td>McLaren, Mercedes</td></tr>
+          <tr data-name="Juan Manuel Fangio" data-country="Argentine" data-titles="5"><td>Juan Manuel Fangio</td><td>Argentine</td><td class="num">5</td><td>Alfa Romeo, Mercedes, Ferrari, Maserati</td></tr>
+          <tr data-name="Alain Prost" data-country="France" data-titles="4"><td>Alain Prost</td><td>France</td><td class="num">4</td><td>McLaren, Williams</td></tr>
+          <tr data-name="Sebastian Vettel" data-country="Allemagne" data-titles="4"><td>Sebastian Vettel</td><td>Allemagne</td><td class="num">4</td><td>Red Bull</td></tr>
+          <tr data-name="Max Verstappen" data-country="Pays-Bas" data-titles="4"><td>Max Verstappen</td><td>Pays-Bas</td><td class="num">4</td><td>Red Bull</td></tr>
+          <tr data-name="Ayrton Senna" data-country="Brésil" data-titles="3"><td>Ayrton Senna</td><td>Brésil</td><td class="num">3</td><td>McLaren</td></tr>
+          <tr data-name="Niki Lauda" data-country="Autriche" data-titles="3"><td>Niki Lauda</td><td>Autriche</td><td class="num">3</td><td>Ferrari, McLaren</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="cols stories">
+      <article class="card">
+        <h3>Lauda, Nürburgring 1976</h3>
+        <p>Niki Lauda est gravement brûlé dans l'accident de son Ferrari au Nürburgring. Il reprend le volant à Monza six semaines plus tard. James Hunt remporte finalement le titre d'un seul point.</p>
+      </article>
+      <article class="card">
+        <h3>Senna et Prost</h3>
+        <p>Coéquipiers chez McLaren en 1988 et 1989, puis rivaux (Prost est passé chez Ferrari en 1990). Leurs titres se sont joués à Suzuka en 1989 et 1990, par collision. Senna est mort à Imola en 1994, à 34 ans.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="circuits" class="block alt">
+    <h2>Circuits mythiques</h2>
+    <div class="grid">
+      <article class="card"><h3>Monza</h3><p class="meta">Italie · 5,793 km</p><p>Ouvert en 1922. Le « temple de la vitesse », et le circuit des tifosi de Ferrari.</p></article>
+      <article class="card"><h3>Monaco</h3><p class="meta">Monaco · 3,337 km</p><p>Rues de Monte-Carlo, glissières à quelques centimètres, dépassements quasi impossibles. La qualification y décide de la course.</p></article>
+      <article class="card"><h3>Spa-Francorchamps</h3><p class="meta">Belgique · 7,004 km</p><p>Le plus long tracé du calendrier, avec l'Eau Rouge, et une météo qui change d'un virage à l'autre.</p></article>
+      <article class="card"><h3>Silverstone</h3><p class="meta">Royaume-Uni · 5,891 km</p><p>Première course du championnat du monde, le 13 mai 1950. Aussi le lieu de la première victoire Ferrari.</p></article>
+      <article class="card"><h3>Suzuka</h3><p class="meta">Japon · 5,807 km</p><p>Tracé en huit, unique au calendrier. Il a souvent décidé du titre en fin de saison.</p></article>
+      <article class="card"><h3>Interlagos</h3><p class="meta">Brésil · 4,309 km</p><p>Tracé à contre-sens des aiguilles d'une montre, public passionné et courses souvent imprévisibles.</p></article>
+    </div>
+  </section>
+
+  <section id="histoire" class="block">
+    <h2>Repères</h2>
+    <ol class="timeline">
+      <li><b>1950</b> Premier championnat du monde à Silverstone. Giuseppe Farina est le premier champion, sur Alfa Romeo.</li>
+      <li><b>1951</b> Première victoire de Ferrari, avec José Froilán González.</li>
+      <li><b>1976</b> Accident de Lauda au Nürburgring et titre de Hunt d'un point.</li>
+      <li><b>1994</b> Mort d'Ayrton Senna à Imola ; la sécurité devient une priorité.</li>
+      <li><b>2000</b> Michael Schumacher offre à Ferrari son premier titre pilotes depuis 1979.</li>
+      <li><b>2010</b> Barème actuel : 25, 18, 15, 12, 10, 8, 6, 4, 2, 1 points pour les dix premiers.</li>
+      <li><b>2014</b> Début de l'ère hybride V6 turbo, dominée par Mercedes jusqu'en 2021.</li>
+    </ol>
+  </section>
+</main>
+
+<footer>
+  <p>Site de fan, sans lien avec la FOM, la FIA ou Ferrari S.p.A. Aucun logo officiel n'est utilisé. Chiffres arrêtés aux faits historiques ci-dessus ; vérifiez les statistiques de la saison en cours sur le site officiel.</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
