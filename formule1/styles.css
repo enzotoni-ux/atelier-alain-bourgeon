@@ -73,6 +73,8 @@ td.num{color:var(--yellow);font-weight:500}
 .stories{margin-top:40px;grid-template-columns:1fr 1fr}
 
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.card.ferrari{border-color:var(--red)}
+.spec{font:500 15px var(--head);letter-spacing:.08em;text-transform:uppercase;color:var(--yellow);margin-bottom:8px}
 .meta{font:500 14px var(--head);letter-spacing:.12em;text-transform:uppercase;color:var(--red-ink);margin-bottom:8px}
 
 .timeline{list-style:none;padding:0;border-left:2px solid var(--line)}
