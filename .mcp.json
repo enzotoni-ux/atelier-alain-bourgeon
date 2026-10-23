@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "reguardian": {
+      "type": "http",
+      "url": "https://mcp.reguardian.eu/mcp"
+    }
+  }
+}
