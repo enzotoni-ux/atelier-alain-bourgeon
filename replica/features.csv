@@ -1,0 +1,27 @@
+feature,area,priority,original,clone,notes
+Profil public à l'URL /<nom>,profile page,must,yes,no,vu sur un profil réel
+Pile de liens avec titre et URL,profile page,must,yes,no,vu
+Avatar titre et description du profil,profile page,must,yes,no,vu
+Icônes de réseaux sociaux en pied de profil,profile page,must,yes,no,vu
+Sections nommées regroupant des liens,profile page,must,yes,no,vu
+Inscription avec e-mail,onboarding,must,yes,no,non vu : déduit de /register
+Éditeur : ajouter modifier supprimer un lien,editor,must,yes,no,non vu : déduit
+Éditeur : réordonner les liens,editor,must,yes,no,non vu : déduit
+Vignette et description sur un lien,profile page,should,yes,no,vu
+Carrousel de grille de produits,profile page,should,yes,no,vu
+Thèmes polices et couleurs,appearance,should,yes,no,non vu : décrit en marketing
+Mise en avant d'un lien (featured),editor,should,yes,no,cité sur la page tarifs
+Statistiques basiques de clics par lien,analytics,should,yes,no,non vu : palier Starter
+Collecte d'e-mail ou de téléphone,audience,should,yes,no,Free : « Email and phone sign-ups »
+QR code de la page,sharing,should,yes,no,non vu : cité sur l'accueil
+Fond vidéo et retrait du logo,appearance,could,yes,no,palier Pro
+Statistiques sur toute la durée et export,analytics,could,yes,no,palier Premium
+Règles et routage des liens,editor,could,yes,no,palier Premium
+Bascule annuel/mensuel et essai 7 jours,billing,could,yes,no,facturation : paiement hors périmètre du test
+Badge de compte vérifié,trust,skip,yes,skip,programme d'authentification de l'éditeur : ne se reproduit pas
+Boutique cours liens sponsorisés affiliation (Earn),monetisation,skip,yes,skip,accords partenaires et réglementation par pays
+Planification et publication sociale,social,skip,yes,skip,dépend des API et accords Meta/TikTok
+Auto-réponses Instagram,social,skip,yes,skip,dépend de l'API Meta
+Générateurs IA de légendes idées et hashtags,ai,skip,yes,skip,hors périmètre
+Agency/Enterprise : équipes et profils multiples,team,skip,yes,skip,hors périmètre
+Applications mobiles natives,platform,skip,yes,skip,web uniquement
